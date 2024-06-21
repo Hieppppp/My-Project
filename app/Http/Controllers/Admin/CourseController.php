@@ -5,20 +5,23 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Course\CreateCourseRequest;
 use App\Http\Requests\Course\UpdateCourseRequest;
-use App\Models\Course;
 use Illuminate\Http\Request;
-use App\Exports\CoursesExport;
-use App\Imports\CoursesImport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Services\Course\CourseServiceInterface;
 
 class CourseController extends Controller
 {
+    public function __construct(
+        public CourseServiceInterface $service
+    )
+    {
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $courses = Course::paginate(10);
+        $courses = $this->service->getAll(10);
         return view('admin.courses.index', compact('courses'));
     }
 
@@ -35,13 +38,8 @@ class CourseController extends Controller
      */
     public function store(CreateCourseRequest $request)
     {
-        $course = Course::create($request->validated());
-
-        $course = new Course();
-        $course->name = $request->name;
-        $course->description = $request->description;
-        $course->start_date = $request->start_date;
-        $course->end_date = $request->end_date;
+        $params = $request->validated();
+        $course = $this->service->create($params);
         $course->save();
         return redirect()->route('courses.index')->with('sms', 'Course created successfully.');
     }
@@ -51,7 +49,7 @@ class CourseController extends Controller
      */
     public function show(string $id)
     {
-        $course = Course::findOrFail($id);
+        $course = $this->service->find($id);
         return view('admin.courses.show', compact('course'));
     }
 
@@ -60,7 +58,7 @@ class CourseController extends Controller
      */
     public function edit(string $id)
     {
-        $course = Course::findOrFail($id);
+        $course = $this->service->find($id);
         return view('admin.courses.edit', compact('course'));
     }
 
@@ -69,9 +67,8 @@ class CourseController extends Controller
      */
     public function update(UpdateCourseRequest $request, string $id)
     {
-        $course = Course::findOrFail($id);
-        $course->update($request->validated());
-        
+        $params = $request->validated();
+        $this->service->update($id, $params);
         return redirect()->route('courses.index')->with('sms', 'Course updated successfully.');
     }
 
@@ -80,22 +77,18 @@ class CourseController extends Controller
      */
     public function destroy(string $id)
     {
-        $course = Course::findOrFail($id);
-
-        $course->delete();
-
-        return redirect()->route('courses.index')->with('sms', 'Course deleted successfully.');
+        $this->service->delete($id);
+        return redirect()->back()->with('sms', 'Course deleted successfully.');
     }
 
     public function export()
     {
-        return Excel::download(new CoursesExport, 'courses.xlsx');
+        return Excel::download($this->service->export(), 'course.xlsx');
     }
 
     public function import(Request $request)
     {
-        Excel::import(new CoursesImport, $request->file('file'));
-
+        $this->service->import($request->file('file'));
         return redirect()->back()->with('sms', 'Courses Imported Successfully');
     }
 }

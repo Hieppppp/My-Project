@@ -12,7 +12,6 @@ class Course extends Model
         'name',
         'description',
         'start_date',
-        'date_of_birth',
         'end_date',
     ];
 

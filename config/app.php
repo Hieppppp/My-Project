@@ -153,6 +153,11 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+
+        
+        App\Providers\RepositoryServiceProvider::class,
+        App\Providers\AppServiceProvider::class,
+        // App\Providers\RouteServiceProvider::class,
        
 
 

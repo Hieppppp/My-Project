@@ -7,13 +7,6 @@ use Illuminate\Pagination\Paginator;
 
 class BaseRepository implements BaseRepositoryInterface
 {
-
-    /**
-     * __construct
-     *
-     * @param string $model
-     * @return void
-     */
     public function __construct(
         public string $model
     ) {
@@ -34,4 +27,7 @@ class BaseRepository implements BaseRepositoryInterface
     {
         return new $this->model;
     }
+
+   
 }
+

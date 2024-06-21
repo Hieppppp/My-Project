@@ -7,20 +7,24 @@ use App\Http\Requests\Users\CreateUserRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
 use App\Models\Course;
 use App\Models\User;
+use App\Services\User\UserServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function __construct(
+        public UserServiceInterface $service
+    ){
+
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $users = User::with('courses')->paginate(10);
+        $users = $this->service->getAll(10);
         return view('admin.users.index', compact('users'));
-        // $users = User::paginate(5);
-        // return (new UserResourceCollection($users))->response();
     }
 
     /**
@@ -37,22 +41,17 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
-        $data = $request->validated();
-
+        $params = $request->validated();
         if ($request->hasFile('avatar')) {
             $avatarName = time() . '.' . $request->avatar->extension();
             $request->avatar->move(public_path('avatar'), $avatarName);
-            $data['avatar'] = $avatarName;
+            $params['avatar'] = $avatarName;
         }
-
-        $data['password'] = Hash::make($data['password']);
-
-        $user = User::create($data);
+        $user = $this->service->create($params);
 
         if ($request->has('courses')) {
             $user->courses()->attach($request->input('courses'));
         }
-
         return redirect()->route('users.index')->with('sms', 'User created successfully.');
 
     }
@@ -62,7 +61,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        $users = User::with('courses')->findOrFail($id);
+        $users = $this->service->find($id);
         return view('admin.users.show', compact('users'));
     }
 
@@ -71,9 +70,8 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        $users = User::findOrFail($id);
+        $users = $this->service->find($id);
         $courses = Course::all();
-
         $selectedCourses = $users->courses->pluck('id')->toArray();
         return view('admin.users.edit', compact('users', 'courses', 'selectedCourses'));
     }
@@ -83,35 +81,27 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, string $id)
     {
-        $user = User::findOrFail($id);
         $data = $request->validated();
-
         if ($request->hasFile('avatar')) {
+            $user = $this->service->find($id);
             if ($user->avatar) {
-                $oldAvatarPath = public_path('avatar') . '.' . $user->avatar;
-                if (file_exists($oldAvatarPath)) {
-                    unlink($oldAvatarPath);
+                $oldImage = public_path('avatar') .'.'. $user->avatar;
+                if (file_exists($oldImage)) {
+                    unlink($oldImage);
                 }
             }
-
-            $avatarName = time() . '.' . $request->avatar->extension();
+            $avatarName = time() .'.'. $request->avatar->extension();
             $request->avatar->move(public_path('avatar'), $avatarName);
             $data['avatar'] = $avatarName;
-        }
 
-        if (!empty($data['password'])) {
-            $data['password'] = Hash::make($data['password']);
         }
-        else {
-            unset($data['password']);
-        }
-
-        $user->update($data);
+        $this->service->update($id, $data);
 
         if ($request->has('courses')) {
+            $user = $this->service->find($id);
             $user->courses()->sync($request->input('courses'));
         }
-
+    
         return redirect()->route('users.index')->with('sms', 'User updated successfully.');
     }
 
@@ -120,16 +110,7 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        $users = User::findOrFail($id);
-
-        if ($users->avatar) {
-            $avatarPath = public_path('avatar') . '/' . $users->avatar;
-            if (file_exists($avatarPath)) {
-                unlink($avatarPath);
-            }
-
-            $users->delete();
-            return redirect()->route('users.index')->with('sms', 'User deleted successfully.');
-        }
+        $this->service->delete($id);
+        return redirect()->back()->with('sms', 'User deleted successfully.');
     }
 }
