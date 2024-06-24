@@ -10,27 +10,34 @@ use App\Services\BaseService;
 
 class CourseService extends BaseService implements CourseServiceInterface
 {
-    
 
+
+    /**
+     * __construct
+     *
+     * @return void
+     */
     public function __construct(
         public BaseRepository $repository
     ) {
         parent::__construct($repository);
     }
-
     /**
-     * @param int $parPage
-     * 
-     * @return [type]
+     * getAll
+     *
+     * @param  mixed $parPage
+     * @return void
      */
     public function getAll(int $parPage)
     {
         return $this->repository->getAll($parPage);
     }
 
+
     /**
-     * @param array|null|null $params
-     * 
+     * create
+     *
+     * @param  mixed $params
      * @return Course
      */
     public function create(array|null $params = null): Course
@@ -38,10 +45,12 @@ class CourseService extends BaseService implements CourseServiceInterface
         return $this->repository->create($params);
     }
 
+
     /**
-     * @param mixed $id
-     * 
-     * @return [type]
+     * find
+     *
+     * @param  mixed $id
+     * @return void
      */
     public function find($id)
     {
@@ -49,38 +58,59 @@ class CourseService extends BaseService implements CourseServiceInterface
     }
 
     /**
-     * @param mixed $id
-     * @param array $course
-     * 
-     * @return bool
+     * update
+     *
+     * @param  mixed $id
+     * @param  mixed $course
+     * @return void
      */
     public function update($id, array $course)
     {
         return $this->repository->update($id, $course);
     }
 
+
     /**
-     * @param mixed $id
-     * 
-     * @return [type]
+     * delete
+     *
+     * @param  mixed $id
+     * @return void
      */
     public function delete($id)
     {
         return $this->repository->delete($id);
     }
 
+    /**
+     * searchCourse
+     *
+     * @param  mixed $keyword
+     * @param  mixed $perPage
+     * @return mixed
+     */
+    public function searchCourse($keyword, int $perPage): mixed
+    {
+        return $this->repository->searchCourse($keyword, $perPage);
+    }
+
+    /**
+     * export
+     *
+     * @return CoursesExport
+     */
     public function export(): CoursesExport
     {
         return $this->repository->export();
     }
 
+    /**
+     * import
+     *
+     * @param  mixed $file
+     * @return void
+     */
     public function import($file): void
     {
         $this->repository->import($file);
     }
-
-
-
-
-   
 }

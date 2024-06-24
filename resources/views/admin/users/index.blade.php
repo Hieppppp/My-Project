@@ -15,11 +15,11 @@ User
             <h1>List Users</h1>
         </div>
         <div class="col-md-9">
-            <form action="" method="get" class="">
+            <form method="get" class="">
                 <div class="row">
                     <div class="d-flex justify-content-end">
                         <div class="col-4 me-2">
-                            <input type="search" name="keywords" class="form-control" placeholder="Search..." value="{{ request()->keywords }}">
+                            <input type="search" name="keywords" class="form-control" placeholder="Search..." value="{{ request()->input('keywords') }}">
                         </div>
                         <div class="col-2">
                             <button type="submit" class="btn btn-primary btn-block">Search</button>
@@ -45,7 +45,7 @@ User
             <tr>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
-                <td>{{ $user->date_of_birth }}</td>
+                <td>{{ \Carbon\Carbon::parse($user->date_of_birth)->format('d-m-Y') }}</td>
                 <td>{{ $user->phone }}</td>
                 <td>
                     <img width="50px" height="50px" class="img-fluid rounded" src="/avatar/{{ $user->avatar }}" alt="">
@@ -57,7 +57,7 @@ User
                     <a href="{{ route('users.edit', $user->id) }}" class="btn btn-outline-info">
                         <i class="bi bi-pencil-square" title="Click to edit"></i>
                     </a>
-                    
+
                     <a class="btn btn-outline-danger" id="delete" href="{{ route('users.destroy', $user->id) }}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this user?')) document.getElementById('delete-form-{{ $user->id }}').submit();">
                         <i class="bi bi-trash" title="Click to delete"></i>
                     </a>

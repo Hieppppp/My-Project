@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories\User;
 
 use App\Models\User;
@@ -7,6 +8,11 @@ use App\Repositories\BaseRepository;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
+    /**
+     * __construct
+     *
+     * @return void
+     */
     public function __construct()
     {
         parent::__construct(User::class);
@@ -27,6 +33,12 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
      * 
      * @return User
      */
+    /**
+     * create
+     *
+     * @param  mixed $user
+     * @return User
+     */
     public function create(array $user): User
     {
         return User::create([
@@ -44,15 +56,18 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
      * 
      * @return [type]
      */
-    public function find($id){
+    public function find($id)
+    {
         return User::with('courses')->findOrFail($id);
     }
 
+
     /**
-     * @param mixed $id
-     * @param array $user
-     * 
-     * @return [type]
+     * update
+     *
+     * @param  mixed $id
+     * @param  mixed $user
+     * @return void
      */
     public function update($id, array $user)
     {
@@ -62,12 +77,41 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             return $results;
         }
         return false;
-
     }
+
     /**
-     * @param mixed $id
-     * 
-     * @return [type]
+     * syncCourses
+     *
+     * @param  mixed $userId
+     * @param  mixed $courseIds
+     * @return void
+     */
+    public function syncCourses(string $userId, array $courseIds): void
+    {
+        $user = $this->find($userId);
+        $user->courses()->sync($courseIds);
+    }
+    
+    /**
+     * searchUser
+     *
+     * @param  mixed $keyword
+     * @param  mixed $perPage
+     * @return mixed
+     */
+    public function searchUser($keyword, int $perPage): mixed
+    {
+        return User::where('name', 'like', '%' . $keyword . '%')
+            ->orWhere('email', 'like', '%' . $keyword . '%')
+            ->orWhere('phone', 'like', '%' . $keyword . '%')
+            ->paginate($perPage);
+    }
+
+    /**
+     * delete
+     *
+     * @param  mixed $id
+     * @return void
      */
     public function delete($id)
     {
@@ -80,9 +124,4 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         }
         return $user->delete();
     }
-
-    
 }
-
-
-

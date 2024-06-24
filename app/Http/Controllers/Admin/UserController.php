@@ -6,69 +6,76 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\CreateUserRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
 use App\Models\Course;
-use App\Models\User;
 use App\Services\User\UserServiceInterface;
+use Illuminate\Console\View\Components\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Routing\Redirector;
 
 class UserController extends Controller
 {
     public function __construct(
         public UserServiceInterface $service
-    ){
-
+    ) {
     }
     /**
-     * Display a listing of the resource.
+     * index
+     *
+     * @return Factory|View
      */
-    public function index()
+    public function index(Request $request): Factory|View
     {
-        $users = $this->service->getAll(10);
+        $keyword = $request->input('keywords');
+        $users = $this->service->searchUser($keyword, 10);
         return view('admin.users.index', compact('users'));
     }
-
     /**
-     * Show the form for creating a new resource.
+     * create
+     *
+     * @return Factory|View
      */
-    public function create()
+    public function create(): Factory|View
     {
         $courses = Course::all();
         return view('admin.users.create', compact('courses'));
     }
-
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateUserRequest $request)
+    /**
+     * store
+     *
+     * @param  mixed $request
+     * @return Redirector|RedirectResponse
+     */
+    public function store(CreateUserRequest $request): Redirector|RedirectResponse
     {
         $params = $request->validated();
-        if ($request->hasFile('avatar')) {
-            $avatarName = time() . '.' . $request->avatar->extension();
-            $request->avatar->move(public_path('avatar'), $avatarName);
-            $params['avatar'] = $avatarName;
-        }
         $user = $this->service->create($params);
-
         if ($request->has('courses')) {
             $user->courses()->attach($request->input('courses'));
         }
         return redirect()->route('users.index')->with('sms', 'User created successfully.');
-
     }
-
     /**
-     * Display the specified resource.
+     * show
+     *
+     * @param  mixed $id
+     * @return Factory|View
      */
-    public function show(string $id)
+    public function show(string $id): Factory|View
     {
         $users = $this->service->find($id);
         return view('admin.users.show', compact('users'));
     }
-
     /**
-     * Show the form for editing the specified resource.
+     * edit
+     *
+     * @param  mixed $id
+     * @return void
      */
-    public function edit(string $id)
+    public function edit(string $id): Factory|View
     {
         $users = $this->service->find($id);
         $courses = Course::all();
@@ -77,38 +84,34 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * update
+     *
+     * @param  mixed $request
+     * @param  mixed $id
+     * @return Redirector|RedirectResponse
      */
-    public function update(UpdateUserRequest $request, string $id)
+    public function update(UpdateUserRequest $request, string $id): Redirector|RedirectResponse
     {
-        $data = $request->validated();
-        if ($request->hasFile('avatar')) {
-            $user = $this->service->find($id);
-            if ($user->avatar) {
-                $oldImage = public_path('avatar') .'.'. $user->avatar;
-                if (file_exists($oldImage)) {
-                    unlink($oldImage);
-                }
-            }
-            $avatarName = time() .'.'. $request->avatar->extension();
-            $request->avatar->move(public_path('avatar'), $avatarName);
-            $data['avatar'] = $avatarName;
+        $user = $request->validated();
 
+        if ($request->hasFile('avatar')) {
+            $user['avatar'] = $request->file('avatar');
         }
-        $this->service->update($id, $data);
+        $this->service->update($id, $user);
 
         if ($request->has('courses')) {
-            $user = $this->service->find($id);
-            $user->courses()->sync($request->input('courses'));
+            $this->service->syncCourses($id, $request->input('courses'));
         }
-    
+
         return redirect()->route('users.index')->with('sms', 'User updated successfully.');
     }
-
     /**
-     * Remove the specified resource from storage.
+     * destroy
+     *
+     * @param  mixed $id
+     * @return Redirector|RedirectResponse
      */
-    public function destroy(string $id)
+    public function destroy(string $id): Redirector|RedirectResponse
     {
         $this->service->delete($id);
         return redirect()->back()->with('sms', 'User deleted successfully.');

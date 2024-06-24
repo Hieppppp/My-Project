@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\Auth\AuthRepository;
+use App\Repositories\Auth\AuthRepositoryInterface;
 use App\Repositories\Course\CourseRepositoryInterface;
 use App\Repositories\User\UserRepositoryInterface;
 use App\Services\Course\CourseService;
@@ -19,6 +21,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+     
+
         $courseRepository = $this->app->get(CourseRepositoryInterface::class);
 
         $userRepository = $this->app->get(UserRepositoryInterface::class);
@@ -31,6 +35,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UserServiceInterface::class, function () use ($userRepository) {
             return new UserService($userRepository);
         });
+
     }
 
     /**

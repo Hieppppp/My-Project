@@ -26,7 +26,7 @@ interface CourseServiceInterface
      * @return [type]
      */
     public function find($id);
-    
+
     /**
      * @param mixed $id
      * @param array $course
@@ -40,12 +40,35 @@ interface CourseServiceInterface
      * 
      * @return [type]
      */
+    /**
+     * delete
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public function delete($id);
 
-    public function export():FromCollection;
+    /**
+     * searchCourse
+     *
+     * @param  mixed $keyword
+     * @param  mixed $perPage
+     * @return mixed
+     */
+    public function searchCourse($keyword, int $perPage): mixed;
 
+    /**
+     * export
+     *
+     * @return FromCollection
+     */
+    public function export(): FromCollection;
+
+    /**
+     * import
+     *
+     * @param  mixed $file
+     * @return void
+     */
     public function import($file): void;
-
-
-    
 }

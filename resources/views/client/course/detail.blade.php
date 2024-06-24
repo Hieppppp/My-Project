@@ -1,5 +1,7 @@
-@extends('admin.layout')
-
+@extends('client.layout')
+@section('title')
+Course Detail
+@endsection
 @section('content')
 <div class="container">
     <h1>Detail Courses</h1>
@@ -9,8 +11,8 @@
         </div>
         <div class="card-body">
             <p>Description: {{ $course->description }}</p>
-            <p>Start Date: {{ \Carbon\Carbon::parse($course->start_date)->format('d-m-Y') }}</p>
-            <p>End Date: {{ \Carbon\Carbon::parse($course->end_date)->format('d-m-Y') }}</p>
+            <p>Start Date: {{ $course->start_date }}</p>
+            <p>End Date: {{ $course->end_date }}</p>
         </div>
     </div>
 </div>

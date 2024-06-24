@@ -17,20 +17,22 @@ Courses
                 <div class="custom-file text-left">
                     <input type="file" name="file" class="custom-file-input" id="customFile">
                     <label class="custom-file-label" for="customFile">Choose file</label>
+                    <p class="text-danger">{{ $errors->first('file') }}</p>
                 </div>
             </div>
             <button class="btn btn-primary">Import</button>
+
             <a class="btn btn-success" href="{{ route('export') }}">Export</a>
         </form>
         <div class="col-md-3">
             <h1>List Courses</h1>
         </div>
         <div class="col-md-9">
-            <form action="" method="get" class="">
+            <form method="get" class="">
                 <div class="row">
                     <div class="d-flex justify-content-end">
                         <div class="col-4 me-2">
-                            <input type="search" name="keywords" class="form-control" placeholder="Search..." value="{{ request()->keywords }}">
+                            <input type="search" name="keywords" class="form-control" placeholder="Search..." value="{{ request()->input('keywords') }}">
                         </div>
                         <div class="col-2">
                             <button type="submit" class="btn btn-primary btn-block">Search</button>
@@ -43,6 +45,7 @@ Courses
     <table class="table table-striple border text-center">
         <thead>
             <tr>
+                <th>#</th>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Start Date</th>
@@ -53,10 +56,11 @@ Courses
         <tbody>
             @foreach ($courses as $course)
             <tr>
+                <td><input type="checkbox"></td>
                 <td>{{ $course->name }}</td>
                 <td>{!! Str::limit($course->description, 50) !!}</td>
-                <td>{{ $course->start_date }}</td>
-                <td>{{ $course->end_date }}</td>
+                <td>{{ \Carbon\Carbon::parse($course->start_date)->format('d-m-Y') }}</td>
+                <td>{{ \Carbon\Carbon::parse($course->end_date)->format('d-m-Y') }}</td>
                 <td>
                     <a href="{{ route('courses.show', $course->id) }}" class="btn btn-outline-info">
                         <i class="bi bi-emoji-neutral-fill" title="Click to views"></i>
