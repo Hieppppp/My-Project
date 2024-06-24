@@ -7,6 +7,9 @@ use App\Imports\CoursesImport;
 use App\Models\Course;
 use App\Repositories\BaseRepository;
 use App\Repositories\Course\CourseRepositoryInterface;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Facades\Excel;
 
 class CourseRepository extends BaseRepository implements CourseRepositoryInterface
@@ -21,20 +24,15 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
         parent::__construct(Course::class);
     }
 
+    
     /**
-     * searchCourse
-     *
-     * @param  mixed $keyword
-     * @param  mixed $perPage
-     * @return mixed
+     * get all course
+     * 
+     * @param int $perPage
+     * 
+     * @return Collection
      */
-    /**
-     * getAll
-     *
-     * @param  mixed $perPage
-     * @return void
-     */
-    public function getAll(int $perPage)
+    public function getAll(int $perPage): Collection|Paginator
     {
         return Course::paginate($perPage);
     }
@@ -57,12 +55,13 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
 
     /**
      * update
-     *
-     * @param  mixed $id
-     * @param  mixed $course
-     * @return void
+     * 
+     * @param int $id
+     * @param array $course
+     * 
+     * @return Course
      */
-    public function update($id, array $course)
+    public function update(int $id, array $course): Course
     {
 
         $results = Course::findOrFail($id);
@@ -72,32 +71,42 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
         }
         return false;
     }
-
     /**
-     * find
-     *
-     * @param  mixed $id
-     * @return void
+     * find course by id
+     * 
+     * @param int $id
+     * 
+     * @return Course|null
      */
-    public function find($id)
+    public function find(int $id): ?Course
     {
         return Course::findOrFail($id);
     }
 
+    
     /**
-     * delete
-     *
-     * @param  mixed $id
-     * @return void
+     * delete course
+     * 
+     * @param int $id
+     * 
+     * @return bool
      */
-    public function delete($id)
+    public function delete(int $id): bool
     {
         $course = Course::findOrFail($id);
 
         return $course->delete();
     }
 
-    public function searchCourse($keyword, int $perPage): mixed
+    /**
+     * search course
+     * 
+     * @param string $keyword
+     * @param int $perPage
+     * 
+     * @return LengthAwarePaginator
+     */
+    public function searchCourse($keyword, int $perPage): LengthAwarePaginator
     {
         return Course::where('name', 'like', '%' . $keyword . '%')
             ->orWhere('description', 'like', '%' . $keyword . '%')
@@ -105,7 +114,7 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
     }
 
     /**
-     * export
+     * export course
      *
      * @return CoursesExport
      */
@@ -115,7 +124,7 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
     }
 
     /**
-     * import
+     * import course
      *
      * @param  mixed $file
      * @return void

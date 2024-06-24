@@ -3,17 +3,20 @@
 namespace App\Repositories\User;
 
 use App\Models\User;
-
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 
 interface UserRepositoryInterface
 {
+    
     /**
-     * getAll
-     *
-     * @param  mixed $perPage
-     * @return mixed
+     * get all user
+     * 
+     * @param int $perPage
+     * 
+     * @return Paginator
      */
-    public function getAll(int $perPage): mixed;
+    public function getAll(int $perPage): Paginator;
     /**
      * create
      *
@@ -21,22 +24,26 @@ interface UserRepositoryInterface
      * @return User
      */
     public function create(array $user): User;
+   
     /**
-     * find
-     *
-     * @param  mixed $id
-     * @return void
+     * find user by id
+     * 
+     * @param int $id
+     * 
+     * @return User|null
      */
-    public function find($id);
-
+    public function find(int $id): ?User;
+   
+    
     /**
      * update
-     *
-     * @param  mixed $id
-     * @param  mixed $user
-     * @return void
+     * 
+     * @param int $id
+     * @param array $user
+     * 
+     * @return User
      */
-    public function update($id, array $user);
+    public function update(int $id, array $user): User;
 
     /**
      * syncCourses
@@ -54,13 +61,13 @@ interface UserRepositoryInterface
      * @param  mixed $perPage
      * @return mixed
      */
-    public function searchUser($keyword, int $perPage): mixed;
+    public function searchUser($keyword, int $perPage): LengthAwarePaginator;
 
     /**
-     * delete
+     * delete user
      *
-     * @param  mixed $id
-     * @return void
+     * @param  int $id
+     * @return bool
      */
-    public function delete($id);
+    public function delete(int $id): bool;
 }

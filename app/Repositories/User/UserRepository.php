@@ -4,7 +4,8 @@ namespace App\Repositories\User;
 
 use App\Models\User;
 use App\Repositories\BaseRepository;
-
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
@@ -19,11 +20,13 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     }
 
     /**
+     * get all user
+     * 
      * @param int $perPage
      * 
-     * @return mixed
+     * @return Paginator
      */
-    public function getAll(int $perPage): mixed
+    public function getAll(int $perPage): Paginator
     {
         return User::with('courses')->paginate($perPage);
     }
@@ -52,24 +55,26 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param mixed $id
+     * find user by id
      * 
-     * @return [type]
+     * @param int $id
+     * 
+     * @return User|null
      */
-    public function find($id)
+    public function find(int $id): ?User
     {
         return User::with('courses')->findOrFail($id);
     }
 
-
     /**
-     * update
-     *
-     * @param  mixed $id
-     * @param  mixed $user
-     * @return void
+     * update user
+     * 
+     * @param int $id
+     * @param array $user
+     * 
+     * @return User
      */
-    public function update($id, array $user)
+    public function update(int $id, array $user): User
     {
         $results = User::findOrFail($id);
         if ($results) {
@@ -81,9 +86,10 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
     /**
      * syncCourses
-     *
-     * @param  mixed $userId
-     * @param  mixed $courseIds
+     * 
+     * @param string $userId
+     * @param array $courseIds
+     * 
      * @return void
      */
     public function syncCourses(string $userId, array $courseIds): void
@@ -92,14 +98,14 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $user->courses()->sync($courseIds);
     }
     
+    
     /**
-     * searchUser
-     *
-     * @param  mixed $keyword
-     * @param  mixed $perPage
-     * @return mixed
+     * @param string $keyword
+     * @param int $perPage
+     * 
+     * @return LengthAwarePaginator
      */
-    public function searchUser($keyword, int $perPage): mixed
+    public function searchUser($keyword, int $perPage): LengthAwarePaginator
     {
         return User::where('name', 'like', '%' . $keyword . '%')
             ->orWhere('email', 'like', '%' . $keyword . '%')
@@ -108,12 +114,12 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     }
 
     /**
-     * delete
+     * delete user
      *
-     * @param  mixed $id
-     * @return void
+     * @param  int  $id
+     * @return bool
      */
-    public function delete($id)
+    public function delete(int $id): bool
     {
         $user = User::findOrFail($id);
         if ($user->avatar) {

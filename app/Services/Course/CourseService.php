@@ -6,7 +6,9 @@ use App\Exports\CoursesExport;
 use App\Models\Course;
 use App\Repositories\BaseRepository;
 use App\Services\BaseService;
-
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
 
 class CourseService extends BaseService implements CourseServiceInterface
 {
@@ -22,20 +24,22 @@ class CourseService extends BaseService implements CourseServiceInterface
     ) {
         parent::__construct($repository);
     }
+   
     /**
-     * getAll
-     *
-     * @param  mixed $parPage
-     * @return void
+     * get all course
+     * 
+     * @param int $parPage
+     * 
+     * @return Collection
      */
-    public function getAll(int $parPage)
+    public function getAll(int $parPage): Collection|Paginator
     {
         return $this->repository->getAll($parPage);
     }
 
 
     /**
-     * create
+     * create course
      *
      * @param  mixed $params
      * @return Course
@@ -45,56 +49,63 @@ class CourseService extends BaseService implements CourseServiceInterface
         return $this->repository->create($params);
     }
 
-
+    
     /**
-     * find
-     *
-     * @param  mixed $id
-     * @return void
+     * find course by id
+     * 
+     * @param int $id
+     * 
+     * @return Course|null
      */
-    public function find($id)
+    public function find(int $id): ?Course
     {
         return $this->repository->find($id);
     }
-
+ 
+    
     /**
-     * update
-     *
-     * @param  mixed $id
-     * @param  mixed $course
-     * @return void
+     * update course
+     * 
+     * @param int $id
+     * @param array $course
+     * 
+     * @return Course
      */
-    public function update($id, array $course)
+    public function update(int $id, array $course): Course
     {
         return $this->repository->update($id, $course);
     }
 
 
+    
     /**
-     * delete
-     *
-     * @param  mixed $id
-     * @return void
+     * delete course
+     * 
+     * @param int $id
+     * 
+     * @return bool
      */
-    public function delete($id)
+    public function delete(int $id): bool
     {
         return $this->repository->delete($id);
     }
 
+ 
     /**
-     * searchCourse
-     *
-     * @param  mixed $keyword
-     * @param  mixed $perPage
-     * @return mixed
+     * search course
+     * 
+     * @param string $keyword
+     * @param int $perPage
+     * 
+     * @return LengthAwarePaginator
      */
-    public function searchCourse($keyword, int $perPage): mixed
+    public function searchCourse($keyword, int $perPage): LengthAwarePaginator
     {
         return $this->repository->searchCourse($keyword, $perPage);
     }
 
     /**
-     * export
+     * export course
      *
      * @return CoursesExport
      */
@@ -104,7 +115,7 @@ class CourseService extends BaseService implements CourseServiceInterface
     }
 
     /**
-     * import
+     * import course
      *
      * @param  mixed $file
      * @return void

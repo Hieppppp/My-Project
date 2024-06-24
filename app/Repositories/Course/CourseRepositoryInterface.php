@@ -4,17 +4,20 @@ namespace App\Repositories\Course;
 
 
 use App\Models\Course;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\Paginator;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
 interface  CourseRepositoryInterface
 {
+   
     /**
-     * getAll
-     *
-     * @param  mixed $perPage
-     * @return void
+     * @param int $perPage
+     * 
+     * @return Collection
      */
-    public function getAll(int $perPage);
+    public function getAll(int $perPage): Collection|Paginator;
 
     /**
      * create
@@ -24,49 +27,56 @@ interface  CourseRepositoryInterface
      */
     public function create(array $course): Course;
 
+    
     /**
-     * find
-     *
-     * @param  mixed $id
-     * @return void
+     * find course by id
+     * 
+     * @param int $id
+     * 
+     * @return Course|null
      */
-    public function find($id);
+    public function find(int $id): ?Course;
 
     /**
      * update
-     *
-     * @param  mixed $id
-     * @param  mixed $course
-     * @return void
+     * 
+     * @param int $id
+     * @param array $course
+     * 
+     * @return Course
      */
-    public function update($id, array $course);
+    public function update(int $id, array $course): Course;
+
+   
+    /**
+     * delete course
+     * 
+     * @param int $id
+     * 
+     * @return bool
+     */
+    public function delete(int $id): bool;
+
+    
+    /**
+     * search course
+     * 
+     * @param string $keyword
+     * @param int $perPage
+     * 
+     * @return LengthAwarePaginator
+     */
+    public function searchCourse($keyword, int $perPage): LengthAwarePaginator;
 
     /**
-     * delete
-     *
-     * @param  mixed $id
-     * @return void
-     */
-    public function delete($id);
-
-    /**
-     * searchCourse
-     *
-     * @param  mixed $keyword
-     * @param  mixed $perPage
-     * @return mixed
-     */
-    public function searchCourse($keyword, int $perPage): mixed;
-
-    /**
-     * export
+     * export course
      *
      * @return FromCollection
      */
     public function export(): FromCollection;
 
     /**
-     * import
+     * import course
      *
      * @param  mixed $file
      * @return void

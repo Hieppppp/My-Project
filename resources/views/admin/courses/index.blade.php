@@ -20,9 +20,9 @@ Courses
                     <p class="text-danger">{{ $errors->first('file') }}</p>
                 </div>
             </div>
-            <button class="btn btn-primary">Import</button>
+            <button class="btn btn-primary"><i class="bi bi-cloud-arrow-down"></i> Import</button>
 
-            <a class="btn btn-success" href="{{ route('export') }}">Export</a>
+            <a class="btn btn-success" href="{{ route('export') }}"><i class="bi bi-file-excel"></i> Export</a>
         </form>
         <div class="col-md-3">
             <h1>List Courses</h1>
@@ -35,7 +35,7 @@ Courses
                             <input type="search" name="keywords" class="form-control" placeholder="Search..." value="{{ request()->input('keywords') }}">
                         </div>
                         <div class="col-2">
-                            <button type="submit" class="btn btn-primary btn-block">Search</button>
+                            <button type="submit" class="btn btn-primary btn-block"><i class="bi bi-search"></i> Search</button>
                         </div>
                     </div>
                 </div>
@@ -44,7 +44,7 @@ Courses
     </div>
     <table class="table table-striple border text-center">
         <thead>
-            <tr>
+            <tr class="bg-primary text-white">
                 <th>#</th>
                 <th>Name</th>
                 <th>Description</th>

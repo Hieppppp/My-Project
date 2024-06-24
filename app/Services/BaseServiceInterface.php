@@ -5,7 +5,9 @@ use Illuminate\Pagination\Paginator;
 
 interface BaseServiceInterface
 {
+    
     /**
+     * paginate
      * @param array|null|null $params
      * 
      * @return Paginator

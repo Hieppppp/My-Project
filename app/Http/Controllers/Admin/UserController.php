@@ -31,7 +31,7 @@ class UserController extends Controller
         return view('admin.users.index', compact('users'));
     }
     /**
-     * create
+     * create user
      *
      * @return Factory|View
      */
@@ -42,9 +42,6 @@ class UserController extends Controller
     }
     /**
      * Store a newly created resource in storage.
-     */
-    /**
-     * store
      *
      * @param  mixed $request
      * @return Redirector|RedirectResponse
@@ -59,7 +56,7 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('sms', 'User created successfully.');
     }
     /**
-     * show
+     * show user
      *
      * @param  mixed $id
      * @return Factory|View
@@ -70,7 +67,7 @@ class UserController extends Controller
         return view('admin.users.show', compact('users'));
     }
     /**
-     * edit
+     * edit user 
      *
      * @param  mixed $id
      * @return void
@@ -84,7 +81,7 @@ class UserController extends Controller
     }
 
     /**
-     * update
+     * update user
      *
      * @param  mixed $request
      * @param  mixed $id
@@ -93,20 +90,17 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, string $id): Redirector|RedirectResponse
     {
         $user = $request->validated();
-
         if ($request->hasFile('avatar')) {
             $user['avatar'] = $request->file('avatar');
         }
         $this->service->update($id, $user);
-
         if ($request->has('courses')) {
             $this->service->syncCourses($id, $request->input('courses'));
         }
-
         return redirect()->route('users.index')->with('sms', 'User updated successfully.');
     }
     /**
-     * destroy
+     * destroy user by id
      *
      * @param  mixed $id
      * @return Redirector|RedirectResponse

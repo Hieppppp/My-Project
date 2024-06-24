@@ -49,7 +49,7 @@ Add User
                 <label for="" class="fw-bold mb-1">List Courses:</label>
                 <select class="form-select" id="multiple-select-custom-field" data-placeholder="Choose anything" name="courses[]" multiple>
                     @foreach ($courses as $course)
-                    <option value="{{ $course->id }}">{{ $course->name }}</option>
+                        <option value="{{ $course->id }}">{{ $course->name }}</option>
                     @endforeach
                 </select>
             </div>

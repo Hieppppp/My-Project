@@ -22,7 +22,7 @@ User
                             <input type="search" name="keywords" class="form-control" placeholder="Search..." value="{{ request()->input('keywords') }}">
                         </div>
                         <div class="col-2">
-                            <button type="submit" class="btn btn-primary btn-block">Search</button>
+                            <button type="submit" class="btn btn-primary btn-block"><i class="bi bi-search"></i> Search</button>
                         </div>
                     </div>
                 </div>
@@ -31,7 +31,7 @@ User
     </div>
     <table class="table table-striple border text-center">
         <thead>
-            <tr>
+            <tr class="bg-primary text-white">
                 <th>Name</th>
                 <th>Email</th>
                 <th>Date Birth</th>

@@ -3,64 +3,77 @@
 namespace App\Services\User;
 
 use App\Models\User;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 
 interface UserServiceInterface
 {
+    
+    
     /**
-     * getAll
-     *
-     * @param  mixed $parPage
-     * @return mixed
+     * get all user
+     * 
+     * @param int $parPage
+     * 
+     * @return Paginator
      */
-    public function getAll(int $parPage): mixed;
+    public function getAll(int $parPage): Paginator;
+  
+    
     /**
      * create
-     *
-     * @param  mixed $params
+     * 
+     * @param array|null|null $params
+     * 
      * @return User
      */
     public function create(array|null $params = null): User;
 
+    
+    
     /**
-     * find
-     *
-     * @param  mixed $id
-     * @return void
+     * find user by id
+     * 
+     * @param int $id
+     * 
+     * @return User|null
      */
-    public function find($id);
+    public function find(int $id): ?User;
 
     /**
-     * update
-     *
-     * @param  mixed $id
-     * @param  mixed $user
-     * @return void
+     * update user
+     * 
+     * @param int $id
+     * @param array $user
+     * 
+     * @return User
      */
-    public function update($id, array $user);
+    public function update(int $id, array $user): User;
+
 
     /**
-     * syncCourses
-     *
-     * @param  mixed $userId
-     * @param  mixed $courseIds
+     * @param string $userId
+     * @param array $courseIds
+     * 
      * @return void
      */
     public function syncCourses(string $userId, array $courseIds): void;
 
     /**
-     * searchUser
-     *
-     * @param  mixed $keyword
-     * @param  mixed $perPage
-     * @return mixed
+     * search user
+     * 
+     * @param mixed $keyword
+     * @param int $perPage
+     * 
+     * @return LengthAwarePaginator
      */
-    public function searchUser($keyword, int $perPage): mixed;
+    public function searchUser($keyword, int $perPage): LengthAwarePaginator;
 
     /**
-     * delete
+     * delete user
      *
-     * @param  mixed $id
-     * @return void
+     * @param  int $id
+     * @return bool
      */
-    public function delete($id);
+    public function delete(int $id): bool;
 }

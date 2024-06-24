@@ -3,6 +3,6 @@
     <h2>Welcome, {{ Auth::user()->name }}</h2>
         <form method="POST" action="{{ url('logout') }}">
             @csrf
-            <button class="btn btn-warning" type="submit">Logout</button>
+            <button class="btn btn-warning" type="submit"><i class="bi bi-box-arrow-in-right"></i> Logout</button>
         </form>
 </div>

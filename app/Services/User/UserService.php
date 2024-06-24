@@ -5,8 +5,13 @@ namespace App\Services\User;
 use App\Models\User;
 use App\Repositories\BaseRepository;
 use App\Services\BaseService;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Pagination\Paginator;
 
+/**
+ * [Description UserService]
+ */
 class UserService extends BaseService implements UserServiceInterface
 {
     /**
@@ -20,21 +25,24 @@ class UserService extends BaseService implements UserServiceInterface
         parent::__construct($repository);
     }
 
+   
     /**
-     * getAll
-     *
-     * @param  mixed $parPage
-     * @return mixed
+     * get all user
+     * 
+     * @param int $parPage
+     * 
+     * @return Paginator
      */
-    public function getAll(int $parPage): mixed
+    public function getAll(int $parPage): Paginator
     {
         return $this->repository->getAll($parPage);
     }
 
     /**
-     * create
-     *
-     * @param  mixed $params
+     * create user
+     * 
+     * @param array|null|null $params
+     * 
      * @return User
      */
     public function create(array|null $params = null): User
@@ -46,37 +54,51 @@ class UserService extends BaseService implements UserServiceInterface
         }
         return $this->repository->create($params);
     }
+    
+    
     /**
-     * find
-     *
-     * @param  mixed $id
-     * @return void
+     * find user by id
+     * 
+     * @param int $id
+     * 
+     * @return User|null
      */
-    public function find($id)
+    public function find(int $id): ?User
     {
         return $this->repository->find($id);
     }
 
     /**
-     * update
-     *
-     * @param  mixed $id
-     * @param  mixed $user
-     * @return void
+     * update user
+     * 
+     * @param int $id
+     * @param array $user
+     * 
+     * @return User
      */
-    public function update($id, array $user)
+    public function update(int $id, array $user): User
     {
+        $existingUser = $this->repository->find($id);
+
         if (isset($user['avatar']) && $user['avatar'] instanceof UploadedFile) {
+           
+            $this->deleteOldAvatar($existingUser->avatar);
+
             $user['avatar'] = $this->uploadAvatar($user['avatar']);
         }
+
+       
+
         return $this->repository->update($id, $user);
     }
 
+   
     /**
      * syncCourses
-     *
-     * @param  mixed $userId
-     * @param  mixed $courseIds
+     * 
+     * @param string $userId
+     * @param array $courseIds
+     * 
      * @return void
      */
     public function syncCourses(string $userId, array $courseIds): void
@@ -86,31 +108,52 @@ class UserService extends BaseService implements UserServiceInterface
     }
     
     /**
-     * searchUser
-     *
-     * @param  mixed $keyword
-     * @param  mixed $perPage
-     * @return mixed
+     * search user
+     * 
+     * @param string $keyword
+     * @param int $perPage
+     * 
+     * @return LengthAwarePaginator
      */
-    public function searchUser($keyword, int $perPage): mixed
+    public function searchUser($keyword, int $perPage): LengthAwarePaginator
     {
         return $this->repository->searchUser($keyword, $perPage);
     }
     /**
-     * delete
+     * delete user 
      *
-     * @param  mixed $id
-     * @return void
+     * @param  int  $id
+     * @return bool
      */
-    public function delete($id)
+    public function delete(int $id): bool
     {
         return $this->repository->delete($id);
     }
 
-    private function uploadAvatar(UploadedFile $avatar)
+    
+    /**
+     * Upload avatar
+     * 
+     * @param UploadedFile $avatar
+     * 
+     * @return string
+     */
+    private function uploadAvatar(UploadedFile $avatar): string
     {
         $avatarName = time() . '.' . $avatar->extension();
         $avatar->move(public_path('avatar'), $avatarName);
         return $avatarName;
+    }
+
+    /**
+     * Delete old avatar
+     * 
+     * @param string|null $avatar
+     */
+    private function deleteOldAvatar(?string $avatar): void
+    {
+        if ($avatar && file_exists(public_path('avatar/' . $avatar))) {
+            unlink(public_path('avatar/' . $avatar));
+        }
     }
 }
