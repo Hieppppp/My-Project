@@ -14,15 +14,22 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 
 class UserController extends Controller
-{
+{    
+    /**
+     * __construct
+     *
+     * @return void
+     */
     public function __construct(
         public UserServiceInterface $service
     ) {
     }
+    
     /**
      * index
-     *
-     * @return Factory|View
+     * 
+     * @param Request $request
+     * @return Factory
      */
     public function index(Request $request): Factory|View
     {
@@ -41,10 +48,10 @@ class UserController extends Controller
         return view('admin.users.create', compact('courses'));
     }
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  mixed $request
-     * @return Redirector|RedirectResponse
+     * store user
+     * 
+     * @param CreateUserRequest $request
+     * @return Redirector
      */
     public function store(CreateUserRequest $request): Redirector|RedirectResponse
     {
@@ -58,7 +65,7 @@ class UserController extends Controller
     /**
      * show user
      *
-     * @param  mixed $id
+     * @param  string $id
      * @return Factory|View
      */
     public function show(string $id): Factory|View
@@ -66,11 +73,12 @@ class UserController extends Controller
         $users = $this->service->find($id);
         return view('admin.users.show', compact('users'));
     }
+    
     /**
-     * edit user 
-     *
-     * @param  mixed $id
-     * @return void
+     * edit user
+     * 
+     * @param string $id
+     * @return Factory|View
      */
     public function edit(string $id): Factory|View
     {
@@ -81,10 +89,10 @@ class UserController extends Controller
     }
 
     /**
-     * update user
-     *
-     * @param  mixed $request
-     * @param  mixed $id
+     * create user
+     * 
+     * @param UpdateUserRequest $request
+     * @param string $id
      * @return Redirector|RedirectResponse
      */
     public function update(UpdateUserRequest $request, string $id): Redirector|RedirectResponse
@@ -102,7 +110,7 @@ class UserController extends Controller
     /**
      * destroy user by id
      *
-     * @param  mixed $id
+     * @param  string $id
      * @return Redirector|RedirectResponse
      */
     public function destroy(string $id): Redirector|RedirectResponse

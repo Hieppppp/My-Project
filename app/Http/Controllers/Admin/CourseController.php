@@ -15,12 +15,21 @@ use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class CourseController extends Controller
-{
+{    
+    /**
+     * __construct
+     *
+     * @return void
+     */
     public function __construct(
         public CourseServiceInterface $service
     ) {
     }
+    
     /**
+     * index
+     * 
+     * @param Request $request
      * @return Factory|View
      */
     public function index(Request $request): Factory|View
@@ -29,19 +38,19 @@ class CourseController extends Controller
         $courses = $this->service->searchCourse($keyword, 10);
         return view('admin.courses.index', compact('courses'));
     }
-
     /**
+     * create
+     * 
      * @return Factory|View
      */
     public function create(): Factory|View
     {
         return view('admin.courses.create');
     }
-
     /**
      * store
-     *
-     * @param  mixed $request
+     * 
+     * @param CreateCourseRequest $request
      * @return Redirector|RedirectResponse
      */
     public function store(CreateCourseRequest $request): Redirector|RedirectResponse
@@ -51,19 +60,14 @@ class CourseController extends Controller
         $course->save();
         return redirect()->route('courses.index')->with('sms', 'Course created successfully.');
     }
-
-    /**
-     * Display the specified resource.
-     */
     /**
      * show
      *
-     * @param  mixed $id
+     * @param  string $id
      * @return Factory|View
      */
     public function show(string $id): Factory|View
     {
-
         $course = $this->service->find($id);
         return view('admin.courses.show', compact('course'));
     }
@@ -71,7 +75,7 @@ class CourseController extends Controller
     /**
      * edit
      *
-     * @param  mixed $id
+     * @param  string $id
      * @return Factory|View
      */
     public function edit(string $id): Factory|View
@@ -83,8 +87,8 @@ class CourseController extends Controller
     /**
      * update
      *
-     * @param  mixed $request
-     * @param  mixed $id
+     * @param  UpdateCourseRequest $request
+     * @param  string $id
      * @return Redirector|RedirectResponse
      */
     public function update(UpdateCourseRequest $request, string $id): Redirector|RedirectResponse
@@ -95,12 +99,9 @@ class CourseController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     */
-    /**
-     * destroy
+     * destroy course
      *
-     * @param  mixed $id
+     * @param  string $id
      * @return Redirector|RedirectResponse
      */
     public function destroy(string $id): Redirector|RedirectResponse
@@ -118,11 +119,12 @@ class CourseController extends Controller
     {
         return Excel::download($this->service->export(), 'course.xlsx');
     }
+    
     /**
      * import
-     *
-     * @param  mixed $request
-     * @return Redirector|RedirectResponse
+     * 
+     * @param FileUploadRequest $request
+     * @return Redirector
      */
     public function import(FileUploadRequest $request): Redirector|RedirectResponse
     {

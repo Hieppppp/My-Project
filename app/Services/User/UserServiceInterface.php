@@ -6,6 +6,9 @@ use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 
+/**
+ * [Description UserServiceInterface]
+ */
 interface UserServiceInterface
 {
     

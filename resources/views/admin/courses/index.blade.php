@@ -45,7 +45,7 @@ Courses
     <table class="table table-striple border text-center">
         <thead>
             <tr class="bg-primary text-white">
-                <th>#</th>
+                <th><input type="checkbox"></th>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Start Date</th>

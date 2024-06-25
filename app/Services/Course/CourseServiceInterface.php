@@ -8,6 +8,9 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
+/**
+ * [Description CourseServiceInterface]
+ */
 interface CourseServiceInterface
 {
     

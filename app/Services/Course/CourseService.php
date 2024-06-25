@@ -10,6 +10,9 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 
+/**
+ * [Description CourseService]
+ */
 class CourseService extends BaseService implements CourseServiceInterface
 {
 
@@ -39,9 +42,10 @@ class CourseService extends BaseService implements CourseServiceInterface
 
 
     /**
-     * create course
-     *
-     * @param  mixed $params
+     * create
+     * 
+     * @param array|null|null $params
+     * 
      * @return Course
      */
     public function create(array|null $params = null): Course

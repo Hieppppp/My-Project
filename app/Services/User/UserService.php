@@ -119,6 +119,7 @@ class UserService extends BaseService implements UserServiceInterface
     {
         return $this->repository->searchUser($keyword, $perPage);
     }
+    
     /**
      * delete user 
      *
