@@ -31,15 +31,12 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return User::with('courses')->paginate($perPage);
     }
 
-    /**
-     * @param array $user
-     * 
-     * @return User
-     */
+    
     /**
      * create
-     *
-     * @param  mixed $user
+     * 
+     * @param array $user
+     * 
      * @return User
      */
     public function create(array $user): User
@@ -72,7 +69,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
      * @param int $id
      * @param array $user
      * 
-     * @return User
+     * @return User|false 
      */
     public function update(int $id, array $user): User
     {

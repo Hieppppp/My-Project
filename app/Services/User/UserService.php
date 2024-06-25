@@ -145,10 +145,13 @@ class UserService extends BaseService implements UserServiceInterface
         return $avatarName;
     }
 
+   
     /**
-     * Delete old avatar
+     * delete old avatar
      * 
      * @param string|null $avatar
+     * 
+     * @return void
      */
     private function deleteOldAvatar(?string $avatar): void
     {

@@ -90,13 +90,13 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, string $id): Redirector|RedirectResponse
     {
         $user = $request->validated();
-        if ($request->hasFile('avatar')) {
-            $user['avatar'] = $request->file('avatar');
-        }
-        $this->service->update($id, $user);
+
         if ($request->has('courses')) {
             $this->service->syncCourses($id, $request->input('courses'));
         }
+
+        $this->service->update($id, $user);
+        
         return redirect()->route('users.index')->with('sms', 'User updated successfully.');
     }
     /**

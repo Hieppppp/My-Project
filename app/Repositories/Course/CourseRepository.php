@@ -37,10 +37,12 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
         return Course::paginate($perPage);
     }
 
+    
     /**
      * create
-     *
-     * @param  mixed $course
+     * 
+     * @param array $course
+     * 
      * @return Course
      */
     public function create(array $course): Course
@@ -59,7 +61,7 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
      * @param int $id
      * @param array $course
      * 
-     * @return Course
+     * @return Course:false
      */
     public function update(int $id, array $course): Course
     {

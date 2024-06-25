@@ -17,10 +17,12 @@ interface UserRepositoryInterface
      * @return Paginator
      */
     public function getAll(int $perPage): Paginator;
+    
     /**
      * create
-     *
-     * @param  mixed $user
+     * 
+     * @param array $user
+     * 
      * @return User
      */
     public function create(array $user): User;
@@ -45,21 +47,25 @@ interface UserRepositoryInterface
      */
     public function update(int $id, array $user): User;
 
+    
     /**
      * syncCourses
-     *
-     * @param  mixed $userId
-     * @param  mixed $courseIds
+     * 
+     * @param string $userId
+     * @param array $courseIds
+     * 
      * @return void
      */
     public function syncCourses(string $userId, array $courseIds): void;
 
+   
     /**
-     * searchUser
-     *
-     * @param  mixed $keyword
-     * @param  mixed $perPage
-     * @return mixed
+     * search user
+     * 
+     * @param mixed $keyword
+     * @param int $perPage
+     * 
+     * @return LengthAwarePaginator
      */
     public function searchUser($keyword, int $perPage): LengthAwarePaginator;
 

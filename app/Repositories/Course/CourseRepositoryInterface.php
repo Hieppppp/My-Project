@@ -21,8 +21,9 @@ interface  CourseRepositoryInterface
 
     /**
      * create
-     *
-     * @param  mixed $course
+     * 
+     * @param array $course
+     * 
      * @return Course
      */
     public function create(array $course): Course;
