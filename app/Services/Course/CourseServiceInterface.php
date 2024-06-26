@@ -32,7 +32,6 @@ interface CourseServiceInterface
      */
     public function create(array|null $params = null): Course;
 
-   
     /**
      * find course by id
      * 
@@ -41,7 +40,6 @@ interface CourseServiceInterface
      * @return Course|null
      */
     public function find(int $id): ?Course;
-
     
     /**
      * update course
@@ -53,8 +51,6 @@ interface CourseServiceInterface
      */
     public function update(int $id, array $course): Course;
 
-   
-   
     /**
      * delete course
      * 
@@ -67,12 +63,12 @@ interface CourseServiceInterface
     /**
      * search course
      * 
-     * @param string $keyword
+     * @param string|null $keyword
      * @param int $perPage
      * 
      * @return LengthAwarePaginator
      */
-    public function searchCourse($keyword, int $perPage): LengthAwarePaginator;
+    public function searchCourse(?string $keyword, int $perPage): LengthAwarePaginator;
 
     /**
      * export course

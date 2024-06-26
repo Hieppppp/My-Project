@@ -2,6 +2,7 @@
 
 namespace App\Repositories\User;
 
+use App\Models\Course;
 use App\Models\User;
 use App\Repositories\BaseRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -30,8 +31,17 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         return User::with('courses')->paginate($perPage);
     }
-
     
+    /**
+     * getAllCourse
+     *
+     * @return void
+     */
+    public function getAllCourse()
+    {
+        return Course::all();
+    }
+
     /**
      * create
      * 
@@ -73,36 +83,18 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
      */
     public function update(int $id, array $user): User
     {
-        $results = User::findOrFail($id);
-        if ($results) {
-            $results->update($user);
-            return $results;
-        }
-        return false;
+        $existingUser = User::findOrFail($id);
+        $existingUser->update($user);
+        return $existingUser;
     }
 
     /**
-     * syncCourses
-     * 
-     * @param string $userId
-     * @param array $courseIds
-     * 
-     * @return void
-     */
-    public function syncCourses(string $userId, array $courseIds): void
-    {
-        $user = $this->find($userId);
-        $user->courses()->sync($courseIds);
-    }
-    
-    
-    /**
-     * @param string $keyword
+     * @param string|null $keyword
      * @param int $perPage
      * 
      * @return LengthAwarePaginator
      */
-    public function searchUser($keyword, int $perPage): LengthAwarePaginator
+    public function pagination(?string $keyword, int $perPage): LengthAwarePaginator
     {
         return User::where('name', 'like', '%' . $keyword . '%')
             ->orWhere('email', 'like', '%' . $keyword . '%')

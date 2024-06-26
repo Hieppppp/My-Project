@@ -16,7 +16,6 @@ use Illuminate\Support\Collection;
 class CourseService extends BaseService implements CourseServiceInterface
 {
 
-
     /**
      * __construct
      *
@@ -40,7 +39,6 @@ class CourseService extends BaseService implements CourseServiceInterface
         return $this->repository->getAll($parPage);
     }
 
-
     /**
      * create
      * 
@@ -53,12 +51,10 @@ class CourseService extends BaseService implements CourseServiceInterface
         return $this->repository->create($params);
     }
 
-    
     /**
      * find course by id
      * 
      * @param int $id
-     * 
      * @return Course|null
      */
     public function find(int $id): ?Course
@@ -66,7 +62,6 @@ class CourseService extends BaseService implements CourseServiceInterface
         return $this->repository->find($id);
     }
  
-    
     /**
      * update course
      * 
@@ -80,8 +75,6 @@ class CourseService extends BaseService implements CourseServiceInterface
         return $this->repository->update($id, $course);
     }
 
-
-    
     /**
      * delete course
      * 
@@ -93,17 +86,16 @@ class CourseService extends BaseService implements CourseServiceInterface
     {
         return $this->repository->delete($id);
     }
-
  
     /**
      * search course
      * 
-     * @param string $keyword
+     * @param string|null $keyword
      * @param int $perPage
      * 
      * @return LengthAwarePaginator
      */
-    public function searchCourse($keyword, int $perPage): LengthAwarePaginator
+    public function searchCourse(?string $keyword, int $perPage): LengthAwarePaginator
     {
         return $this->repository->searchCourse($keyword, $perPage);
     }

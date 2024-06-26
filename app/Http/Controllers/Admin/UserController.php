@@ -34,9 +34,10 @@ class UserController extends Controller
     public function index(Request $request): Factory|View
     {
         $keyword = $request->input('keywords');
-        $users = $this->service->searchUser($keyword, 10);
+        $users = $this->service->pagination($keyword, 10);
         return view('admin.users.index', compact('users'));
     }
+    
     /**
      * create user
      *
@@ -44,9 +45,10 @@ class UserController extends Controller
      */
     public function create(): Factory|View
     {
-        $courses = Course::all();
+        $courses = $this->service->getAllCourse();
         return view('admin.users.create', compact('courses'));
     }
+
     /**
      * store user
      * 
@@ -62,6 +64,7 @@ class UserController extends Controller
         }
         return redirect()->route('users.index')->with('sms', 'User created successfully.');
     }
+
     /**
      * show user
      *
@@ -73,7 +76,7 @@ class UserController extends Controller
         $users = $this->service->find($id);
         return view('admin.users.show', compact('users'));
     }
-    
+
     /**
      * edit user
      * 
@@ -97,16 +100,13 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, string $id): Redirector|RedirectResponse
     {
+       
         $user = $request->validated();
-
-        if ($request->has('courses')) {
-            $this->service->syncCourses($id, $request->input('courses'));
-        }
-
-        $this->service->update($id, $user);
-        
+        $courseIds = $request->input('courses');
+        $this->service->update($id, $user, $courseIds);
         return redirect()->route('users.index')->with('sms', 'User updated successfully.');
     }
+
     /**
      * destroy user by id
      *

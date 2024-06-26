@@ -24,7 +24,6 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
         parent::__construct(Course::class);
     }
 
-    
     /**
      * get all course
      * 
@@ -37,7 +36,6 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
         return Course::paginate($perPage);
     }
 
-    
     /**
      * create
      * 
@@ -65,7 +63,6 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
      */
     public function update(int $id, array $course): Course
     {
-
         $results = Course::findOrFail($id);
         if ($results) {
             $results->update($course);
@@ -85,7 +82,6 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
         return Course::findOrFail($id);
     }
 
-    
     /**
      * delete course
      * 
@@ -103,12 +99,12 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
     /**
      * search course
      * 
-     * @param string $keyword
+     * @param string|null $keyword
      * @param int $perPage
      * 
      * @return LengthAwarePaginator
      */
-    public function searchCourse($keyword, int $perPage): LengthAwarePaginator
+    public function searchCourse(?string $keyword, int $perPage): LengthAwarePaginator
     {
         return Course::where('name', 'like', '%' . $keyword . '%')
             ->orWhere('description', 'like', '%' . $keyword . '%')

@@ -2,6 +2,7 @@
 
 namespace App\Services\User;
 
+use App\Models\Course;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
@@ -20,9 +21,15 @@ interface UserServiceInterface
      * 
      * @return Paginator
      */
-    public function getAll(int $parPage): Paginator;
+    public function getAll(int $perPage): Paginator;
+
+    /**
+     * getAllCourse
+     *
+     * @return void
+     */
+    public function getAllCourse();
   
-    
     /**
      * create
      * 
@@ -32,8 +39,6 @@ interface UserServiceInterface
      */
     public function create(array|null $params = null): User;
 
-    
-    
     /**
      * find user by id
      * 
@@ -42,35 +47,26 @@ interface UserServiceInterface
      * @return User|null
      */
     public function find(int $id): ?User;
-
+   
     /**
-     * update user
-     * 
-     * @param int $id
-     * @param array $user
-     * 
+     * update
+     *
+     * @param  int $id
+     * @param  array $user
+     * @param  array $courseId
      * @return User
      */
-    public function update(int $id, array $user): User;
-
-
-    /**
-     * @param string $userId
-     * @param array $courseIds
-     * 
-     * @return void
-     */
-    public function syncCourses(string $userId, array $courseIds): void;
+    public function update(int $id, array $user, array $courseId): User;
 
     /**
      * search user
      * 
-     * @param mixed $keyword
+     * @param string|null $keyword
      * @param int $perPage
      * 
      * @return LengthAwarePaginator
      */
-    public function searchUser($keyword, int $perPage): LengthAwarePaginator;
+    public function pagination(?string $keyword, int $perPage): LengthAwarePaginator;
 
     /**
      * delete user

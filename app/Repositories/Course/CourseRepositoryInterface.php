@@ -28,7 +28,6 @@ interface  CourseRepositoryInterface
      */
     public function create(array $course): Course;
 
-    
     /**
      * find course by id
      * 
@@ -48,7 +47,6 @@ interface  CourseRepositoryInterface
      */
     public function update(int $id, array $course): Course;
 
-   
     /**
      * delete course
      * 
@@ -58,16 +56,15 @@ interface  CourseRepositoryInterface
      */
     public function delete(int $id): bool;
 
-    
     /**
      * search course
      * 
-     * @param string $keyword
+     * @param string|null $keyword
      * @param int $perPage
      * 
      * @return LengthAwarePaginator
      */
-    public function searchCourse($keyword, int $perPage): LengthAwarePaginator;
+    public function searchCourse(?string $keyword, int $perPage): LengthAwarePaginator;
 
     /**
      * export course

@@ -2,6 +2,7 @@
 
 namespace App\Services\User;
 
+use App\Models\Course;
 use App\Models\User;
 use App\Repositories\BaseRepository;
 use App\Services\BaseService;
@@ -25,7 +26,7 @@ class UserService extends BaseService implements UserServiceInterface
         parent::__construct($repository);
     }
 
-   
+
     /**
      * get all user
      * 
@@ -33,9 +34,14 @@ class UserService extends BaseService implements UserServiceInterface
      * 
      * @return Paginator
      */
-    public function getAll(int $parPage): Paginator
+    public function getAll(int $perPage): Paginator
     {
-        return $this->repository->getAll($parPage);
+        return $this->repository->getAll($perPage);
+    }
+
+    public function getAllCourse()
+    {
+        return $this->repository->getAllCourse();
     }
 
     /**
@@ -54,8 +60,7 @@ class UserService extends BaseService implements UserServiceInterface
         }
         return $this->repository->create($params);
     }
-    
-    
+
     /**
      * find user by id
      * 
@@ -69,57 +74,39 @@ class UserService extends BaseService implements UserServiceInterface
     }
 
     /**
-     * update user
-     * 
-     * @param int $id
-     * @param array $user
-     * 
+     * update
+     *
+     * @param  int $id
+     * @param  array $user
+     * @param  array $courseIds
      * @return User
      */
-    public function update(int $id, array $user): User
+    public function update(int $id, array $user, array $courseIds): User
     {
         $existingUser = $this->repository->find($id);
 
-        if (isset($user['avatar']) && $user['avatar'] instanceof UploadedFile) {
-           
-            $this->deleteOldAvatar($existingUser->avatar);
+        $existingUser->courses()->sync($courseIds);
 
+        if (isset($user['avatar']) && $user['avatar'] instanceof UploadedFile) {
+            $this->deleteOldAvatar($existingUser->avatar);
             $user['avatar'] = $this->uploadAvatar($user['avatar']);
         }
-
-       
-
         return $this->repository->update($id, $user);
     }
 
-   
-    /**
-     * syncCourses
-     * 
-     * @param string $userId
-     * @param array $courseIds
-     * 
-     * @return void
-     */
-    public function syncCourses(string $userId, array $courseIds): void
-    {
-        $user = $this->repository->find($userId);
-        $user->courses()->sync($courseIds);
-    }
-    
     /**
      * search user
      * 
-     * @param string $keyword
+     * @param string|null $keyword
      * @param int $perPage
      * 
      * @return LengthAwarePaginator
      */
-    public function searchUser($keyword, int $perPage): LengthAwarePaginator
+    public function pagination(?string $keyword, int $perPage): LengthAwarePaginator
     {
-        return $this->repository->searchUser($keyword, $perPage);
+        return $this->repository->pagination($keyword, $perPage);
     }
-    
+
     /**
      * delete user 
      *
@@ -131,7 +118,6 @@ class UserService extends BaseService implements UserServiceInterface
         return $this->repository->delete($id);
     }
 
-    
     /**
      * Upload avatar
      * 
@@ -146,7 +132,6 @@ class UserService extends BaseService implements UserServiceInterface
         return $avatarName;
     }
 
-   
     /**
      * delete old avatar
      * 
