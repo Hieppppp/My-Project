@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Course\CourseIndexRequest;
 use App\Http\Requests\Course\CreateCourseRequest;
 use App\Http\Requests\Course\UpdateCourseRequest;
 use App\Http\Requests\File\FileUploadRequest;
@@ -32,7 +33,7 @@ class CourseController extends Controller
      * @param Request $request
      * @return Factory|View
      */
-    public function index(Request $request): Factory|View
+    public function index(CourseIndexRequest $request): Factory|View
     {
         $keyword = $request->input('keywords');
         $courses = $this->service->pagination($keyword, 10);

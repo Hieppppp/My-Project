@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\CreateUserRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
+use App\Http\Requests\Users\UserIndexRequest;
 use App\Models\Course;
 use App\Services\User\UserServiceInterface;
 use Illuminate\Console\View\Components\Factory;
@@ -31,7 +32,7 @@ class UserController extends Controller
      * @param Request $request
      * @return Factory
      */
-    public function index(Request $request): Factory|View
+    public function index(UserIndexRequest $request): Factory|View
     {
         $keyword = $request->input('keywords');
         $users = $this->service->pagination($keyword, 10);
