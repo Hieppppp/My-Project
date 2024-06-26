@@ -65,9 +65,9 @@ Courses
                 <td>{{ \Carbon\Carbon::parse($course->end_date)->format('d-m-Y') }}</td>
                 <td>
                     <a href="{{ route('courses.show', $course->id) }}" class="btn btn-outline-info">
-                        <i class="bi bi-emoji-neutral-fill" title="Click to views"></i>
+                        <i class="bi bi-bookmark-check" title="Click to views"></i>
                     </a>
-                    <a href="{{ route('courses.edit', $course->id) }}" class="btn btn-outline-info">
+                    <a href="{{ route('courses.edit', $course->id) }}" class="btn btn-outline-success">
                         <i class="bi bi-pencil-square" title="Click to edit"></i>
                     </a>
                     <a class="btn btn-outline-danger" id="delete" href="{{ route('courses.destroy', $course->id) }}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this course?')) document.getElementById('delete-form-{{ $course->id }}').submit();">

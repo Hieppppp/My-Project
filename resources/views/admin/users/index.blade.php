@@ -54,9 +54,9 @@ User
                 </td>
                 <td>
                     <a href="{{ route('users.show', $user->id) }}" class="btn btn-outline-info">
-                        <i class="bi bi-emoji-neutral-fill" title="Click to views"></i>
+                        <i class="bi bi-bookmark-check" title="Click to views"></i>
                     </a>
-                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-outline-info">
+                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-outline-success">
                         <i class="bi bi-pencil-square" title="Click to edit"></i>
                     </a>
 

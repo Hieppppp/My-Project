@@ -44,6 +44,18 @@ class UserService extends BaseService implements UserServiceInterface
     }
 
     /**
+     * find user by id
+     * 
+     * @param int $id
+     * 
+     * @return User|null
+     */
+    public function find(int $id): ?User
+    {
+        return $this->repository->find($id);
+    }
+
+    /**
      * create user
      * 
      * @param array|null|null $params
@@ -58,18 +70,6 @@ class UserService extends BaseService implements UserServiceInterface
             $params['avatar'] = $avatarName;
         }
         return $this->repository->create($params);
-    }
-
-    /**
-     * find user by id
-     * 
-     * @param int $id
-     * 
-     * @return User|null
-     */
-    public function find(int $id): ?User
-    {
-        return $this->repository->find($id);
     }
 
     /**
@@ -94,6 +94,17 @@ class UserService extends BaseService implements UserServiceInterface
     }
 
     /**
+     * delete user 
+     *
+     * @param  int  $id
+     * @return bool
+     */
+    public function delete(int $id): bool
+    {
+        return $this->repository->delete($id);
+    }
+
+    /**
      * search user
      * 
      * @param string|null $keyword
@@ -104,17 +115,6 @@ class UserService extends BaseService implements UserServiceInterface
     public function pagination(?string $keyword, int $perPage): LengthAwarePaginator
     {
         return $this->repository->pagination($keyword, $perPage);
-    }
-
-    /**
-     * delete user 
-     *
-     * @param  int  $id
-     * @return bool
-     */
-    public function delete(int $id): bool
-    {
-        return $this->repository->delete($id);
     }
 
     /**

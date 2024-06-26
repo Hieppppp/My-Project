@@ -42,6 +42,18 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return Course::all();
     }
 
+     /**
+     * find user by id
+     * 
+     * @param int $id
+     * 
+     * @return User|null
+     */
+    public function find(int $id): ?User
+    {
+        return User::with('courses')->findOrFail($id);
+    }
+
     /**
      * create
      * 
@@ -62,18 +74,6 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     }
 
     /**
-     * find user by id
-     * 
-     * @param int $id
-     * 
-     * @return User|null
-     */
-    public function find(int $id): ?User
-    {
-        return User::with('courses')->findOrFail($id);
-    }
-
-    /**
      * update user
      * 
      * @param int $id
@@ -86,20 +86,6 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $existingUser = User::findOrFail($id);
         $existingUser->update($user);
         return $existingUser;
-    }
-
-    /**
-     * @param string|null $keyword
-     * @param int $perPage
-     * 
-     * @return LengthAwarePaginator
-     */
-    public function pagination(?string $keyword, int $perPage): LengthAwarePaginator
-    {
-        return User::where('name', 'like', '%' . $keyword . '%')
-            ->orWhere('email', 'like', '%' . $keyword . '%')
-            ->orWhere('phone', 'like', '%' . $keyword . '%')
-            ->paginate($perPage);
     }
 
     /**
@@ -119,4 +105,20 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         }
         return $user->delete();
     }
+
+    /**
+     * @param string|null $keyword
+     * @param int $perPage
+     * 
+     * @return LengthAwarePaginator
+     */
+    public function pagination(?string $keyword, int $perPage): LengthAwarePaginator
+    {
+        return User::where('name', 'like', '%' . $keyword . '%')
+            ->orWhere('email', 'like', '%' . $keyword . '%')
+            ->orWhere('phone', 'like', '%' . $keyword . '%')
+            ->paginate($perPage);
+    }
+
+    
 }

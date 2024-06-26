@@ -27,6 +27,15 @@ interface UserServiceInterface
      * @return void
      */
     public function getAllCourse();
+
+    /**
+     * find user by id
+     * 
+     * @param int $id
+     * 
+     * @return User|null
+     */
+    public function find(int $id): ?User;
   
     /**
      * create
@@ -38,15 +47,6 @@ interface UserServiceInterface
     public function create(array|null $params = null): User;
 
     /**
-     * find user by id
-     * 
-     * @param int $id
-     * 
-     * @return User|null
-     */
-    public function find(int $id): ?User;
-   
-    /**
      * update
      *
      * @param  int $id
@@ -55,6 +55,14 @@ interface UserServiceInterface
      * @return User
      */
     public function update(int $id, array $user, array $courseId): User;
+
+    /**
+     * delete user
+     *
+     * @param  int $id
+     * @return bool
+     */
+    public function delete(int $id): bool;
 
     /**
      * search user
@@ -66,11 +74,4 @@ interface UserServiceInterface
      */
     public function pagination(?string $keyword, int $perPage): LengthAwarePaginator;
 
-    /**
-     * delete user
-     *
-     * @param  int $id
-     * @return bool
-     */
-    public function delete(int $id): bool;
 }

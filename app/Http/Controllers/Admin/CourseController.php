@@ -35,7 +35,7 @@ class CourseController extends Controller
     public function index(Request $request): Factory|View
     {
         $keyword = $request->input('keywords');
-        $courses = $this->service->searchCourse($keyword, 10);
+        $courses = $this->service->pagination($keyword, 10);
         return view('admin.courses.index', compact('courses'));
     }
     /**

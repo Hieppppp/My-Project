@@ -22,15 +22,6 @@ interface CourseServiceInterface
      * @return Collection
      */
     public function getAll(int $parPage): Collection|Paginator;
-    
-    /**
-     * create course
-     * 
-     * @param array|null|null $params
-     * 
-     * @return Course
-     */
-    public function create(array|null $params = null): Course;
 
     /**
      * find course by id
@@ -41,6 +32,15 @@ interface CourseServiceInterface
      */
     public function find(int $id): ?Course;
     
+    /**
+     * create course
+     * 
+     * @param array|null|null $params
+     * 
+     * @return Course
+     */
+    public function create(array|null $params = null): Course;
+
     /**
      * update course
      * 
@@ -68,7 +68,7 @@ interface CourseServiceInterface
      * 
      * @return LengthAwarePaginator
      */
-    public function searchCourse(?string $keyword, int $perPage): LengthAwarePaginator;
+    public function pagination(?string $keyword, int $perPage): LengthAwarePaginator;
 
     /**
      * export course

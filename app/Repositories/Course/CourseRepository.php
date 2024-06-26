@@ -37,6 +37,18 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
     }
 
     /**
+     * find course by id
+     * 
+     * @param int $id
+     * 
+     * @return Course|null
+     */
+    public function find(int $id): ?Course
+    {
+        return Course::findOrFail($id);
+    }
+
+    /**
      * create
      * 
      * @param array $course
@@ -70,18 +82,7 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
         }
         return false;
     }
-    /**
-     * find course by id
-     * 
-     * @param int $id
-     * 
-     * @return Course|null
-     */
-    public function find(int $id): ?Course
-    {
-        return Course::findOrFail($id);
-    }
-
+    
     /**
      * delete course
      * 
@@ -104,7 +105,7 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
      * 
      * @return LengthAwarePaginator
      */
-    public function searchCourse(?string $keyword, int $perPage): LengthAwarePaginator
+    public function pagination(?string $keyword, int $perPage): LengthAwarePaginator
     {
         return Course::where('name', 'like', '%' . $keyword . '%')
             ->orWhere('description', 'like', '%' . $keyword . '%')

@@ -40,6 +40,17 @@ class CourseService extends BaseService implements CourseServiceInterface
     }
 
     /**
+     * find course by id
+     * 
+     * @param int $id
+     * @return Course|null
+     */
+    public function find(int $id): ?Course
+    {
+        return $this->repository->find($id);
+    }
+
+    /**
      * create
      * 
      * @param array|null|null $params
@@ -51,17 +62,6 @@ class CourseService extends BaseService implements CourseServiceInterface
         return $this->repository->create($params);
     }
 
-    /**
-     * find course by id
-     * 
-     * @param int $id
-     * @return Course|null
-     */
-    public function find(int $id): ?Course
-    {
-        return $this->repository->find($id);
-    }
- 
     /**
      * update course
      * 
@@ -95,9 +95,9 @@ class CourseService extends BaseService implements CourseServiceInterface
      * 
      * @return LengthAwarePaginator
      */
-    public function searchCourse(?string $keyword, int $perPage): LengthAwarePaginator
+    public function pagination(?string $keyword, int $perPage): LengthAwarePaginator
     {
-        return $this->repository->searchCourse($keyword, $perPage);
+        return $this->repository->pagination($keyword, $perPage);
     }
 
     /**

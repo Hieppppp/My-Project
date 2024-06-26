@@ -27,15 +27,6 @@ interface UserRepositoryInterface
     public function getAllCourse();
     
     /**
-     * create
-     * 
-     * @param array $user
-     * 
-     * @return User
-     */
-    public function create(array $user): User;
-   
-    /**
      * find user by id
      * 
      * @param int $id
@@ -43,6 +34,15 @@ interface UserRepositoryInterface
      * @return User|null
      */
     public function find(int $id): ?User;
+    
+    /**
+     * create
+     * 
+     * @param array $user
+     * 
+     * @return User
+     */
+    public function create(array $user): User;
    
     /**
      * update
@@ -55,6 +55,14 @@ interface UserRepositoryInterface
     public function update(int $id, array $user): User;
 
     /**
+     * delete user
+     *
+     * @param  int $id
+     * @return bool
+     */
+    public function delete(int $id): bool;
+
+    /**
      * search user
      * 
      * @param string|null $keyword
@@ -64,11 +72,5 @@ interface UserRepositoryInterface
      */
     public function pagination(?string $keyword, int $perPage): LengthAwarePaginator;
 
-    /**
-     * delete user
-     *
-     * @param  int $id
-     * @return bool
-     */
-    public function delete(int $id): bool;
+  
 }

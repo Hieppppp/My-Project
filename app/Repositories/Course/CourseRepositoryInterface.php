@@ -18,16 +18,7 @@ interface  CourseRepositoryInterface
      * @return Collection
      */
     public function getAll(int $perPage): Collection|Paginator;
-
-    /**
-     * create
-     * 
-     * @param array $course
-     * 
-     * @return Course
-     */
-    public function create(array $course): Course;
-
+    
     /**
      * find course by id
      * 
@@ -36,7 +27,15 @@ interface  CourseRepositoryInterface
      * @return Course|null
      */
     public function find(int $id): ?Course;
-
+    /**
+     * create
+     * 
+     * @param array $course
+     * 
+     * @return Course
+     */
+    public function create(array $course): Course;
+    
     /**
      * update
      * 
@@ -64,7 +63,7 @@ interface  CourseRepositoryInterface
      * 
      * @return LengthAwarePaginator
      */
-    public function searchCourse(?string $keyword, int $perPage): LengthAwarePaginator;
+    public function pagination(?string $keyword, int $perPage): LengthAwarePaginator;
 
     /**
      * export course
