@@ -26,7 +26,6 @@ class UserService extends BaseService implements UserServiceInterface
         parent::__construct($repository);
     }
 
-
     /**
      * get all user
      * 

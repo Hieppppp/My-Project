@@ -18,9 +18,9 @@
             height: 100%;
         }
 
-        .alert-container {
+        #alert-container {
             position: fixed;
-            top: 20px;
+            top: 70px;
             right: 20px;
             z-index: 10000;
         }
@@ -74,6 +74,12 @@
                 tags: true
             });
         });
+
+        window.setTimeout(function () {
+            $("#alert-container").fadeTo(500, 0).slideUp(500, function () {
+                $(this).remove();
+            });
+        }, 1500);
     </script>
 </body>
 

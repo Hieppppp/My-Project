@@ -63,10 +63,10 @@ class CourseController extends Controller
     /**
      * show
      *
-     * @param  string $id
+     * @param  int $id
      * @return Factory|View
      */
-    public function show(string $id): Factory|View
+    public function show(int $id): Factory|View
     {
         $course = $this->service->find($id);
         return view('admin.courses.show', compact('course'));
@@ -75,10 +75,10 @@ class CourseController extends Controller
     /**
      * edit
      *
-     * @param  string $id
+     * @param  int $id
      * @return Factory|View
      */
-    public function edit(string $id): Factory|View
+    public function edit(int $id): Factory|View
     {
         $course = $this->service->find($id);
         return view('admin.courses.edit', compact('course'));
@@ -88,10 +88,10 @@ class CourseController extends Controller
      * update
      *
      * @param  UpdateCourseRequest $request
-     * @param  string $id
+     * @param  int $id
      * @return Redirector|RedirectResponse
      */
-    public function update(UpdateCourseRequest $request, string $id): Redirector|RedirectResponse
+    public function update(UpdateCourseRequest $request, int $id): Redirector|RedirectResponse
     {
         $params = $request->validated();
         $this->service->update($id, $params);
@@ -101,10 +101,10 @@ class CourseController extends Controller
     /**
      * destroy course
      *
-     * @param  string $id
+     * @param  int $id
      * @return Redirector|RedirectResponse
      */
-    public function destroy(string $id): Redirector|RedirectResponse
+    public function destroy(int $id): Redirector|RedirectResponse
     {
         $this->service->delete($id);
         return redirect()->back()->with('sms', 'Course deleted successfully.');

@@ -18,7 +18,12 @@ interface UserRepositoryInterface
      * @return Paginator
      */
     public function getAll(int $perPage): Paginator;
-
+    
+    /**
+     * getAllCourse
+     *
+     * @return void
+     */
     public function getAllCourse();
     
     /**

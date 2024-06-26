@@ -12,8 +12,6 @@ use Illuminate\Pagination\Paginator;
  */
 interface UserServiceInterface
 {
-    
-    
     /**
      * get all user
      * 
