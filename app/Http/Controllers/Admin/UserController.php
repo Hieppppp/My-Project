@@ -7,11 +7,11 @@ use App\Http\Requests\Users\CreateUserRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
 use App\Http\Requests\Users\UserIndexRequest;
 use App\Models\Course;
+use App\Services\Course\CourseServiceInterface;
 use App\Services\User\UserServiceInterface;
 use Illuminate\Console\View\Components\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 
 class UserController extends Controller
@@ -22,21 +22,23 @@ class UserController extends Controller
      * @return void
      */
     public function __construct(
-        public UserServiceInterface $service
+        public UserServiceInterface $userService,
+        public CourseServiceInterface $courseService
     ) {
     }
     
     /**
      * index
      * 
-     * @param Request $request
+     * @param UserIndexRequest $request
      * @return Factory
      */
     public function index(UserIndexRequest $request): Factory|View
     {
         $keyword = $request->input('keywords');
-        $users = $this->service->pagination($keyword, 10);
-        return view('admin.users.index', compact('users'));
+        $perPage = $request->input('per_page', 10);
+        $users = $this->userService->pagination($keyword, $perPage);
+        return view('admin.users.index', compact('users', 'perPage'));
     }
     
     /**
@@ -46,7 +48,7 @@ class UserController extends Controller
      */
     public function create(): Factory|View
     {
-        $courses = $this->service->getAllCourse();
+        $courses = $this->courseService->getCourse();
         return view('admin.users.create', compact('courses'));
     }
 
@@ -59,7 +61,7 @@ class UserController extends Controller
     public function store(CreateUserRequest $request): Redirector|RedirectResponse
     {
         $params = $request->validated();
-        $user = $this->service->create($params);
+        $user = $this->userService->create($params);
         if ($request->has('courses')) {
             $user->courses()->attach($request->input('courses'));
         }
@@ -74,7 +76,7 @@ class UserController extends Controller
      */
     public function show(string $id): Factory|View
     {
-        $users = $this->service->find($id);
+        $users = $this->userService->find($id);
         return view('admin.users.show', compact('users'));
     }
 
@@ -86,7 +88,7 @@ class UserController extends Controller
      */
     public function edit(string $id): Factory|View
     {
-        $users = $this->service->find($id);
+        $users = $this->userService->find($id);
         $courses = Course::all();
         $selectedCourses = $users->courses->pluck('id')->toArray();
         return view('admin.users.edit', compact('users', 'courses', 'selectedCourses'));
@@ -104,7 +106,7 @@ class UserController extends Controller
        
         $user = $request->validated();
         $courseIds = $request->input('courses');
-        $this->service->update($id, $user, $courseIds);
+        $this->userService->update($id, $user, $courseIds);
         return redirect()->route('users.index')->with('sms', 'User updated successfully.');
     }
 
@@ -116,7 +118,7 @@ class UserController extends Controller
      */
     public function destroy(string $id): Redirector|RedirectResponse
     {
-        $this->service->delete($id);
+        $this->userService->delete($id);
         return redirect()->back()->with('sms', 'User deleted successfully.');
     }
 }

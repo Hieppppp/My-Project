@@ -11,22 +11,6 @@ interface UserRepositoryInterface
 {
     
     /**
-     * get all user
-     * 
-     * @param int $perPage
-     * 
-     * @return Paginator
-     */
-    public function getAll(int $perPage): Paginator;
-    
-    /**
-     * getAllCourse
-     *
-     * @return void
-     */
-    public function getAllCourse();
-    
-    /**
      * find user by id
      * 
      * @param int $id

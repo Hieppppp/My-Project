@@ -8,7 +8,6 @@ use App\Models\Course;
 use App\Repositories\BaseRepository;
 use App\Repositories\Course\CourseRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -24,16 +23,9 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
         parent::__construct(Course::class);
     }
 
-    /**
-     * get all course
-     * 
-     * @param int $perPage
-     * 
-     * @return Collection
-     */
-    public function getAll(int $perPage): Collection|Paginator
+    public function getCourse(): Collection
     {
-        return Course::paginate($perPage);
+        return Course::all();
     }
 
     /**

@@ -26,19 +26,17 @@ class CourseService extends BaseService implements CourseServiceInterface
     ) {
         parent::__construct($repository);
     }
-   
+
     /**
-     * get all course
-     * 
-     * @param int $parPage
-     * 
+     * getCourse
+     *
      * @return Collection
      */
-    public function getAll(int $parPage): Collection|Paginator
+    public function getCourse(): Collection
     {
-        return $this->repository->getAll($parPage);
+        return $this->repository->getCourse();
     }
-
+   
     /**
      * find course by id
      * 

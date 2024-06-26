@@ -25,24 +25,6 @@ class UserService extends BaseService implements UserServiceInterface
     ) {
         parent::__construct($repository);
     }
-
-    /**
-     * get all user
-     * 
-     * @param int $parPage
-     * 
-     * @return Paginator
-     */
-    public function getAll(int $perPage): Paginator
-    {
-        return $this->repository->getAll($perPage);
-    }
-
-    public function getAllCourse()
-    {
-        return $this->repository->getAllCourse();
-    }
-
     /**
      * find user by id
      * 

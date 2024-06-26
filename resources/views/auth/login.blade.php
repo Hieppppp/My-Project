@@ -104,7 +104,7 @@
             <p class="form-title">Login</p>
             @csrf
             <div class="input-container">
-                <input placeholder="Enter email" type="email" name="email" value="{{ old('email')}}">
+                <input placeholder="Enter email" type="email" name="email" value="{{ old('email') }}">
                 <p class="help is-danger">{{ $errors->first('email') }}</p>
             </div>
             

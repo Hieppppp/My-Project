@@ -21,7 +21,7 @@ interface CourseServiceInterface
      * 
      * @return Collection
      */
-    public function getAll(int $parPage): Collection|Paginator;
+    public function getCourse(): Collection;
 
     /**
      * find course by id

@@ -4,36 +4,66 @@ User
 @endsection
 @section('content')
 @if(Session::get('sms'))
-    <div id="alert-container">
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <strong>{{Session::get('sms')}}</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+<div id="alert-container">
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{Session::get('sms')}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
+</div>
 @endif
 <div class="container">
     <div class="row">
-        <div class="col-md-3">
-            <h1>List Users</h1>
+        <div class="row mb-3">
+            <div class="d-flex justify-content-between align-items-center w-100">
+                <h3>List User</h3>
+                <div>
+                    <a href="{{ route('users.create') }}" class="btn btn-outline-primary">
+                        <i class="bi bi-plus-circle-fill" title="Click to add new user"></i>
+                        <span>New User</span>
+                    </a>
+                    <button class="btn btn-outline-danger">
+                        <i class="bi bi-trash" title="Click to delete all"></i>
+                        <span>Delete All</span>
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="col-md-9">
-            <form method="get" class="">
-                <div class="row">
-                    <div class="d-flex justify-content-end">
-                        <div class="col-4 me-2">
-                            <input type="search" name="keywords" class="form-control" placeholder="Search..." value="{{ request()->input('keywords') }}">
-                        </div>
-                        <div class="col-2">
-                            <button type="submit" class="btn btn-primary btn-block"><i class="bi bi-search"></i> Search</button>
+        <div class="row mb-2">
+            <div class="col-md-6">
+                <form action="{{ route('users.index') }}" method="get">
+                    <label>
+                        Show
+                        <select name="per_page" onchange="this.form.submit()">
+                            <option value="10" {{ request('per_page') == 10 ? ' selected ' : '' }}>10</option>
+                            <option value="20" {{ request('per_page') == 20 ? ' selected ' : '' }}>20</option>
+                            <option value="50" {{ request('per_page') == 50 ? ' selected ' : '' }}>50</option>
+                            <option value="100" {{ request('per_page') == 100 ? ' selected ' : '' }}>100</option>
+                        </select>
+                        users
+                    </label>
+                </form>
+            </div>
+
+            <div class="col-md-6">
+                <form method="get" class="">
+                    <div class="row">
+                        <div class="d-flex justify-content-end">
+                            <div class="me-2 w-50">
+                                <input type="search" name="keywords" class="form-control" placeholder="Search..." value="{{ request()->input('keywords') }}">
+                            </div>
+                            <div class="">
+                                <button type="submit" class="btn btn-primary btn-block"><i class="bi bi-search"></i> Search</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
     <table class="table table-striple border text-center">
         <thead>
             <tr class="bg-primary text-white">
+                <th><input type="checkbox"></th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Date Birth</th>
@@ -45,6 +75,7 @@ User
         <tbody>
             @foreach ($users as $user)
             <tr>
+                <td><input type="checkbox"></td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>{{ \Carbon\Carbon::parse($user->date_of_birth)->format('d-m-Y') }}</td>
@@ -73,6 +104,6 @@ User
             @endforeach
         </tbody>
     </table>
-    {{ $users->links() }}
+    {{ $users->appends(['per_page' => $perPage])->links() }}
 </div>
 @endsection

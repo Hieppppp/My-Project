@@ -10,7 +10,7 @@ Add User
 </div>
 @endif
 <div class="card-body">
-    <h5 class="text-center">Create User</h5>
+    <!-- <h5 class="text-center">Create User</h5> -->
     <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="row">

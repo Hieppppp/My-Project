@@ -17,7 +17,7 @@ interface  CourseRepositoryInterface
      * 
      * @return Collection
      */
-    public function getAll(int $perPage): Collection|Paginator;
+    public function getCourse(): Collection;
     
     /**
      * find course by id

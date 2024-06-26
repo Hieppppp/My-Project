@@ -1,11 +1,13 @@
 @extends('admin.layout')
-
+@section('title')
+    Detail User
+@endsection
 @section('content')
 <div class="container">
     <h1>Detail User</h1>
     <div class="card">
         <div class="card-header">
-            {{ $users->name }}
+            Name: {{ $users->name }}
         </div>
         <div class="card-body">
             <p>Email: {{ $users->email }}</p>
@@ -15,12 +17,12 @@
             <h3>List Courses:</h3>
             <ul>
                 @foreach ($users->courses as $course)
-                <li>
-                    <p><strong>Courses:</strong> {{ $course->name }}</p>
-                    <p><strong>Description:</strong> {{ $course->description }}</p>
-                    <p><strong>Start Date:</strong> {{ \Carbon\Carbon::parse($course->start_date)->format('d-m-Y')  }}</p>
-                    <p><strong>End Date:</strong> {{ \Carbon\Carbon::parse($course->end_date)->format('d-m-Y')  }}</p>
-                </li>
+                    <li>
+                        <p><strong>Courses:</strong> {{ $course->name }}</p>
+                        <p><strong>Description:</strong> {!! $course->description !!}</p>
+                        <p><strong>Start Date:</strong> {{ \Carbon\Carbon::parse($course->start_date)->format('d-m-Y')  }}</p>
+                        <p><strong>End Date:</strong> {{ \Carbon\Carbon::parse($course->end_date)->format('d-m-Y')  }}</p>
+                    </li>
                 @endforeach
             </ul>
 

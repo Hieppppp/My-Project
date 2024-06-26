@@ -2,11 +2,10 @@
 
 namespace App\Repositories\User;
 
-use App\Models\Course;
 use App\Models\User;
 use App\Repositories\BaseRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
+
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
@@ -18,28 +17,6 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     public function __construct()
     {
         parent::__construct(User::class);
-    }
-
-    /**
-     * get all user
-     * 
-     * @param int $perPage
-     * 
-     * @return Paginator
-     */
-    public function getAll(int $perPage): Paginator
-    {
-        return User::with('courses')->paginate($perPage);
-    }
-    
-    /**
-     * getAllCourse
-     *
-     * @return void
-     */
-    public function getAllCourse()
-    {
-        return Course::all();
     }
 
      /**

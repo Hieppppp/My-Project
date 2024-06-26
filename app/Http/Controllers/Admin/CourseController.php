@@ -7,7 +7,6 @@ use App\Http\Requests\Course\CourseIndexRequest;
 use App\Http\Requests\Course\CreateCourseRequest;
 use App\Http\Requests\Course\UpdateCourseRequest;
 use App\Http\Requests\File\FileUploadRequest;
-use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Services\Course\CourseServiceInterface;
 use Illuminate\Console\View\Components\Factory;
@@ -23,21 +22,22 @@ class CourseController extends Controller
      * @return void
      */
     public function __construct(
-        public CourseServiceInterface $service
+        public CourseServiceInterface $courseService
     ) {
     }
     
     /**
      * index
      * 
-     * @param Request $request
+     * @param CourseIndexRequest $request
      * @return Factory|View
      */
     public function index(CourseIndexRequest $request): Factory|View
     {
         $keyword = $request->input('keywords');
-        $courses = $this->service->pagination($keyword, 10);
-        return view('admin.courses.index', compact('courses'));
+        $perPage = $request->input('per_page', 10);
+        $courses = $this->courseService->pagination($keyword, $perPage);
+        return view('admin.courses.index', compact('courses', 'perPage'));
     }
     /**
      * create
@@ -57,7 +57,7 @@ class CourseController extends Controller
     public function store(CreateCourseRequest $request): Redirector|RedirectResponse
     {
         $params = $request->validated();
-        $course = $this->service->create($params);
+        $course = $this->courseService->create($params);
         $course->save();
         return redirect()->route('courses.index')->with('sms', 'Course created successfully.');
     }
@@ -69,7 +69,7 @@ class CourseController extends Controller
      */
     public function show(int $id): Factory|View
     {
-        $course = $this->service->find($id);
+        $course = $this->courseService->find($id);
         return view('admin.courses.show', compact('course'));
     }
 
@@ -81,7 +81,7 @@ class CourseController extends Controller
      */
     public function edit(int $id): Factory|View
     {
-        $course = $this->service->find($id);
+        $course = $this->courseService->find($id);
         return view('admin.courses.edit', compact('course'));
     }
 
@@ -95,7 +95,7 @@ class CourseController extends Controller
     public function update(UpdateCourseRequest $request, int $id): Redirector|RedirectResponse
     {
         $params = $request->validated();
-        $this->service->update($id, $params);
+        $this->courseService->update($id, $params);
         return redirect()->route('courses.index')->with('sms', 'Course updated successfully.');
     }
 
@@ -107,7 +107,7 @@ class CourseController extends Controller
      */
     public function destroy(int $id): Redirector|RedirectResponse
     {
-        $this->service->delete($id);
+        $this->courseService->delete($id);
         return redirect()->back()->with('sms', 'Course deleted successfully.');
     }
 
@@ -118,7 +118,7 @@ class CourseController extends Controller
      */
     public function export()
     {
-        return Excel::download($this->service->export(), 'course.xlsx');
+        return Excel::download($this->courseService->export(), 'course.xlsx');
     }
     
     /**
@@ -131,7 +131,7 @@ class CourseController extends Controller
     {
         $validatedData = $request->validated();
         $file = $validatedData['file'];
-        $this->service->import($file);
+        $this->courseService->import($file);
         return redirect()->back()->with('sms', 'Courses Imported Successfully');
     }
 }

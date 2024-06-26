@@ -23,6 +23,7 @@ class CourseIndexRequest extends FormRequest
     {
         return [
             'keywords' => 'nullable|string|max:256',
+            'per_page' => 'nullable|integer|in:10,20,50,100',
         ];
     }
 }

@@ -12,21 +12,6 @@ use Illuminate\Pagination\Paginator;
  */
 interface UserServiceInterface
 {
-    /**
-     * get all user
-     * 
-     * @param int $parPage
-     * 
-     * @return Paginator
-     */
-    public function getAll(int $perPage): Paginator;
-
-    /**
-     * getAllCourse
-     *
-     * @return void
-     */
-    public function getAllCourse();
 
     /**
      * find user by id
