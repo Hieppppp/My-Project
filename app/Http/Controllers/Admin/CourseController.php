@@ -34,10 +34,11 @@ class CourseController extends Controller
      */
     public function index(CourseIndexRequest $request): Factory|View
     {
-        $keyword = $request->input('keywords');
-        $perPage = $request->input('per_page', 10);
-        $courses = $this->courseService->pagination($keyword, $perPage);
-        return view('admin.courses.index', compact('courses', 'perPage'));
+        $validated = $request->validated();
+        $searchKeyword = $validated['keywords'] ?? null;
+        $itemsPerPage = $validated['per_page'] ?? 10;
+        $courses = $this->courseService->pagination($searchKeyword, $itemsPerPage);
+        return view('admin.courses.index', compact('courses', 'itemsPerPage'));
     }
     /**
      * create
@@ -57,8 +58,7 @@ class CourseController extends Controller
     public function store(CreateCourseRequest $request): Redirector|RedirectResponse
     {
         $params = $request->validated();
-        $course = $this->courseService->create($params);
-        $course->save();
+        $this->courseService->create($params);
         return redirect()->route('courses.index')->with('sms', 'Course created successfully.');
     }
     /**

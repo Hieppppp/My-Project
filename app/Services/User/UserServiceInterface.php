@@ -25,11 +25,11 @@ interface UserServiceInterface
     /**
      * create
      * 
-     * @param array|null|null $params
+     * @param array $userData
      * 
      * @return User
      */
-    public function create(array|null $params = null): User;
+    public function create(array $userData): User;
 
     /**
      * update
@@ -39,7 +39,7 @@ interface UserServiceInterface
      * @param  array $courseId
      * @return User
      */
-    public function update(int $id, array $user, array $courseId): User;
+    public function update(int $id, array $userData): User;
 
     /**
      * delete user

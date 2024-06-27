@@ -42,9 +42,9 @@ interface  CourseRepositoryInterface
      * @param int $id
      * @param array $course
      * 
-     * @return Course
+     * @return bool
      */
-    public function update(int $id, array $course): Course;
+    public function update(int $id, array $course): bool;
 
     /**
      * delete course

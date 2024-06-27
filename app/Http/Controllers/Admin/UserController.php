@@ -35,14 +35,16 @@ class UserController extends Controller
      */
     public function index(UserIndexRequest $request): Factory|View
     {
-        $keyword = $request->input('keywords');
-        $perPage = $request->input('per_page', 10);
-        $users = $this->userService->pagination($keyword, $perPage);
-        return view('admin.users.index', compact('users', 'perPage'));
+        $validatedData = $request->validated();
+        $searchKeyword = $validatedData['keywords'] ?? null;
+        $itemsPerPage = $validatedData['per_page'] ?? 10;
+        $users = $this->userService->pagination($searchKeyword, $itemsPerPage);
+        return view('admin.users.index', compact('users', 'itemsPerPage'));
     }
     
+  
     /**
-     * create user
+     * create
      *
      * @return Factory|View
      */
@@ -61,10 +63,7 @@ class UserController extends Controller
     public function store(CreateUserRequest $request): Redirector|RedirectResponse
     {
         $params = $request->validated();
-        $user = $this->userService->create($params);
-        if ($request->has('courses')) {
-            $user->courses()->attach($request->input('courses'));
-        }
+        $this->userService->create($params);
         return redirect()->route('users.index')->with('sms', 'User created successfully.');
     }
 
@@ -104,9 +103,8 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, string $id): Redirector|RedirectResponse
     {
        
-        $user = $request->validated();
-        $courseIds = $request->input('courses');
-        $this->userService->update($id, $user, $courseIds);
+        $userData = $request->validated();
+        $this->userService->update($id, $userData,);
         return redirect()->route('users.index')->with('sms', 'User updated successfully.');
     }
 

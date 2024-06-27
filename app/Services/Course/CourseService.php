@@ -66,9 +66,9 @@ class CourseService extends BaseService implements CourseServiceInterface
      * @param int $id
      * @param array $course
      * 
-     * @return Course
+     * @return bool
      */
-    public function update(int $id, array $course): Course
+    public function update(int $id, array $course): bool
     {
         return $this->repository->update($id, $course);
     }

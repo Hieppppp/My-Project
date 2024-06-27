@@ -111,6 +111,6 @@ Courses
             @endforeach
         </tbody>
     </table>
-    {{ $courses->appends(['per_page' => $perPage])->links() }}
+    {{ $courses->appends(['per_page' => $itemsPerPage])->links() }}
 </div>
 @endsection

@@ -63,16 +63,12 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
      * @param int $id
      * @param array $course
      * 
-     * @return Course:false
+     * @return bool
      */
-    public function update(int $id, array $course): Course
+    public function update(int $id, array $course): bool
     {
         $results = Course::findOrFail($id);
-        if ($results) {
-            $results->update($course);
-            return $results;
-        }
-        return false;
+        return $results->update($course);
     }
     
     /**

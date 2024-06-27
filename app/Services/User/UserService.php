@@ -2,13 +2,13 @@
 
 namespace App\Services\User;
 
-use App\Models\Course;
+
 use App\Models\User;
 use App\Repositories\BaseRepository;
 use App\Services\BaseService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Pagination\Paginator;
+
 
 /**
  * [Description UserService]
@@ -36,22 +36,33 @@ class UserService extends BaseService implements UserServiceInterface
     {
         return $this->repository->find($id);
     }
-
+   
     /**
-     * create user
-     * 
-     * @param array|null|null $params
-     * 
+     * create
+     *
+     * @param  array $userData
      * @return User
      */
-    public function create(array|null $params = null): User
+    public function create(array $userData): User
     {
-        if (isset($params['avatar'])) {
-            $avatarName = time() . '.' . $params['avatar']->extension();
-            $params['avatar']->move(public_path('avatar'), $avatarName);
-            $params['avatar'] = $avatarName;
+        if (isset($userData['avatar']) && $userData['avatar'] instanceof UploadedFile) {
+            $avatarName = time() . '.' . $userData['avatar']->extension();
+            $userData['avatar']->move(public_path('avatar'), $avatarName);
+            $userData['avatar'] = $avatarName;
         }
-        return $this->repository->create($params);
+    
+        if (isset($userData['courses'])) {
+            $courseIds = $userData['courses'];
+            unset($userData['courses']);
+        }
+    
+        $user = $this->repository->create($userData);
+    
+        if (isset($courseIds)) {
+            $user->courses()->attach($courseIds);
+        }
+    
+        return $user;
     }
 
     /**
@@ -62,17 +73,21 @@ class UserService extends BaseService implements UserServiceInterface
      * @param  array $courseIds
      * @return User
      */
-    public function update(int $id, array $user, array $courseIds): User
+    public function update(int $id, array $userData): User
     {
         $existingUser = $this->repository->find($id);
 
-        $existingUser->courses()->sync($courseIds);
-
-        if (isset($user['avatar']) && $user['avatar'] instanceof UploadedFile) {
-            $this->deleteOldAvatar($existingUser->avatar);
-            $user['avatar'] = $this->uploadAvatar($user['avatar']);
+        if (isset($userData['courses'])) {
+            $courseIds = $userData['courses'];
+            unset($userData['courses']);
+            $existingUser->courses()->sync($courseIds);
         }
-        return $this->repository->update($id, $user);
+
+        if (isset($user['avatar']) && $userData['avatar'] instanceof UploadedFile) {
+            $this->deleteOldAvatar($existingUser->avatar);
+            $user['avatar'] = $this->uploadAvatar($userData['avatar']);
+        }
+        return $this->repository->update($id, $userData);
     }
 
     /**

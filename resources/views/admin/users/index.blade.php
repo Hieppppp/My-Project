@@ -104,6 +104,6 @@ User
             @endforeach
         </tbody>
     </table>
-    {{ $users->appends(['per_page' => $perPage])->links() }}
+    {{ $users->appends(['per_page' => $itemsPerPage])->links() }}
 </div>
 @endsection
