@@ -54,7 +54,7 @@ class CoursesExport implements FromCollection, WithHeadings, WithStyles, ShouldA
     public function styles(Worksheet $sheet)
     {
         return [
-            // Style the first row as bold text.
+           
             1    => ['font' => ['bold' => true]],
 
         ];

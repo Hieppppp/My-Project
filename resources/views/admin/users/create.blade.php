@@ -3,12 +3,7 @@
 Add User
 @endsection
 @section('content')
-@if(Session::get('sms'))
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
-    <strong>{{Session::get('sms')}}</strong>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
+
 <div class="card-body">
     <!-- <h5 class="text-center">Create User</h5> -->
     <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">

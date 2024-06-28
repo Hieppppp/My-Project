@@ -15,6 +15,11 @@ class Course extends Model
         'end_date',
     ];
 
+    protected $dates = [
+        'start_date',
+        'end_date',
+    ];
+
     public function users() {
         return $this->belongsToMany(User::class);
     }

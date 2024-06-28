@@ -15,7 +15,7 @@ use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class CourseController extends Controller
-{    
+{
     /**
      * __construct
      *
@@ -25,7 +25,7 @@ class CourseController extends Controller
         public CourseServiceInterface $courseService
     ) {
     }
-    
+
     /**
      * index
      * 
@@ -120,7 +120,7 @@ class CourseController extends Controller
     {
         return Excel::download($this->courseService->export(), 'course.xlsx');
     }
-    
+
     /**
      * import
      * 
@@ -129,9 +129,13 @@ class CourseController extends Controller
      */
     public function import(FileUploadRequest $request): Redirector|RedirectResponse
     {
-        $validatedData = $request->validated();
-        $file = $validatedData['file'];
-        $this->courseService->import($file);
-        return redirect()->back()->with('sms', 'Courses Imported Successfully');
+        try {
+            $validatedData = $request->validated();
+            $file = $validatedData['file'];
+            $this->courseService->import($file);
+            return redirect()->back()->with('sms', 'Courses Imported Successfully');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error_message', 'Error: ' . $th->getMessage());
+        }
     }
 }

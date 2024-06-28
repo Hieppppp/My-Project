@@ -5,12 +5,13 @@ Courses
 @section('content')
 @if(Session::get('sms'))
 <div id="alert-container">
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
         <strong>{{Session::get('sms')}}</strong>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 </div>
 @endif
+
 <div class="container">
     <div class="row">
         <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
@@ -25,6 +26,9 @@ Courses
             <button class="btn btn-primary"><i class="bi bi-cloud-arrow-down"></i> Import</button>
 
             <a class="btn btn-success" href="{{ route('export') }}"><i class="bi bi-file-excel"></i> Export</a>
+            @if(session('error_message'))
+                <p class="text-danger">{{ session('error_message') }}</p>
+            @endif
         </form>
         <div class="row mb-3">
             <div class="d-flex justify-content-between align-items-center w-100">
@@ -47,10 +51,10 @@ Courses
                     <label>
                         Show
                         <select name="per_page" onchange="this.form.submit()">
-                            <option value="10"{{ request('per_page') == 10 ? ' selected' : '' }}>10</option>
-                            <option value="20"{{ request('per_page') == 20 ? ' selected' : '' }}>20</option>
-                            <option value="50"{{ request('per_page') == 50 ? ' selected' : '' }}>50</option>
-                            <option value="100"{{ request('per_page') == 100 ? ' selected' : '' }}>100</option>
+                            <option value="10" {{ request('per_page') == 10 ? ' selected' : '' }}>10</option>
+                            <option value="20" {{ request('per_page') == 20 ? ' selected' : '' }}>20</option>
+                            <option value="50" {{ request('per_page') == 50 ? ' selected' : '' }}>50</option>
+                            <option value="100" {{ request('per_page') == 100 ? ' selected' : '' }}>100</option>
                         </select>
                         courses
                     </label>

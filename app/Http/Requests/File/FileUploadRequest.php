@@ -22,7 +22,7 @@ class FileUploadRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => 'required|mimes:xlsx,xls'
+            'file' => 'required|file|mimes:xls,xlsx,csv|max:10240',
         ];
     }
     
@@ -34,8 +34,11 @@ class FileUploadRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'file.required' => 'File is required.',
-            'file.mimes' => 'The file must be a file of type: xlsx, xls.',
+            'file.required' => 'A file is required for upload.',
+            'file.file' => 'The uploaded file must be a valid file.',
+            'file.mimes' => 'The uploaded file must be a file of type: xls, xlsx, csv.',
+            'file.max' => 'The uploaded file must not exceed 10MB.',
         ];
+
     }
 }

@@ -3,12 +3,7 @@
 Add Course
 @endsection
 @section('content')
-@if(Session::get('sms'))
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
-    <strong>{{Session::get('sms')}}</strong>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
+
 <div class="card-body">
     <form action="{{ route('courses.store') }}" method="POST">
         @csrf
@@ -18,11 +13,6 @@ Add Course
                 <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" placeholder="Course name">
                 <p class="text-danger">{{ $errors->first('name') }}</p>
             </div>
-            <!-- <div class="form-group">
-                <label for="description">Description</label>
-                <textarea class="form-control" id="description" name="description" rows="10" value="{{ old('description') }}" placeholder="Description"></textarea>
-                <p class="text-danger">{{ $errors->first('description') }}</p>
-            </div> -->
             <div class="form-group">
                 <label for="description">Description</label>
                 <textarea class="form-control" id="description" name="description" rows="10" placeholder="Description">{{ old('description') }}</textarea>
