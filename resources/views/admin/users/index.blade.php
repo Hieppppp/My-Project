@@ -1,6 +1,6 @@
 @extends('admin.layout')
 @section('title')
-User
+User Management
 @endsection
 @section('content')
 @if(Session::get('sms'))
@@ -17,14 +17,18 @@ User
             <div class="d-flex justify-content-between align-items-center w-100">
                 <h3>List User</h3>
                 <div>
+                    @can('create', $users)
                     <a href="{{ route('users.create') }}" class="btn btn-outline-primary">
                         <i class="bi bi-plus-circle-fill" title="Click to add new user"></i>
                         <span>New User</span>
                     </a>
+                    @endcan
+                    @can('delete', $users)
                     <button class="btn btn-outline-danger">
                         <i class="bi bi-trash" title="Click to delete all"></i>
                         <span>Delete All</span>
                     </button>
+                    @endcan
                 </div>
             </div>
         </div>
@@ -65,10 +69,9 @@ User
             <tr class="bg-primary text-white">
                 <th><input type="checkbox"></th>
                 <th>Name</th>
-                <th>Email</th>
-                <th>Date Birth</th>
-                <th>Phone</th>
                 <th>Profile</th>
+                <th>Role</th>
+                <th>Group</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -77,23 +80,43 @@ User
             <tr>
                 <td><input type="checkbox"></td>
                 <td>{{ $user->name }}</td>
-                <td>{{ $user->email }}</td>
-                <td>{{ \Carbon\Carbon::parse($user->date_of_birth)->format('d-m-Y') }}</td>
-                <td>{{ $user->phone }}</td>
                 <td>
                     <img width="50px" height="50px" class="img-fluid rounded" src="/avatar/{{ $user->avatar }}" alt="">
                 </td>
                 <td>
+                    @if(count($user->roles)>0)
+                        @foreach($user->roles as $role)
+                            <span class="badge bg-success">{{ $role->name }}</span>
+                        @endforeach
+                    @else
+                        <span class="badge bg-danger">No role</span>
+                    @endif
+                </td>
+                <td>
+                    @if(count($user->groups)>0)
+                        @foreach($user->groups as $group)
+                            <span class="badge bg-primary">{{ $group->name }}</span>
+                        @endforeach
+                    @else
+                        <span class="badge bg-danger">No group</span>
+                    @endif
+                </td>
+                <td>
+                    @can('view', $user)
                     <a href="{{ route('users.show', $user->id) }}" class="btn btn-outline-info">
-                        <i class="bi bi-bookmark-check" title="Click to views"></i>
+                        <i class="bi bi-eye" title="Click to views"></i>
                     </a>
+                    @endcan
+                    @can('update', $user)
                     <a href="{{ route('users.edit', $user->id) }}" class="btn btn-outline-success">
                         <i class="bi bi-pencil-square" title="Click to edit"></i>
                     </a>
-
+                    @endcan
+                    @can('delete', $user)
                     <a class="btn btn-outline-danger" id="delete" href="{{ route('users.destroy', $user->id) }}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this user?')) document.getElementById('delete-form-{{ $user->id }}').submit();">
                         <i class="bi bi-trash" title="Click to delete"></i>
                     </a>
+                    @endcan
 
                     <form id="delete-form-{{ $user->id }}" action="{{ route('users.destroy', $user->id) }}" method="POST" style="display: none;">
                         @csrf

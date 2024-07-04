@@ -1,7 +1,8 @@
 <?php
 
 return [
-    App\Providers\RepositoryServiceProvider::class,
     App\Providers\AppServiceProvider::class,
+    App\Providers\AuthServiceProvider::class,
+    App\Providers\RepositoryServiceProvider::class,
     App\Providers\RouteServiceProvider::class,
 ];

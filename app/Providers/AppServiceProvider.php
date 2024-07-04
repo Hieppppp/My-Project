@@ -2,17 +2,22 @@
 
 namespace App\Providers;
 
-use App\Repositories\Auth\AuthRepository;
-use App\Repositories\Auth\AuthRepositoryInterface;
 use App\Repositories\Course\CourseRepositoryInterface;
+use App\Repositories\Permission\PermissionRepositoryInterface;
+use App\Repositories\Role\RoleRepositoryInterface;
 use App\Repositories\User\UserRepositoryInterface;
 use App\Services\Course\CourseService;
 use App\Services\Course\CourseServiceInterface;
+use App\Services\DeMo\DeMoService;
+use App\Services\Permission\PermissionService;
+use App\Services\Permission\PermissionServiceInterface;
+use App\Services\Role\RoleService;
+use App\Services\Role\RoleServiceInterface;
 use App\Services\User\UserService;
 use App\Services\User\UserServiceInterface;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
-
+use Illuminate\Support\Facades\Blade;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,6 +32,10 @@ class AppServiceProvider extends ServiceProvider
 
         $userRepository = $this->app->get(UserRepositoryInterface::class);
 
+        $roleRepository = $this->app->get(RoleRepositoryInterface::class);
+
+        $permissionRepository = $this->app->get(PermissionRepositoryInterface::class);
+
 
         $this->app->bind(CourseServiceInterface::class, function () use ($courseRepository) {
             return new CourseService($courseRepository);
@@ -36,6 +45,14 @@ class AppServiceProvider extends ServiceProvider
             return new UserService($userRepository);
         });
 
+        $this->app->bind(RoleServiceInterface::class, function () use($roleRepository) {
+            return new RoleService(($roleRepository));
+        });
+        
+        $this->app->bind(PermissionServiceInterface::class, function () use ($permissionRepository) {
+            return new PermissionService($permissionRepository);
+        });
+
     }
 
     /**
@@ -43,6 +60,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+       
         Paginator::useBootstrapFive();
         Paginator::useBootstrapFour();
 

@@ -36,7 +36,7 @@ class UserService extends BaseService implements UserServiceInterface
     {
         return $this->repository->find($id);
     }
-   
+
     /**
      * create
      *
@@ -50,20 +50,30 @@ class UserService extends BaseService implements UserServiceInterface
             $userData['avatar']->move(public_path('avatar'), $avatarName);
             $userData['avatar'] = $avatarName;
         }
-    
+
         if (isset($userData['courses'])) {
             $courseIds = $userData['courses'];
             unset($userData['courses']);
         }
-    
+
+        if (isset($userData['roles'])) {
+            $roleIds = $userData['roles'];
+            unset($userData['roles']);
+        }
+
         $user = $this->repository->create($userData);
-    
+
         if (isset($courseIds)) {
             $user->courses()->attach($courseIds);
         }
-    
+
+        if (isset($roleIds)) {
+            $user->roles()->sync($roleIds);
+        }
+
         return $user;
     }
+
 
     /**
      * update
@@ -81,6 +91,12 @@ class UserService extends BaseService implements UserServiceInterface
             $courseIds = $userData['courses'];
             unset($userData['courses']);
             $existingUser->courses()->sync($courseIds);
+        }
+
+        if (isset($userData['roles'])) {
+            $rolesIds = $userData['roles'];
+            unset($userData['roles']);
+            $existingUser->roles()->sync($rolesIds);
         }
 
         if (isset($user['avatar']) && $userData['avatar'] instanceof UploadedFile) {

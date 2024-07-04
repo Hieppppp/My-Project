@@ -7,12 +7,15 @@ use App\Http\Requests\Users\CreateUserRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
 use App\Http\Requests\Users\UserIndexRequest;
 use App\Models\Course;
+use App\Models\User;
 use App\Services\Course\CourseServiceInterface;
+use App\Services\Role\RoleServiceInterface;
 use App\Services\User\UserServiceInterface;
 use Illuminate\Console\View\Components\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {    
@@ -23,7 +26,8 @@ class UserController extends Controller
      */
     public function __construct(
         public UserServiceInterface $userService,
-        public CourseServiceInterface $courseService
+        public CourseServiceInterface $courseService,
+        public RoleServiceInterface $roleService
     ) {
     }
     
@@ -34,7 +38,8 @@ class UserController extends Controller
      * @return Factory
      */
     public function index(UserIndexRequest $request): Factory|View
-    {
+    { 
+        
         $validatedData = $request->validated();
         $searchKeyword = $validatedData['keywords'] ?? null;
         $itemsPerPage = $validatedData['per_page'] ?? 10;
@@ -48,10 +53,15 @@ class UserController extends Controller
      *
      * @return Factory|View
      */
-    public function create(): Factory|View
+    public function create(User $user): Factory|View
     {
+        // if (! Gate::allows('user.create')) {
+        //     return abort(403);
+        // }
+        Gate::authorize('create', $user);
+        $roles = $this->roleService->getRole();
         $courses = $this->courseService->getCourse();
-        return view('admin.users.create', compact('courses'));
+        return view('admin.users.create', compact('roles', 'courses'));
     }
 
     /**
@@ -62,6 +72,7 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request): Redirector|RedirectResponse
     {
+       
         $params = $request->validated();
         $this->userService->create($params);
         return redirect()->route('users.index')->with('sms', 'User created successfully.');
@@ -88,9 +99,16 @@ class UserController extends Controller
     public function edit(string $id): Factory|View
     {
         $users = $this->userService->find($id);
-        $courses = Course::all();
+
+        if (! Gate::allows('user.update')) {
+            return abort(403);
+        }
+
+        $courses = $this->courseService->getCourse();
+        $roles = $this->roleService->getRole();
         $selectedCourses = $users->courses->pluck('id')->toArray();
-        return view('admin.users.edit', compact('users', 'courses', 'selectedCourses'));
+        $selectedRoles = $users->roles->pluck('id')->toArray();
+        return view('admin.users.edit', compact('users', 'courses', 'roles', 'selectedCourses', 'selectedRoles'));
     }
 
     /**
@@ -102,7 +120,6 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, string $id): Redirector|RedirectResponse
     {
-       
         $userData = $request->validated();
         $this->userService->update($id, $userData,);
         return redirect()->route('users.index')->with('sms', 'User updated successfully.');
@@ -116,6 +133,10 @@ class UserController extends Controller
      */
     public function destroy(string $id): Redirector|RedirectResponse
     {
+        if (! Gate::allows('user.delete')) {
+            return abort(403);
+        }
+        
         $this->userService->delete($id);
         return redirect()->back()->with('sms', 'User deleted successfully.');
     }

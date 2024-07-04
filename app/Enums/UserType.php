@@ -9,9 +9,10 @@ use BenSampo\Enum\Enum;
  * @method static static OptionTwo()
  * @method static static OptionThree()
  */
-final class UserType extends Enum
+enum UserType: string
 {
-    const ADMIN = 'admin';
-    const USER = 'user';
-    const GUEST = 'guest';
+    case ADMIN = 'admin';
+    case USER = 'user';
+    case GUEST = 'guest';
+    case CUSTOMER = 'customer';
 }

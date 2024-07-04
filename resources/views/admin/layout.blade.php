@@ -25,6 +25,14 @@
             top: 70px;
             right: 20px;
             z-index: 10000;
+            
+        }
+        .table-striped tr:nth-child(odd) {
+            background-color: #f8f9fa;
+        }
+
+        .table-striped th {
+            background-color: #dee2e6;
         }
 
         @media screen and (max-width:991px) {

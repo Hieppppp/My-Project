@@ -30,6 +30,8 @@ class UpdateUserRequest extends FormRequest
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'courses' => 'array',
             'courses.*' => 'exists:courses,id',
+            'roles' => 'array',
+            'roles.*' => 'exists:roles,id',
         ];
     }
 

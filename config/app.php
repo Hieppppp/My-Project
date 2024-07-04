@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Facade;
 
+
 return [
 
     /*
@@ -165,6 +166,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        
+        
         
     ])->toArray(),
 

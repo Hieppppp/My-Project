@@ -11,11 +11,14 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Services\Course\CourseServiceInterface;
 use Illuminate\Console\View\Components\Factory;
 use Illuminate\Routing\Redirector;
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class CourseController extends Controller
 {
+    public $user;
     /**
      * __construct
      *
@@ -24,6 +27,7 @@ class CourseController extends Controller
     public function __construct(
         public CourseServiceInterface $courseService
     ) {
+        
     }
 
     /**
@@ -34,6 +38,7 @@ class CourseController extends Controller
      */
     public function index(CourseIndexRequest $request): Factory|View
     {
+    
         $validated = $request->validated();
         $searchKeyword = $validated['keywords'] ?? null;
         $itemsPerPage = $validated['per_page'] ?? 10;
@@ -47,6 +52,7 @@ class CourseController extends Controller
      */
     public function create(): Factory|View
     {
+        
         return view('admin.courses.create');
     }
     /**
@@ -57,6 +63,7 @@ class CourseController extends Controller
      */
     public function store(CreateCourseRequest $request): Redirector|RedirectResponse
     {
+       
         $params = $request->validated();
         $this->courseService->create($params);
         return redirect()->route('courses.index')->with('sms', 'Course created successfully.');
@@ -69,6 +76,7 @@ class CourseController extends Controller
      */
     public function show(int $id): Factory|View
     {
+       
         $course = $this->courseService->find($id);
         return view('admin.courses.show', compact('course'));
     }
@@ -81,6 +89,7 @@ class CourseController extends Controller
      */
     public function edit(int $id): Factory|View
     {
+       
         $course = $this->courseService->find($id);
         return view('admin.courses.edit', compact('course'));
     }
@@ -94,6 +103,7 @@ class CourseController extends Controller
      */
     public function update(UpdateCourseRequest $request, int $id): Redirector|RedirectResponse
     {
+        
         $params = $request->validated();
         $this->courseService->update($id, $params);
         return redirect()->route('courses.index')->with('sms', 'Course updated successfully.');
@@ -107,6 +117,7 @@ class CourseController extends Controller
      */
     public function destroy(int $id): Redirector|RedirectResponse
     {
+        
         $this->courseService->delete($id);
         return redirect()->back()->with('sms', 'Course deleted successfully.');
     }
@@ -118,6 +129,7 @@ class CourseController extends Controller
      */
     public function export()
     {
+        
         return Excel::download($this->courseService->export(), 'course.xlsx');
     }
 

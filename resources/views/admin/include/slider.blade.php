@@ -7,18 +7,25 @@
             </button>
             <div class="collapse navbar-collapse flex-column mt-2 align-items-stretch" id="adminDropdown">
                 <ul class="list-unstyled">
+                    
                     <li class="mb-4">
-                        <a class="btn btn-outline-light text-decoration-none w-100 mb-2" data-bs-toggle="collapse" href="#courseDropdown"  aria-expanded="false" aria-controls="multiCollapseExample1"><i class="bi bi-bookmark-heart-fill"></i> Course</a>
-                        <ul id="courseDropdown" class="collapse list-unstyled">
-                            <!-- <li class="mb-3 btn w-100"><a class="text-decoration-none text-dark btn-hover" href=" {{ route('courses.create') }} ">Add Course</a></li> -->
-                            <li class="mb-3 btn w-100"><a class="text-decoration-none text-dark" href=" {{ route('courses.store') }} ">Manage Courses</a></li>
-                        </ul>
-                    </li>
-                    <li class="mb-4">
-                        <a class="btn btn-outline-light text-decoration-none w-100 mb-2" data-bs-toggle="collapse" href="#userDropdown" aria-expanded="false" aria-controls="multiCollapseExample1"><i class="bi bi-person-circle"></i> User</a>
+                        <a class="btn btn-outline-light text-decoration-none w-100 mb-2" data-bs-toggle="collapse" href="#userDropdown" aria-expanded="false" aria-controls="multiCollapseExample1"><i class="bi bi-person-circle"></i> User </a>
                         <ul id="userDropdown" class="collapse list-unstyled">
                             <!-- <li class="mb-3 btn w-100"><a class="text-decoration-none text-dark btn-hover" href=" {{ route('users.create') }} ">Add User</a></li> -->
-                            <li class="mb-3 btn w-100"><a class="text-decoration-none text-dark btn-hover" href=" {{ route('users.store') }} ">Manage Users</a></li>
+                            <li class="mb-3 btn w-100"><a class="text-decoration-none text-dark btn-hover" href=" {{ route('users.store') }} ">User Management</a></li>
+                            @can('users_manage')
+                            <li class="mb-3 btn w-100"><a class="text-decoration-none text-dark btn-hover" href=" {{ route('roles.store') }} ">Role Management</a></li>
+                            <li class="mb-3 btn w-100"><a class="text-decoration-none text-dark btn-hover" href=" {{ route('permissions.store') }} ">Permission Management</a></li>
+                            @endcan
+                        </ul>
+                    </li>
+                    
+
+                    <li class="mb-4">
+                        <a class="btn btn-outline-light text-decoration-none w-100 mb-2" data-bs-toggle="collapse" href="#courseDropdown"  aria-expanded="false" aria-controls="multiCollapseExample1"><i class="bi bi-bookmark-heart-fill"></i> Course </a>
+                        <ul id="courseDropdown" class="collapse list-unstyled">
+                            <!-- <li class="mb-3 btn w-100"><a class="text-decoration-none text-dark btn-hover" href=" {{ route('courses.create') }} ">Add Course</a></li> -->
+                            <li class="mb-3 btn w-100"><a class="text-decoration-none text-dark" href=" {{ route('courses.store') }} ">Course Management</a></li>
                         </ul>
                     </li>
                 </ul>
