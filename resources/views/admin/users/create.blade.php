@@ -5,6 +5,11 @@ Add User
 @section('content')
 
 <div class="card-body">
+    <div style="font: size 14px;">
+        <a href="{{ route('users.index') }}" class="text-dark text-decoration-none"><i class="bi bi-house-door-fill"></i> Home</a>
+        <span class="text-dark"> > </span>
+        <a href="" class="text-dark text-decoration-none">Create New User</a>
+    </div>
     <h2>Create New User</h2>
     <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -61,10 +66,10 @@ Add User
                     <label for="" class="fw-bold">Role Type</label>
                     <div class="p-2">
                         @foreach ($roles as $role)
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="roles[]" value="{{ $role->id }}">
-                                <label class="form-check-label" for="check{{ $role->id }}">{{ $role->name }}</label>
-                            </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="roles[]" value="{{ $role->id }}">
+                            <label class="form-check-label" for="check{{ $role->id }}">{{ $role->name }}</label>
+                        </div>
                         @endforeach
                     </div>
                 </div>

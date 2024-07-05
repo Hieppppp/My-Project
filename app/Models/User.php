@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Enums\RoleName;
+use App\Enums\UserRole;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -23,35 +24,36 @@ class User extends Authenticatable
         'phone',
         'avatar',
     ];
-    
+
     /**
      * roles
      *
      * @return BelongsToMany
      */
-    public function roles(): BelongsToMany 
+    public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class, 'user_role');
-    }    
+    }
     /**
      * groups
      *
      * @return BelongsToMany
      */
-    public function groups(): BelongsToMany 
+    public function groups(): BelongsToMany
     {
         return $this->belongsToMany(Group::class, 'user_group');
     }
-    
+
     /**
      * courses
      *
      * @return BelongsToMany
      */
-    public function courses() {
+    public function courses()
+    {
         return $this->belongsToMany(Course::class);
     }
-    
+
     /**
      * isAdmin
      * 
@@ -59,9 +61,9 @@ class User extends Authenticatable
      */
     public function isAdmin(): bool
     {
-        return $this->hasRole(RoleName::ADMIN);
+        return $this->hasRole(UserRole::ADMIN());
     }
-    
+
     /**
      * isUser
      *
@@ -69,9 +71,9 @@ class User extends Authenticatable
      */
     public function isUser(): bool
     {
-        return $this->hasRole(RoleName::USER);
+        return $this->hasRole(UserRole::USER());
     }
-    
+
     /**
      * isCustomer
      *
@@ -79,43 +81,20 @@ class User extends Authenticatable
      */
     public function isCustomer(): bool
     {
-        return $this->hasRole(RoleName::CUSTOMER);
+        return $this->hasRole(UserRole::CUSTOMER());
     }
-    
+
     /**
      * hasRole
      *
-     * @param  RoleName $role
+     * @param  UserRole $role
      * @return bool
      */
-    public function hasRole(RoleName $role): bool
+    public function hasRole(UserRole $role): bool
     {
         return $this->roles()->where('name', $role->value)->exists();
     }
-    
-    // /**
-    //  * permissions
-    //  *
-    //  * @return array
-    //  */
-    // public function permissions(): array
-    // {
-    //     return $this->roles()->with('permissions')->get()
-    //         ->map(function ($role) {
-    //             return $role->permissions->pluck('name');
-    //         })->flatten()->values()->unique()->toArray();
-    // }
-    
-    // /**
-    //  * hasPermission
-    //  *
-    //  * @param  string $permission
-    //  * @return bool
-    //  */
-    // public function hasPermission(string $permission): bool
-    // {
-    //     return in_array($permission, $this->permissions(), true);
-    // }
+
 
     public function permissions()
     {
@@ -127,19 +106,9 @@ class User extends Authenticatable
     {
         return $this->permissions()->contains($permission);
     }
-    
-    // public function hasPermission(string $permission): bool
-    // {
-    //     return $this->roles()->whereHas('permissions', function ($query) use ($permission) {
-    //         $query->where('name', $permission);
-    //     })->exists();
-    // }
 
-    // public function getPermissions(): array
-    // {
-    //     return $this->roles()->with('permissions')->get()
-    //         ->pluck('permissions')->flatten()->pluck('name')->unique()->toArray();
-    // }
-
-    
+    public function isAssociatedWithCourse(Course $course): bool
+    {
+        return $this->courses->contains($course);
+    }
 }

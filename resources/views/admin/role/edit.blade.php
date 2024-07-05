@@ -4,6 +4,13 @@ Edit Role
 @endsection
 @section('content')
 <div class="card-body">
+    <div class="mb-4">
+        <div style="font: size 14px;">
+            <a href="{{ route('users.index') }}" class="text-dark text-decoration-none"><i class="bi bi-house-door-fill"></i> Home</a>
+            <span class="text-dark"> > </span>
+            <a href="" class="text-dark text-decoration-none">Edit Role</a>
+        </div>
+    </div>
     <form action="{{ route('roles.update', $roles->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')

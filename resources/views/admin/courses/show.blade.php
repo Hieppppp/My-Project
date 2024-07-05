@@ -4,6 +4,11 @@ Detail Course
 @endsection
 @section('content')
 <div class="container">
+    <div style="font: size 14px;">
+        <a href="{{ route('courses.index') }}" class="text-dark text-decoration-none"><i class="bi bi-house-door-fill"></i> Home</a>
+        <span class="text-dark"> > </span>
+        <a href="" class="text-dark text-decoration-none">Detail Courses</a>
+    </div>
     <h1>Detail Courses</h1>
     <div class="card">
         <div class="card-header">

@@ -14,6 +14,7 @@ Courses
 
 <div class="container">
     <div class="row">
+        @can('admin')
         <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group mb-4">
@@ -30,20 +31,22 @@ Courses
                 <p class="text-danger">{{ session('error_message') }}</p>
             @endif
         </form>
+        @endcan
         <div class="row mb-3">
             <div class="d-flex justify-content-between align-items-center w-100">
                 <h3>List Courses</h3>
                 <div>
-                    @can('create', $courses)
+                   @can('admin')
                     <a href="{{ route('courses.create') }}" class="btn btn-outline-primary">
                         <i class="bi bi-plus-circle-fill"></i>
                         <span>New Course</span>
                     </a>
-                    @endcan
+                  
                     <button class="btn btn-outline-danger">
                         <i class="bi bi-trash"></i>
                         <span>Delete All</span>
                     </button>
+                    @endcan
                 </div>
             </div>
         </div>
@@ -99,21 +102,19 @@ Courses
                 <td>{{ \Carbon\Carbon::parse($course->start_date)->format('d-m-Y') }}</td>
                 <td>{{ \Carbon\Carbon::parse($course->end_date)->format('d-m-Y') }}</td>
                 <td>
-                    @can('view', $course)
                     <a href="{{ route('courses.show', $course->id) }}" class="btn btn-outline-info">
                         <i class="bi bi-eye" title="Click to views"></i>
                     </a>
-                    @endcan
-                    @can('update', $course)
+                   @can(App\Enums\PermissionName::UPDATE_COURSE)
                     <a href="{{ route('courses.edit', $course->id) }}" class="btn btn-outline-success">
                         <i class="bi bi-pencil-square" title="Click to edit"></i>
                     </a>
-                    @endcan
-                    @can('delete', $course)
+                   @endcan
+                   @can(App\Enums\PermissionName::DELETE_COURSE)
                     <a class="btn btn-outline-danger" id="delete" href="{{ route('courses.destroy', $course->id) }}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this course?')) document.getElementById('delete-form-{{ $course->id }}').submit();">
                         <i class="bi bi-trash" title="Click to delete"></i>
                     </a>
-                    @endcan
+                   @endcan
                     <form id="delete-form-{{ $course->id }}" action="{{ route('courses.destroy', $course->id) }}" method="POST" style="display: none;">
                         @csrf
                         @method('DELETE')

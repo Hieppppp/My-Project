@@ -102,17 +102,17 @@ User Management
                     @endif
                 </td>
                 <td>
-                    @can('view', $user)
+                    
                     <a href="{{ route('users.show', $user->id) }}" class="btn btn-outline-info">
                         <i class="bi bi-eye" title="Click to views"></i>
                     </a>
-                    @endcan
-                    @can('update', $user)
+                   
+                    <!-- @can(App\Enums\PermissionName::UPDATE, $user)
                     <a href="{{ route('users.edit', $user->id) }}" class="btn btn-outline-success">
                         <i class="bi bi-pencil-square" title="Click to edit"></i>
                     </a>
-                    @endcan
-                    @can('delete', $user)
+                    @endcan -->
+                    @can(App\Enums\PermissionName::DELETE, $user)
                     <a class="btn btn-outline-danger" id="delete" href="{{ route('users.destroy', $user->id) }}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this user?')) document.getElementById('delete-form-{{ $user->id }}').submit();">
                         <i class="bi bi-trash" title="Click to delete"></i>
                     </a>

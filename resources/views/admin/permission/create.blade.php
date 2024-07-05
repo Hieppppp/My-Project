@@ -4,6 +4,11 @@ Add New Permission
 @endsection
 @section('content')
 <div class="card-body">
+    <div style="font: size 14px;">
+        <a href="{{ route('users.index') }}" class="text-dark text-decoration-none"><i class="bi bi-house-door-fill"></i> Home</a>
+        <span class="text-dark"> > </span>
+        <a href="" class="text-dark text-decoration-none">Create New Permission</a>
+    </div>
     <h2>Create New Permission</h2>
     <form action="{{ route('permissions.store')}}" method="POST">
         @csrf

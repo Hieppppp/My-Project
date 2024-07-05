@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\CreateUserRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
 use App\Http\Requests\Users\UserIndexRequest;
-use App\Models\Course;
 use App\Models\User;
 use App\Services\Course\CourseServiceInterface;
 use App\Services\Role\RoleServiceInterface;
@@ -46,17 +45,17 @@ class UserController extends Controller
         $users = $this->userService->pagination($searchKeyword, $itemsPerPage);
         return view('admin.users.index', compact('users', 'itemsPerPage'));
     }
-    
-  
+       
     /**
      * create
      *
-     * @return Factory|View
+     * @param  User $user
+     * @return Factory
      */
     public function create(User $user): Factory|View
     {
         
-        Gate::authorize('create', $user);
+        
         $roles = $this->roleService->getRole();
         $courses = $this->courseService->getCourse();
         return view('admin.users.create', compact('roles', 'courses'));
@@ -97,7 +96,6 @@ class UserController extends Controller
     public function edit(string $id): Factory|View
     {
         $users = $this->userService->find($id);
-
         $courses = $this->courseService->getCourse();
         $roles = $this->roleService->getRole();
         $selectedCourses = $users->courses->pluck('id')->toArray();
@@ -127,10 +125,7 @@ class UserController extends Controller
      */
     public function destroy(string $id): Redirector|RedirectResponse
     {
-        if (! Gate::allows('user.delete')) {
-            return abort(403);
-        }
-        
+       
         $this->userService->delete($id);
         return redirect()->back()->with('sms', 'User deleted successfully.');
     }

@@ -7,7 +7,11 @@ use App\Http\Requests\Role\CreateRoleRequest;
 use App\Http\Requests\Role\UpdateRoleRequest;
 use App\Services\Permission\PermissionServiceInterface;
 use App\Services\Role\RoleServiceInterface;
+use Carbon\Factory;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\View\View;
 
 class RoleController extends Controller
 {
@@ -18,11 +22,13 @@ class RoleController extends Controller
     {
         
     }
-    
+      
     /**
-     * Display a listing of the resource.
+     * index
+     *
+     * @return Factory
      */
-    public function index()
+    public function index(): Factory|View
     {
         
        
@@ -31,41 +37,55 @@ class RoleController extends Controller
         return view('admin.role.index', compact('roles', 'permissions'));
     }
 
+       
     /**
-     * Show the form for creating a new resource.
+     * create
+     *
+     * @return Factory
      */
-    public function create()
+    public function create(): Factory|View
     {
         
         $permissions = $this->permissionService->getPermission();
         return view('admin.role.create', compact('permissions'));
     }
 
+      
     /**
-     * Store a newly created resource in storage.
+     * store
+     *
+     * @param  CreateRoleRequest $request
+     * @return Redirector
      */
-    public function store(CreateRoleRequest $request)
+    public function store(CreateRoleRequest $request): Redirector|RedirectResponse
     {
         
         $data = $request->validated();
         $this->roleService->create($data);
         return redirect()->route('roles.index')->with('sms', 'Role created successfully.');
     }
-
+  
     /**
-     * Display the specified resource.
+     * show
+     *
+     * @param  string $id
+     * @return Factory
      */
-    public function show(string $id)
+    public function show(string $id): Factory|View
     {
         
         $roles = $this->roleService->findById($id);
         return view('admin.role.show', compact('roles'));
     }
 
+  
     /**
-     * Show the form for editing the specified resource.
+     * edit
+     *
+     * @param  string $id
+     * @return Factory|View
      */
-    public function edit(string $id)
+    public function edit(string $id): Factory|View
     {
        
         $roles = $this->roleService->findById($id);
@@ -76,34 +96,53 @@ class RoleController extends Controller
         return view('admin.role.edit', compact('roles', 'permissions', 'selectedPermissions'));
     }
 
+     
     /**
-     * Update the specified resource in storage.
+     * update
+     *
+     * @param  UpdateRoleRequest $request
+     * @param  string $id
+     * @return Redirector|RedirectResponse
      */
-    public function update(UpdateRoleRequest $request, string $id)
+    public function update(UpdateRoleRequest $request, string $id): Redirector|RedirectResponse
     {
        
         $data = $request->validated();
         $this->roleService->update($id, $data);
         return redirect()->route('roles.index')->with('sms', 'Role updated successfully.');
     }
-
+    
     /**
-     * Remove the specified resource from storage.
+     * destroy
+     *
+     * @param  string $id
+     * @return Redirector
      */
-    public function destroy(string $id)
+    public function destroy(string $id): Redirector|RedirectResponse
     {
         
         $this->roleService->delete($id);
         return redirect()->back()->with('sms', 'Role deleted successfully.');
-    }
-
-    public function activate(int $id)
+    }    
+    /**
+     * activate
+     *
+     * @param  int $id
+     * @return Redirector|RedirectResponse
+     */
+    public function activate(int $id): Redirector|RedirectResponse
     {
         $this->roleService->active($id);
         return redirect()->back()->with('sms', 'Role activated successfully.');
     }
-
-    public function deactivate(int $id)
+    
+    /**
+     * deactivate
+     *
+     * @param  int $id
+     * @return Redirector|RedirectResponse
+     */
+    public function deactivate(int $id): Redirector|RedirectResponse
     {
         $this->roleService->inactive($id);
         return redirect()->back()->with('sms', 'Role deactivated successfully.');

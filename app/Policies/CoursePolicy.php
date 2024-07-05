@@ -2,18 +2,20 @@
 
 namespace App\Policies;
 
+use App\Enums\PermissionName;
 use App\Models\Course;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CoursePolicy
 {
+    use HandlesAuthorization;
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermission('course.viewAny');
+        return $user->hasPermission(PermissionName::VIEWANY_COURSE);
     }
 
     /**
@@ -21,7 +23,7 @@ class CoursePolicy
      */
     public function view(User $user, Course $course): bool
     {
-        return $user->hasPermission('course.view') || $user->id === $course->user_id;
+        return $user->hasPermission(PermissionName::VIEW_COURSE) || $user->isAssociatedWithCourse($course);
     }
 
     /**
@@ -29,7 +31,7 @@ class CoursePolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermission('course.create');
+        return $user->hasPermission(PermissionName::CREATE_COURSE);
     }
 
     /**
@@ -37,7 +39,7 @@ class CoursePolicy
      */
     public function update(User $user, Course $course): bool
     {
-        return $user->id === $course->user_id;
+        return $user->hasPermission(PermissionName::UPDATE_COURSE) || $user->isAssociatedWithCourse($course);
     }
 
     /**
@@ -45,7 +47,7 @@ class CoursePolicy
      */
     public function delete(User $user, Course $course): bool
     {
-        return $user->id === $course->user_id;
+        return $user->hasPermission(PermissionName::DELETE_COURSE) || $user->isAssociatedWithCourse($course);
     }
 
     /**
@@ -53,7 +55,7 @@ class CoursePolicy
      */
     public function restore(User $user, Course $course): bool
     {
-        return $user->id === $course->user_id;
+        return $user->hasPermission(PermissionName::RESTORE_COURSE) || $user->isAssociatedWithCourse($course);
     }
 
     /**
@@ -61,6 +63,6 @@ class CoursePolicy
      */
     public function forceDelete(User $user, Course $course): bool
     {
-        return $user->id === $course->user_id;
+        return $user->hasPermission(PermissionName::FORCEDELETE_COURSE) || $user->isAssociatedWithCourse($course);
     }
 }

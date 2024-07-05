@@ -120,15 +120,27 @@ class PermissionController extends Controller
         $this->permissionService->delete($id);
         return redirect()->back()->with('sms', 'Permission deleted successfully.');
     }
-
-    public function activate(int $id)
+    
+    /**
+     * activate
+     *
+     * @param  int $id
+     * @return Redirector
+     */
+    public function activate(int $id): Redirector|RedirectResponse
     {
       
         $this->permissionService->active($id);
         return redirect()->back()->with('sms', 'Permission activated successfully.');
     }
-
-    public function deactivate(int $id)
+    
+    /**
+     * deactivate
+     *
+     * @param  int $id
+     * @return Redirector
+     */
+    public function deactivate(int $id): Redirector|RedirectResponse
     {
        
         $this->permissionService->inactive($id);

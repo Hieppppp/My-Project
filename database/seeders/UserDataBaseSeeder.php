@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\RoleName;
+use App\Enums\UserRole;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -28,6 +29,6 @@ class UserDataBaseSeeder extends Seeder
             'date_of_birth' => '2003-07-02',
             'phone' => '09999999999',
             'avatar' => '1718272414.jpg',
-        ])->roles()->sync(Role::where('name', RoleName::ADMIN->value)->first());
+        ])->roles()->sync(Role::where('name', UserRole::ADMIN)->first()->id);
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Enums\RoleName;
+use App\Enums\PermissionName;
+use App\Enums\UserRole;
 use Illuminate\Database\Seeder;
-use App\Enums\UserType;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Support\Collection;
@@ -17,9 +17,13 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         $this->createAdminRole();
+        $this->createUserRole();
+        $this->createCustomerRole();
+       
+
     }
 
-    protected function createRole(RoleName $role, Collection $permissions): void
+    protected function createRole(UserRole $role, Collection $permissions): void
     {
         $newRole = Role::create([
             'name' => $role->value,
@@ -31,10 +35,22 @@ class RoleSeeder extends Seeder
 
     protected function createAdminRole(): void
     {
-        $permissions = Permission::query()
-            ->where('name', 'like', 'user.%')
-            ->pluck('id');
-        $this->createRole(RoleName::ADMIN, $permissions);
+        $permission = Permission::pluck('id');
+        $this->createRole(UserRole::ADMIN(), $permission);
     }
+
+    protected function createUserRole(): void
+    {
+        $permission = Permission::pluck('id');
+        $this->createRole(UserRole::USER(), $permission);
+    }
+
+    protected function createCustomerRole(): void
+    {
+        $permission = Permission::pluck('id');
+        $this->createRole(UserRole::CUSTOMER(), $permission);
+    }
+
+    
 
 }
