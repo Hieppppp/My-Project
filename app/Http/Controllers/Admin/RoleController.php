@@ -24,9 +24,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        if (! Gate::allows('users_manage')) {
-            return abort(403);
-        }
+        
        
         $roles = $this->roleService->getRole();
         $permissions = $this->permissionService->getPermission();
@@ -38,9 +36,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        if (! Gate::allows('users_manage')) {
-            return abort(403);
-        }
+        
         $permissions = $this->permissionService->getPermission();
         return view('admin.role.create', compact('permissions'));
     }
@@ -61,9 +57,7 @@ class RoleController extends Controller
      */
     public function show(string $id)
     {
-        if (! Gate::allows('users_manage')) {
-            return abort(403);
-        }
+        
         $roles = $this->roleService->findById($id);
         return view('admin.role.show', compact('roles'));
     }
@@ -73,9 +67,7 @@ class RoleController extends Controller
      */
     public function edit(string $id)
     {
-        if (! Gate::allows('users_manage')) {
-            return abort(403);
-        }
+       
         $roles = $this->roleService->findById($id);
 
         $permissions = $this->permissionService->getPermission();
@@ -100,9 +92,7 @@ class RoleController extends Controller
      */
     public function destroy(string $id)
     {
-        if (! Gate::allows('users_manage')) {
-            return abort(403);
-        }
+        
         $this->roleService->delete($id);
         return redirect()->back()->with('sms', 'Role deleted successfully.');
     }

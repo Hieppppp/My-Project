@@ -59,7 +59,7 @@ Edit
                     </select>
                 </div>
             </div>
-            <div class="col-md-4 border p-3">
+            <!-- <div class="col-md-4 border p-3">
                 <div class="form-group mb-3">
                     <label for="role" class="fw-bold">Role Type</label>
                     <div class="p-2">
@@ -72,7 +72,27 @@ Edit
                     </div>
                     <p class="text-danger">{{ $errors->first('roles') }}</p>
                 </div>
+            </div> -->
+            <div class="col-md-4 border p-3">
+                <div class="form-group mb-3">
+                    <label for="role" class="fw-bold">Role Type</label>
+                    <div class="p-2">
+                        @foreach ($roles as $role)
+                            <div class="form-check">
+                                @if (auth()->user()->isAdmin())
+                                    <input class="form-check-input" type="checkbox" name="roles[]" value="{{ $role->id }}" {{ in_array($role->id, old('roles', $selectedRoles)) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="check{{ $role->id }}">{{ $role->name }}</label>
+                                    @else
+                                        <input class="form-check-input" type="checkbox" name="roles[]" value="{{ $role->id }}" {{ in_array($role->id, old('roles', $selectedRoles)) ? 'checked' : '' }} disabled>
+                                        <label class="form-check-label" for="check{{ $role->id }}">{{ $role->name }}</label>
+                                    @endif
+                            </div>
+                        @endforeach
+                    </div>
+                    <p class="text-danger">{{ $errors->first('roles') }}</p>
+                </div>
             </div>
+
         </div>
         <button type="button" class="btn btn-danger m-3" style="width:100px;">Cancel</button>
         <button type="submit" class="btn btn-primary" style="width:100px;">Update</button>

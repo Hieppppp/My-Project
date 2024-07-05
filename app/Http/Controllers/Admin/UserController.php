@@ -55,9 +55,7 @@ class UserController extends Controller
      */
     public function create(User $user): Factory|View
     {
-        // if (! Gate::allows('user.create')) {
-        //     return abort(403);
-        // }
+        
         Gate::authorize('create', $user);
         $roles = $this->roleService->getRole();
         $courses = $this->courseService->getCourse();
@@ -99,10 +97,6 @@ class UserController extends Controller
     public function edit(string $id): Factory|View
     {
         $users = $this->userService->find($id);
-
-        if (! Gate::allows('user.update')) {
-            return abort(403);
-        }
 
         $courses = $this->courseService->getCourse();
         $roles = $this->roleService->getRole();

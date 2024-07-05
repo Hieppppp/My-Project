@@ -99,9 +99,9 @@ class UserService extends BaseService implements UserServiceInterface
             $existingUser->roles()->sync($rolesIds);
         }
 
-        if (isset($user['avatar']) && $userData['avatar'] instanceof UploadedFile) {
+        if (isset($userData['avatar']) && $userData['avatar'] instanceof UploadedFile) {
             $this->deleteOldAvatar($existingUser->avatar);
-            $user['avatar'] = $this->uploadAvatar($userData['avatar']);
+            $userData['avatar'] = $this->uploadAvatar($userData['avatar']);
         }
         return $this->repository->update($id, $userData);
     }

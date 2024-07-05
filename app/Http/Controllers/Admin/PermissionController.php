@@ -26,9 +26,7 @@ class PermissionController extends Controller
      */
     public function index(PermissionIndexRequest $request): Factory|View
     {
-        if (! Gate::allows('users_manage')) {
-            return abort(403);
-        }
+       
         $validated = $request->validated();
         $searchKeyword = $validated['keywords'] ?? null;
         $itemsPerPage = $validated['per_page'] ?? 10;
@@ -43,9 +41,7 @@ class PermissionController extends Controller
      */
     public function create(): Factory|View
     {
-        if (! Gate::allows('users_manage')) {
-            return abort(401);
-        }
+        
         
         return view('admin.permission.create');
     }
@@ -74,9 +70,7 @@ class PermissionController extends Controller
      */
     public function show(string $id): Factory|View
     {
-        if (! Gate::allows('users_manage')) {
-            return abort(403);
-        }
+        
 
         $permission = $this->permissionService->findById($id);
         return view('admin.permission.show', compact('permission'));
@@ -91,9 +85,7 @@ class PermissionController extends Controller
      */
     public function edit(string $id): Factory|View
     {
-        if (! Gate::allows('users_manage')) {
-            return abort(403);
-        }
+        
         $permissions = $this->permissionService->findById($id);
         return view('admin.permission.edit', compact('permissions'));
     }
@@ -123,9 +115,7 @@ class PermissionController extends Controller
      */
     public function destroy(string $id): Redirector|RedirectResponse
     {
-        if (! Gate::allows('users_manage')) {
-            return abort(403);
-        }
+        
         
         $this->permissionService->delete($id);
         return redirect()->back()->with('sms', 'Permission deleted successfully.');
