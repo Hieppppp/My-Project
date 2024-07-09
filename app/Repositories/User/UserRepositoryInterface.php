@@ -55,6 +55,14 @@ interface UserRepositoryInterface
      * @return LengthAwarePaginator
      */
     public function pagination(?string $keyword, int $perPage): LengthAwarePaginator;
+    
+    /**
+     * findByEmail
+     *
+     * @param  string $email
+     * @return User
+     */
+    public function findByEmail(string $email): ?User;
 
   
 }

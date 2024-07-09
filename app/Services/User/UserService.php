@@ -2,13 +2,17 @@
 
 namespace App\Services\User;
 
-
+use App\Enums\UserRole;
 use App\Models\User;
+use App\Models\VerificationToken;
 use App\Repositories\BaseRepository;
 use App\Services\BaseService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\UploadedFile;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 /**
  * [Description UserService]
@@ -155,6 +159,69 @@ class UserService extends BaseService implements UserServiceInterface
     {
         if ($avatar && file_exists(public_path('avatar/' . $avatar))) {
             unlink(public_path('avatar/' . $avatar));
+        }
+    }
+    
+    /**
+     * register
+     *
+     * @param  array $data
+     * @return User
+     */
+    public function register(array $data): User
+    {
+        $user = new User();
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->password = Hash::make($data['password']);
+        $user->date_of_birth = $data['date_of_birth'] ?? date('Y-m-d');
+        $user->phone = $data['phone'] ?? 'null';
+        $user->avatar = $data['avatar'] ?? 'null';
+        $user->save();
+
+        $user->assignRole(UserRole::USER);
+
+        $token = base64_encode(Str::random(64));
+
+        VerificationToken::create([
+            'user_type' => UserRole::USER,
+            'email' => $data['email'],
+            'token' => $token,
+        ]);
+
+        $actionLink = route('user.verify', ['token' => $token]);
+
+        $mailData = [
+            'action_links' => $actionLink,
+            'name' => $data['name'],
+            'email' => $data['email'],
+        ];
+
+        Mail::send('admin.mail.verify_email', $mailData, function ($message) use ($mailData) {
+            $message->to($mailData['email']);
+            $message->subject('Verify Your Email');
+        });
+
+        return $user;
+    }
+
+    public function verifyUser($token)
+    {
+        $verifyToken = VerificationToken::where('token', $token)->first();
+
+        if (!is_null($verifyToken)) {
+            $user = User::where('email', $verifyToken->email)->first();
+
+            if (!$user->verified) {
+                $user->verified = 1;
+                $user->save();
+
+                return 'Email has been verified';
+            } else {
+                return 'Email has already been verified';
+            }
+        } else {
+            return 'Invalid verification code';
         }
     }
 }

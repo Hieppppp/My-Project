@@ -58,5 +58,21 @@ interface UserServiceInterface
      * @return LengthAwarePaginator
      */
     public function pagination(?string $keyword, int $perPage): LengthAwarePaginator;
+    
+    /**
+     * register
+     *
+     * @param  array $data
+     * @return User
+     */
+    public function register(array $data): User;
+        
+    /**
+     * verifyUser
+     *
+     * @param  string $token
+     * @return void
+     */
+    public function verifyUser(string $token);
 
 }

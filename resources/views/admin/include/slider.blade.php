@@ -13,7 +13,7 @@
                         <ul id="userDropdown" class="collapse list-unstyled">
                             <!-- <li class="mb-3 btn w-100"><a class="text-decoration-none text-dark btn-hover" href=" {{ route('users.create') }} ">Add User</a></li> -->
                             <li class="mb-3 btn w-100"><a class="text-decoration-none text-dark btn-hover" href=" {{ route('users.store') }} ">User Management</a></li>
-                            @can('admin')
+                            @can(\App\Enums\UserRole::ADMIN)
                             <li class="mb-3 btn w-100"><a class="text-decoration-none text-dark btn-hover" href=" {{ route('roles.store') }} ">Role Management</a></li>
                             <li class="mb-3 btn w-100"><a class="text-decoration-none text-dark btn-hover" href=" {{ route('permissions.store') }} ">Permission Management</a></li>
                             @endcan

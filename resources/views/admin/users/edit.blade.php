@@ -1,10 +1,8 @@
 @extends('admin.layout')
 @section('title')
-Edit
+Edit User
 @endsection
 @section('content')
-
-
 <div class="card-body">
     <form action="{{ route('users.update', $users->id) }}" method="POST" enctype="multipart/form-data">
         @csrf

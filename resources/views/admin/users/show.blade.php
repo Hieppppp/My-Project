@@ -1,6 +1,6 @@
 @extends('admin.layout')
 @section('title')
-DETAI USER
+Detail User
 @endsection
 @section('content')
 <div id="user-profile-2" class="user-profile">
@@ -10,7 +10,7 @@ DETAI USER
         <a href="" class="text-dark text-decoration-none">Detail User</a>
     </div>
     <div class="tabbable">
-        <div class="d-flex justify-content-end">
+        <div class="d-flex justify-content-end" style="margin-right:35px;">
             @can(App\Enums\PermissionName::UPDATE, $users)
             <a href="{{ route('users.edit', $users->id) }}" class="btn btn-outline-primary">
                 <i class="bi bi-pencil-square" title="Click to edit"></i>

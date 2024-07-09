@@ -4,12 +4,13 @@
 <head>
     <title>Login</title>
     <style>
-        .container{
+        .container {
             display: flex;
             justify-content: center;
             align-items: center;
             margin-top: 100px;
         }
+
         .form {
             background-color: #fff;
             display: block;
@@ -92,7 +93,8 @@
         .signup-link a {
             text-decoration: underline;
         }
-        .help{
+
+        .help {
             color: red;
         }
     </style>
@@ -108,7 +110,7 @@
                 <input placeholder="Enter email" type="email" name="email" value="{{ old('email') }}">
                 <p class="help is-danger">{{ $errors->first('email') }}</p>
             </div>
-            
+
             <div class="input-container">
                 <span class="input-group-text" id="inputGroupPrepend">@</span>
                 <input placeholder="Enter password" type="password" name="password">
@@ -117,7 +119,12 @@
             <button class="submit" type="submit">
                 Login
             </button>
-            <p class="text-center mt-3">Create an account? <a href="{{ route('register') }}">Register!</a></p>
+            <div class="d-flex">
+                <p class="text-center mt-3">Create an account? <a href="{{ route('register') }}">Register!</a></p>
+                <a class="btn btn-link" href="{{ route('password.request') }}">
+                    Forgot Password?
+                </a>
+            </div>
         </form>
     </div>
 </body>

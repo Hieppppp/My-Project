@@ -101,4 +101,15 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             ->orWhere('phone', 'like', '%' . $keyword . '%')
             ->paginate($perPage);
     }
+    
+    /**
+     * findByEmail
+     *
+     * @param  string $email
+     * @return User
+     */
+    public function findByEmail(string $email): ?User
+    {
+        return User::where('email', $email)->first();
+    }
 }
