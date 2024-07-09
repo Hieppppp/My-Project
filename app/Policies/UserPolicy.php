@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Enums\PermissionName;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\Response;
 
 class UserPolicy
 {
@@ -24,8 +25,7 @@ class UserPolicy
      */
     public function view(User $user, User $targetUser): bool
     {
-        // return $user->hasPermission('user.view');
-        return $user->hasPermission(PermissionName::VIEW);
+        return $user->id === $targetUser->id || $user->hasPermission(PermissionName::VIEW);
     }
 
     /**
@@ -41,9 +41,7 @@ class UserPolicy
      */
     public function update(User $user, User $targetUser): bool
     {
-        // return $user->hasPermission('user.update');
-        return $user->id === $targetUser->id || $user->hasPermission(PermissionName::UPDATE);
-
+        return $user->id === $targetUser->id;
     }
 
     /**

@@ -19,12 +19,6 @@ class CheckMiddleware
      */
     public function handle(Request $request, Closure $next, ...$permissions): Response
     {
-
-        // foreach ($permissions as $permission) {
-        //     if (!$request->user()->hasPermission($permission)) {
-        //         return abort(403, 'This action is unauthorized');
-        //     }
-        // }
         $user = Auth::user();
 
         if (!$user) {
