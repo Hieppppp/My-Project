@@ -36,17 +36,17 @@ Courses
             <div class="d-flex justify-content-between align-items-center w-100">
                 <h3>List Courses</h3>
                 <div>
-                   @can('admin')
+                    @can(App\Enums\PermissionName::CREATE_COURSE, $courses)
                     <a href="{{ route('courses.create') }}" class="btn btn-outline-primary">
                         <i class="bi bi-plus-circle-fill"></i>
                         <span>New Course</span>
                     </a>
-                  
                     <button class="btn btn-outline-danger">
                         <i class="bi bi-trash"></i>
                         <span>Delete All</span>
                     </button>
                     @endcan
+                    
                 </div>
             </div>
         </div>
@@ -105,12 +105,12 @@ Courses
                     <a href="{{ route('courses.show', $course->id) }}" class="btn btn-outline-info">
                         <i class="bi bi-eye" title="Click to views"></i>
                     </a>
-                   @can(App\Enums\PermissionName::UPDATE_COURSE)
+                   @can(App\Enums\PermissionName::UPDATE_COURSE, $course)
                     <a href="{{ route('courses.edit', $course->id) }}" class="btn btn-outline-success">
                         <i class="bi bi-pencil-square" title="Click to edit"></i>
                     </a>
                    @endcan
-                   @can(App\Enums\PermissionName::DELETE_COURSE)
+                   @can(App\Enums\PermissionName::DELETE_COURSE, $course)
                     <a class="btn btn-outline-danger" id="delete" href="{{ route('courses.destroy', $course->id) }}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this course?')) document.getElementById('delete-form-{{ $course->id }}').submit();">
                         <i class="bi bi-trash" title="Click to delete"></i>
                     </a>

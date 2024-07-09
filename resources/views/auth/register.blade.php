@@ -2,14 +2,15 @@
 <html>
 
 <head>
-    <title>Login</title>
+    <title>Register</title>
     <style>
-        .container{
+        .container {
             display: flex;
             justify-content: center;
             align-items: center;
             margin-top: 100px;
         }
+
         .form {
             background-color: #fff;
             display: block;
@@ -92,7 +93,8 @@
         .signup-link a {
             text-decoration: underline;
         }
-        .help{
+
+        .help {
             color: red;
         }
     </style>
@@ -100,25 +102,33 @@
 
 <body>
     <div class="container">
-        <form class="form" method="POST" action="{{ route('login') }}">
-            <p class="form-title">Login</p>
+        <form class="form" method="POST" action="{{ route('register') }}">
+            <p class="form-title">Register</p>
             @csrf
             <div class="input-container">
-                <span class="input-group-text" id="inputGroupPrepend">@</span>
-                <input placeholder="Enter email" type="email" name="email" value="{{ old('email') }}">
+                <input type="text" id="name" name="name" value="{{ old('name') }}" placeholder="Enter name">
+                <p class="help is-danger">{{ $errors->first('name') }}</p>
+            </div>
+            <div class="input-container">
+                <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="Enter email">
                 <p class="help is-danger">{{ $errors->first('email') }}</p>
             </div>
-            
             <div class="input-container">
-                <span class="input-group-text" id="inputGroupPrepend">@</span>
-                <input placeholder="Enter password" type="password" name="password">
+                <input type="password" id="password" name="password" placeholder="Enter password">
                 <p class="help is-danger">{{ $errors->first('password') }}</p>
             </div>
-            <button class="submit" type="submit">
-                Login
-            </button>
-            <p class="text-center mt-3">Create an account? <a href="{{ route('register') }}">Register!</a></p>
+            <div class="input-container">
+                <input type="password" name="password_confirmation" placeholder="Enter confirm password">
+                <p class="help is-danger">{{ $errors->first('password_confirmation') }}</p>
+            </div>
+            <div class="form-group form-check mb-3">
+                <input type="checkbox" class="form-check-input" name="checkbox" id="terms">
+                <label class="form-check-label" for="terms">I agree to the Terms of Service!</label>
+            </div>
+            <button type="submit" class="submit">Register</button>
+            <p class="text-center mt-3">Do you already have an account? <a href="{{ route('login') }}">LOGIN NOW!</a></p>
         </form>
+
     </div>
 </body>
 

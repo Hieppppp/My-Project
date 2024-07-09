@@ -6,7 +6,7 @@ use App\Enums\UserRole;
 
 return [
     'routes' => [
-        'users.index' => [PermissionName::VIEWANY],
+        'users.index' => [PermissionName::VIEW],
         'users.create' => [PermissionName::CREATE],
         'users.edit' => [PermissionName::UPDATE],
         'users.destroy' => [PermissionName::DELETE],

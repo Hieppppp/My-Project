@@ -4,6 +4,11 @@ DETAI USER
 @endsection
 @section('content')
 <div id="user-profile-2" class="user-profile">
+    <div style="font: size 14px;">
+        <a href="{{ route('users.index') }}" class="text-dark text-decoration-none"><i class="bi bi-house-door-fill"></i> Home</a>
+        <span class="text-dark"> > </span>
+        <a href="" class="text-dark text-decoration-none">Detail User</a>
+    </div>
     <div class="tabbable">
         <div class="d-flex justify-content-end">
             @can(App\Enums\PermissionName::UPDATE, $users)
@@ -24,7 +29,7 @@ DETAI USER
                     </div>
 
                     <div class="col-xs-12 col-sm-9">
-                        <h4 class="blue">
+                        <h4 class="blue" style="margin-left:80px;">
                             <span class="middle">{{ $users->name }}</span>
                         </h4>
 
@@ -40,26 +45,24 @@ DETAI USER
 
                             <div class="profile-info-row">
                                 <div class="profile-info-name"> Email </div>
-
                                 <div class="profile-info-value">
-                                    <i class="fa fa-map-marker light-orange bigger-110"></i>
+                                    <i class="bi bi-envelope light-orange bigger-110"></i>
                                     <span>{{ $users->email }}</span>
                                 </div>
                             </div>
 
                             <div class="profile-info-row">
                                 <div class="profile-info-name"> Phone </div>
-
                                 <div class="profile-info-value">
+                                    <i class="bi bi-telephone-fill light-orange bigger-110"></i>
                                     <span>{{ $users->phone }}</span>
                                 </div>
                             </div>
 
                             <div class="profile-info-row">
                                 <div class="profile-info-name"> Birth </div>
-
                                 <div class="profile-info-value">
-                                    <i class="bi bi-map-marker light-orange bigger-110"></i>
+                                    <i class="bi bi-calendar-date light-orange bigger-110"></i>
                                     <span>{{ \Carbon\Carbon::parse($users->date_of_birth)->format('d-m-Y')  }}</span>
                                 </div>
                             </div>
@@ -78,19 +81,32 @@ DETAI USER
                 </div><!-- /.col -->
             </div><!-- /.row -->
             <div class="row">
-                <div class="col-xs-12 col-sm-6 m-4">
+                <div class="col-xs-12 col-sm-9 card-body">
                     <div class="widget-box transparent">
                         <h3>List Courses:</h3>
-                        <ul>
-                            @foreach ($users->courses as $course)
-                            <li>
-                                <p><strong>Courses:</strong> {{ $course->name }}</p>
-                                <p><strong>Description:</strong> {!! $course->description !!}</p>
-                                <p><strong>Start Date:</strong> {{ \Carbon\Carbon::parse($course->start_date)->format('d-m-Y')  }}</p>
-                                <p><strong>End Date:</strong> {{ \Carbon\Carbon::parse($course->end_date)->format('d-m-Y')  }}</p>
-                            </li>
-                            @endforeach
-                        </ul>
+                        <table id="" class="table table-hover table-striped text-center ">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Courses</th>
+                                    <th>Description</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php($i=1)
+                                @foreach($users->courses as $course)
+                                <tr class='align-middle'>
+                                    <td>{{$i++}}</td>
+                                    <td>{{ $course->name }}</td>
+                                    <td>{!! $course->description !!}</td>
+                                    <td>{{ \Carbon\Carbon::parse($course->start_date)->format('d-m-Y')  }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($course->end_date)->format('d-m-Y')  }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
