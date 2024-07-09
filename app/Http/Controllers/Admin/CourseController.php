@@ -44,6 +44,7 @@ class CourseController extends Controller
         $itemsPerPage = $validated['per_page'] ?? 10;
         $courses = $this->courseService->pagination($searchKeyword, $itemsPerPage);
         return view('admin.courses.index', compact('courses', 'itemsPerPage'));
+        
     }
     /**
      * create

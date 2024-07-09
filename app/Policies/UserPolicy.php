@@ -25,7 +25,7 @@ class UserPolicy
      */
     public function view(User $user, User $targetUser): bool
     {
-        return $user->id === $targetUser->id || $user->hasPermission(PermissionName::VIEW);
+        return $user->id === $targetUser->id;
     }
 
     /**

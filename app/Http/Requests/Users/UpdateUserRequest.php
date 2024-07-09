@@ -24,7 +24,7 @@ class UpdateUserRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $this->route('user'),
-            'password' => 'nullable|string|min:8',
+            'password' => 'nullable|confirmed|string|min:8',
             'date_of_birth' => 'required|date|before_or_equal:today',
             'phone' => ['required', 'regex:/^(03|05|07|08|09|01[2|6|8|9])\d{8}$/'],
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',

@@ -5,7 +5,7 @@ namespace App\Repositories\User;
 use App\Models\User;
 use App\Repositories\BaseRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-
+use Illuminate\Support\Facades\Hash;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
@@ -19,7 +19,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         parent::__construct(User::class);
     }
 
-     /**
+    /**
      * find user by id
      * 
      * @param int $id
@@ -61,6 +61,11 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     public function update(int $id, array $user): User
     {
         $existingUser = User::findOrFail($id);
+        if (isset($user['password']) && !empty($user['password'])) {
+            $user['password'] = bcrypt($user['password']);
+        } else {
+            unset($user['password']);
+        }
         $existingUser->update($user);
         return $existingUser;
     }
@@ -96,6 +101,4 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             ->orWhere('phone', 'like', '%' . $keyword . '%')
             ->paginate($perPage);
     }
-
-    
 }

@@ -71,7 +71,6 @@ User Management
                 <th>Name</th>
                 <th>Profile</th>
                 <th>Role</th>
-                <th>Group</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -93,26 +92,16 @@ User Management
                     @endif
                 </td>
                 <td>
-                    @if(count($user->groups)>0)
-                        @foreach($user->groups as $group)
-                            <span class="badge bg-primary">{{ $group->name }}</span>
-                        @endforeach
-                    @else
-                        <span class="badge bg-danger">No group</span>
-                    @endif
-                </td>
-                <td>
-                    @can(App\Enums\PermissionName::VIEWANY)
+                    @can(App\Enums\PermissionName::VIEWANY, $user)
                     <a href="{{ route('users.show', $user->id) }}" class="btn btn-outline-info">
                         <i class="bi bi-eye" title="Click to views"></i>
                     </a>
                     @endcan
-                    @can(App\Enums\PermissionName::DELETE)
+                    @can(App\Enums\PermissionName::DELETE, $user)
                     <a class="btn btn-outline-danger" id="delete" href="{{ route('users.destroy', $user->id) }}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this user?')) document.getElementById('delete-form-{{ $user->id }}').submit();">
                         <i class="bi bi-trash" title="Click to delete"></i>
                     </a>
                     @endcan
-
                     <form id="delete-form-{{ $user->id }}" action="{{ route('users.destroy', $user->id) }}" method="POST" style="display: none;">
                         @csrf
                         @method('DELETE')

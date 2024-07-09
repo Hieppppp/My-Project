@@ -38,7 +38,7 @@ Edit
                         <p class="text-danger">{{ $errors->first('phone') }}</p>
                     </div>
                 </div>
-
+                
                 <div class="form-group col-md-6">
                     <label for="avatar">Profile:</label>
                     <input type="file" class="form-control" id="avatar" name="avatar" onchange="previewAvatar(event)">
@@ -48,6 +48,7 @@ Edit
                         <img id="avatar-preview" src="#" alt="Image Preview" style="display:none; max-width: 100px; margin-top: 10px;">
                     @endif
                 </div>
+
                 <div class="form-group mb-4">
                     <label for="courses" class="fw-bold">List Courses:</label>
                     <select class="form-select" name="courses[]" id="multiple-select-custom-field" data-placeholder="Choose anything" multiple>
@@ -59,34 +60,20 @@ Edit
                     </select>
                 </div>
             </div>
-            <!-- <div class="col-md-4 border p-3">
-                <div class="form-group mb-3">
-                    <label for="role" class="fw-bold">Role Type</label>
-                    <div class="p-2">
-                        @foreach ($roles as $role)
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="roles[]" value="{{ $role->id }}" {{ in_array($role->id, old('roles', $selectedRoles)) ? 'checked' : '' }}>
-                                <label class="form-check-label" for="check{{ $role->id }}">{{ $role->name }}</label>
-                            </div>
-                        @endforeach
-                    </div>
-                    <p class="text-danger">{{ $errors->first('roles') }}</p>
-                </div>
-            </div> -->
             <div class="col-md-4 border p-3">
                 <div class="form-group mb-3">
                     <label for="role" class="fw-bold">Role Type</label>
                     <div class="p-2">
                         @foreach ($roles as $role)
-                            <div class="form-check">
-                                @if (auth()->user()->isAdmin())
-                                    <input class="form-check-input" type="checkbox" name="roles[]" value="{{ $role->id }}" {{ in_array($role->id, old('roles', $selectedRoles)) ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="check{{ $role->id }}">{{ $role->name }}</label>
-                                    @else
-                                        <input class="form-check-input" type="checkbox" name="roles[]" value="{{ $role->id }}" {{ in_array($role->id, old('roles', $selectedRoles)) ? 'checked' : '' }} disabled>
-                                        <label class="form-check-label" for="check{{ $role->id }}">{{ $role->name }}</label>
-                                    @endif
-                            </div>
+                        <div class="form-check">
+                            @if (auth()->user()->isAdmin())
+                                <input class="form-check-input" type="checkbox" name="roles[]" value="{{ $role->id }}" {{ in_array($role->id, old('roles', $selectedRoles)) ? 'checked' : '' }}>
+                                <label class="form-check-label" for="check{{ $role->id }}">{{ $role->name }}</label>
+                            @else
+                                <input class="form-check-input" type="checkbox" name="roles[]" value="{{ $role->id }}" {{ in_array($role->id, old('roles', $selectedRoles)) ? 'checked' : '' }} disabled>
+                                <label class="form-check-label" for="check{{ $role->id }}">{{ $role->name }}</label>
+                                @endif
+                        </div>
                         @endforeach
                     </div>
                     <p class="text-danger">{{ $errors->first('roles') }}</p>
