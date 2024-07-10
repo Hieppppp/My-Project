@@ -22,7 +22,7 @@ class CreateRoleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:roles,name,',
             'description' => 'required|string',
             'status' => 'required|in:0,1',
             'permissions' => 'array',
@@ -39,6 +39,7 @@ class CreateRoleRequest extends FormRequest
     {
         return [
             'name.required' => 'Role is required.',
+            'name.unique' => 'This name already exists. Please choose another name.',
             'description.required' => 'Description is required.',
             'status.required' => 'Status is required.', 
             'status.in' => 'Invalid status',

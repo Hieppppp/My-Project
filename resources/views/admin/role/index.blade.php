@@ -26,7 +26,7 @@ Role Management
             </div>
         </div>
     </div>
-    <table class="table table-striple border text-center">
+    <table class="table table-hover border text-center">
         <thead>
             <tr class="bg-primary text-white">
                 <th>Role</th>

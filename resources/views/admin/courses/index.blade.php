@@ -12,26 +12,27 @@ Courses
 </div>
 @endif
 
+
 <div class="container">
     <div class="row">
-        @can('admin')
-        <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="form-group mb-4">
-                <div class="custom-file text-left">
-                    <input type="file" name="file" class="custom-file-input" id="customFile">
-                    <label class="custom-file-label" for="customFile">Choose file</label>
-                    <p class="text-danger">{{ $errors->first('file') }}</p>
+        @if (auth()->user()->isAdmin())
+            <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group mb-4">
+                    <div class="custom-file text-left">
+                        <input type="file" name="file" class="custom-file-input" id="customFile">
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                        <p class="text-danger">{{ $errors->first('file') }}</p>
+                    </div>
                 </div>
-            </div>
-            <button class="btn btn-primary"><i class="bi bi-cloud-arrow-down"></i> Import</button>
+                <button class="btn btn-primary"><i class="bi bi-cloud-arrow-down"></i> Import</button>
 
-            <a class="btn btn-success" href="{{ route('export') }}"><i class="bi bi-file-excel"></i> Export</a>
-            @if(session('error_message'))
-                <p class="text-danger">{{ session('error_message') }}</p>
-            @endif
-        </form>
-        @endcan
+                <a class="btn btn-success" href="{{ route('export') }}"><i class="bi bi-file-excel"></i> Export</a>
+                @if(session('error_message'))
+                    <p class="text-danger">{{ session('error_message') }}</p>
+                @endif
+            </form>
+        @endif
         <div class="row mb-3">
             <div class="d-flex justify-content-between align-items-center w-100">
                 <h3>List Courses</h3>
@@ -82,7 +83,7 @@ Courses
             </div>
         </div>
     </div>
-    <table class="table table-striple border text-center">
+    <table class="table table-hover border text-center">
         <thead>
             <tr class="bg-primary text-white">
                 <th><input type="checkbox"></th>

@@ -103,7 +103,14 @@ class PermissionService extends BaseService implements PermissionServiceInterfac
         }
         return false;
     }
-
+    
+    /**
+     * pagination
+     *
+     * @param  string|null $keyword
+     * @param  int $perPage
+     * @return LengthAwarePaginator
+     */
     public function pagination(?string $keyword, int $perPage): LengthAwarePaginator
     {
         return $this->repository->pagination($keyword, $perPage);

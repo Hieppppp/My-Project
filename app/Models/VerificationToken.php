@@ -8,7 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class VerificationToken extends Model
 {
     use HasFactory;
-
+    
+    /**
+     * fillable
+     *
+     * @var array
+     */
     protected $fillable = [
         'user_type',
         'email',

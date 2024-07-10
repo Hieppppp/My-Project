@@ -19,6 +19,8 @@ return new class extends Migration
             $table->date('date_of_birth');
             $table->string('phone');
             $table->string('avatar')->nullable();
+            $table->integer('verified')->default(0);
+            $table->string('remember_token')->nullable();
             $table->timestamps();
         });
 

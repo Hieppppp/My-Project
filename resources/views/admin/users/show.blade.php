@@ -36,11 +36,18 @@ Detail User
                         <div class="profile-user-info">
                             <div class="profile-info-row">
                                 <div class="profile-info-name"> Role </div>
-                                @foreach ($users->roles as $role )
-                                <div class="profile-info-value">
-                                    <span>{{ $role->name}} </span>
-                                </div>
-                                @endforeach
+                                @if (count($users->roles) > 0)
+                                    @foreach ($users->roles as $role )
+                                    <div class="profile-info-value">
+                                        <i class="bi bi-person-fill light-orange bigger-110"></i>
+                                        <span>{{ $role->name}} </span>
+                                    </div>
+                                    @endforeach
+                                @else
+                                    <div class="profile-info-value">
+                                        <span> No role</span>
+                                    </div>
+                                @endif
                             </div>
 
                             <div class="profile-info-row">
@@ -118,7 +125,7 @@ Detail User
                                 <tr class='align-middle'>
                                     <td>{{$i++}}</td>
                                     <td>{{ $course->name }}</td>
-                                    <td>{!! $course->description !!}</td>
+                                    <td>{!! Str::limit($course->description, 50) !!}</td>
                                     <td>{{ \Carbon\Carbon::parse($course->start_date)->format('d-m-Y')  }}</td>
                                     <td>{{ \Carbon\Carbon::parse($course->end_date)->format('d-m-Y')  }}</td>
                                 </tr>

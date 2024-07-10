@@ -2,20 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\UserRole;
 use App\Http\Requests\Login\LoginRequest;
 use App\Http\Requests\Login\RegisterRequest;
-use App\Models\User;
-use App\Models\VerificationToken;
 use App\Services\User\UserServiceInterface;
 use Illuminate\Console\View\Components\Factory;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
-use Illuminate\Support\Str;
+
 
 class AuthController extends Controller
 {    
@@ -49,9 +45,9 @@ class AuthController extends Controller
      * login
      *
      * @param  LoginRequest $request
-     * @return 
+     * @return Redirector|RedirectResponse
      */
-    public function login(LoginRequest $request)
+    public function login(LoginRequest $request): Redirector|RedirectResponse
     {
         $request->validated();
         $credentials = $request->only('email', 'password');
@@ -61,8 +57,14 @@ class AuthController extends Controller
         }
         return back();
     }
-
-    public function register(RegisterRequest $request)
+    
+    /**
+     * register
+     *
+     * @param  RegisterRequest $request
+     * @return Redirector|RedirectResponse
+     */
+    public function register(RegisterRequest $request): Redirector|RedirectResponse
     {
         $validated = $request->validated();
 
@@ -72,8 +74,14 @@ class AuthController extends Controller
 
         return redirect('login');
     }
-
-    public function verifyUser(string $token)
+    
+    /**
+     * verifyUser
+     *
+     * @param  string $token
+     * @return Redirector|RedirectResponse
+     */
+    public function verifyUser(string $token): Redirector|RedirectResponse
     {
         $message = $this->userService->verifyUser($token);
 
@@ -85,9 +93,11 @@ class AuthController extends Controller
      *
      * @return Redirector|RedirectResponse
      */
-    public function logout(): Redirector|RedirectResponse
+    public function logout(Request $request): Redirector|RedirectResponse
     {
         Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         return redirect()->route('login');
     }
 }

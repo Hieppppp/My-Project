@@ -3,12 +3,14 @@
 namespace App\Imports;
 
 use App\Models\Course;
+use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 
 
 class CoursesImport implements ToModel, WithStartRow
 {
+    use SkipsFailures;
     /**
     * @param array $row
     *

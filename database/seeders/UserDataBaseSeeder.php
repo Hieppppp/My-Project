@@ -16,10 +16,15 @@ class UserDataBaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory()->count(20)->create();
+        User::factory()->count(20)->create();
         $this->createAdminUser();
     }
-
+    
+    /**
+     * createAdminUser
+     *
+     * @return void
+     */
     public function createAdminUser()
     {
         User::create([
@@ -27,8 +32,10 @@ class UserDataBaseSeeder extends Seeder
             'email' => 'admin.example@gmail.com',
             'password' => bcrypt('123456789'),
             'date_of_birth' => '2003-07-02',
-            'phone' => '09999999999',
+            'phone' => '0999999999',
             'avatar' => '1718272414.jpg',
+            'verified' => 0,
+            'remember_token' => null
         ])->roles()->sync(Role::where('name', UserRole::ADMIN)->first()->id);
     }
 }

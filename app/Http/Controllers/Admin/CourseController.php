@@ -7,6 +7,7 @@ use App\Http\Requests\Course\CourseIndexRequest;
 use App\Http\Requests\Course\CreateCourseRequest;
 use App\Http\Requests\Course\UpdateCourseRequest;
 use App\Http\Requests\File\FileUploadRequest;
+use App\Imports\CoursesImport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Services\Course\CourseServiceInterface;
 use Illuminate\Console\View\Components\Factory;
@@ -145,10 +146,18 @@ class CourseController extends Controller
         try {
             $validatedData = $request->validated();
             $file = $validatedData['file'];
-            $this->courseService->import($file);
-            return redirect()->back()->with('sms', 'Courses Imported Successfully');
+            $import = new CoursesImport;
+
+            Excel::import($import, $file);
+            if ($import->failures()->isNotEmpty()) {
+                return redirect()->back()->withFailures($import->failures());
+            }
+
+            return redirect()->back()->with('sms', 'Excel file uploaded!');
         } catch (\Throwable $th) {
             return redirect()->back()->with('error_message', 'Error: ' . $th->getMessage());
         }
     }
+    
+    
 }

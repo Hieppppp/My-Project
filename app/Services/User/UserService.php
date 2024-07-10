@@ -204,8 +204,14 @@ class UserService extends BaseService implements UserServiceInterface
 
         return $user;
     }
-
-    public function verifyUser($token)
+    
+    /**
+     * verifyUser
+     *
+     * @param  string $token
+     * @return void
+     */
+    public function verifyUser(string $token)
     {
         $verifyToken = VerificationToken::where('token', $token)->first();
 

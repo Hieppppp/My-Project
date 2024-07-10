@@ -42,7 +42,12 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerGates();
 
     }
-
+    
+    /**
+     * registerGates
+     *
+     * @return void
+     */
     protected function registerGates(): void
     {
         try {

@@ -30,7 +30,6 @@ Route::get('password/reset/{token}', [ResetPasswordController::class, 'showReset
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 
 
-
 Route::prefix('admin')->group(function () {
     
     Route::middleware(['auth', 'check-permission'])->group(function () {
@@ -55,7 +54,6 @@ Route::prefix('admin')->group(function () {
         Route::get('permission/deactivate/{id}', [PermissionController::class, 'deactivate'])->name('permission.deactivate');
     });
 
-    
 });
 
 

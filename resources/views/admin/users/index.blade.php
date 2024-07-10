@@ -17,13 +17,13 @@ User Management
             <div class="d-flex justify-content-between align-items-center w-100">
                 <h3>List User</h3>
                 <div>
-                    @can('create', $users)
+                    @can(App\Enums\PermissionName::CREATE, $users)
                     <a href="{{ route('users.create') }}" class="btn btn-outline-primary">
                         <i class="bi bi-plus-circle-fill" title="Click to add new user"></i>
                         <span>New User</span>
                     </a>
                     @endcan
-                    @can('delete', $users)
+                    @can(APP\Enums\PermissionName::DELETE, $users)
                     <button class="btn btn-outline-danger">
                         <i class="bi bi-trash" title="Click to delete all"></i>
                         <span>Delete All</span>
@@ -64,7 +64,7 @@ User Management
             </div>
         </div>
     </div>
-    <table class="table table-striple border text-center">
+    <table class="table table-hover border text-center">
         <thead>
             <tr class="bg-primary text-white">
                 <th><input type="checkbox"></th>
@@ -80,10 +80,10 @@ User Management
                 <td><input type="checkbox"></td>
                 <td>{{ $user->name }}</td>
                 <td>
-                    <img width="50px" height="50px" class="img-fluid rounded" src="/avatar/{{ $user->avatar }}" alt="">
+                    <img width="50px" height="50px" class="img-fluid rounded-circle" src="/avatar/{{ $user->avatar }}" alt="">
                 </td>
                 <td>
-                    @if(count($user->roles)>0)
+                    @if (count($user->roles)>0)
                         @foreach($user->roles as $role)
                             <span class="badge bg-success">{{ $role->name }}</span>
                         @endforeach
@@ -92,7 +92,7 @@ User Management
                     @endif
                 </td>
                 <td>
-                    @can(App\Enums\PermissionName::VIEWANY, $user)
+                    @can(App\Enums\PermissionName::VIEW, $user)
                     <a href="{{ route('users.show', $user->id) }}" class="btn btn-outline-info">
                         <i class="bi bi-eye" title="Click to views"></i>
                     </a>

@@ -70,7 +70,7 @@ Edit User
                             @else
                                 <input class="form-check-input" type="checkbox" name="roles[]" value="{{ $role->id }}" {{ in_array($role->id, old('roles', $selectedRoles)) ? 'checked' : '' }} disabled>
                                 <label class="form-check-label" for="check{{ $role->id }}">{{ $role->name }}</label>
-                                @endif
+                            @endif
                         </div>
                         @endforeach
                     </div>

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\PermissionName;
 use App\Models\Permission;
 use Illuminate\Database\Seeder;
 
@@ -12,35 +13,32 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        $actions = [
-            'viewAny',
-            'view',
-            'create',
-            'update',
-            'delete',
-            'restore',
-            'forceDelete',
+        $permissions = [
+            PermissionName::VIEW,
+            PermissionName::CREATE,
+            PermissionName::UPDATE,
+            PermissionName::DELETE,
+            PermissionName::RESTORE,
+            PermissionName::FORCEDELETE,
+
+            PermissionName::VIEW_COURSE,
+            PermissionName::CREATE_COURSE,
+            PermissionName::UPDATE_COURSE,
+            PermissionName::DELETE_COURSE,
+            PermissionName::RESTORE_COURSE,
+            PermissionName::FORCEDELETE_COURSE,
         ];
 
-        $resources = [
-            'user',
-            'course',
-        ];
+        $status = 1;
+        $description = 'Defaults descriptions';
 
-        $status = 1; 
-        $description = 'Default description'; 
-
-        collect($resources)
-            ->crossJoin($actions)
-            ->map(function ($set) {
-                return implode('.', $set);
-            })
-            ->each(function ($permission) use ($status, $description) {
-                Permission::create([
-                    'name' => $permission,
-                    'status' => $status,
-                    'description' => $description,
-                ]);
-            });
+        foreach ($permissions as $permission)
+        {
+            Permission::create([
+                'name' => $permission,
+                'status' => $status,
+                'description' => $description,
+            ]);
+        }
     }
 }

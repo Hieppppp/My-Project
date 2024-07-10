@@ -97,6 +97,7 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
     {
         return Course::where('name', 'like', '%' . $keyword . '%')
             ->orWhere('description', 'like', '%' . $keyword . '%')
+            ->orderBy('created_at', 'DESC')
             ->paginate($perPage);
     }
 

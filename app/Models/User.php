@@ -15,7 +15,12 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
-
+    
+    /**
+     * fillable
+     *
+     * @var array
+     */
     protected $fillable = [
         'name',
         'email',
@@ -94,8 +99,14 @@ class User extends Authenticatable
     {
         return $this->roles()->where('name', $role->value)->exists();
     }
-
-    public function assignRole($role)
+    
+    /**
+     * assignRole
+     *
+     * @param  string $role
+     * @return void
+     */
+    public function assignRole(string $role)
     {
         $roleInstance = Role::where('name', $role)->firstOrFail();
         $this->roles()->attach($roleInstance);
@@ -107,12 +118,24 @@ class User extends Authenticatable
         return $this->roles()->with('permissions')->get()
             ->pluck('permissions')->flatten()->pluck('name')->unique();
     }
-
+    
+    /**
+     * hasPermission
+     *
+     * @param  string $permission
+     * @return bool
+     */
     public function hasPermission(string $permission): bool
     {
         return $this->permissions()->contains($permission);
     }
-
+    
+    /**
+     * isAssociatedWithCourse
+     *
+     * @param  Course $course
+     * @return bool
+     */
     public function isAssociatedWithCourse(Course $course): bool
     {
         return $this->courses->contains($course);

@@ -26,6 +26,8 @@ class UserFactory extends Factory
             'date_of_birth' => $this->faker->date(),
             'phone' => '09' . $this->faker->randomNumber(8, true),
             'avatar' => '1718272414.jpg',
+            'verified' => 0,
+            'remember_token' => null,
         ];
     }
 

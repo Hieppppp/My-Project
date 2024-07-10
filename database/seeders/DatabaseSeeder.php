@@ -14,18 +14,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $users = User::factory()->count(20)->create();
-        // $courses = Course::factory()->count(30)->create();
+        $users = User::factory()->count(20)->create();
+        $courses = Course::factory()->count(30)->create();
 
-        // foreach ($users as $user) {
-        //     $user->courses()->attach(
-        //         $courses->random(rand(1, 5))->pluck('id')->toArray()
-        //     );
-        // }
+        foreach ($users as $user) {
+            $user->courses()->attach(
+                $courses->random(rand(1, 5))->pluck('id')->toArray()
+            );
+        }
+        
         $this->call([
-            RolesAndPermissionsSeede::class,
+            PermissionSeeder::class,
             RoleSeeder::class,
-            CourseDataBaseSeeder::class,
             UserDataBaseSeeder::class,
         ]);
     }

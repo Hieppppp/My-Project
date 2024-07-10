@@ -100,9 +100,10 @@
             $("#alert-container").fadeTo(500, 0).slideUp(500, function () {
                 $(this).remove();
             });
-        }, 1500);
+        }, 3500);
 
         CKEDITOR.replace('description');
+
 
     </script>
 </body>

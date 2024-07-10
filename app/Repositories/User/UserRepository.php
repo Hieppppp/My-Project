@@ -99,6 +99,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return User::where('name', 'like', '%' . $keyword . '%')
             ->orWhere('email', 'like', '%' . $keyword . '%')
             ->orWhere('phone', 'like', '%' . $keyword . '%')
+            ->orderBy('created_at', 'DESC')
             ->paginate($perPage);
     }
     

@@ -8,14 +8,24 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Course extends Model
 {
-    use HasFactory;
+    use HasFactory;    
+    /**
+     * fillable
+     *
+     * @var array
+     */
     protected $fillable = [
         'name',
         'description',
         'start_date',
         'end_date',
     ];
-
+    
+    /**
+     * dates
+     *
+     * @var array
+     */
     protected $dates = [
         'start_date',
         'end_date',

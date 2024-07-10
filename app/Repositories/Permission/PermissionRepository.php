@@ -71,7 +71,14 @@ class PermissionRepository extends BaseRepository implements PermissionRepositor
         $permission = Permission::findOrFail($id);
         return $permission->delete();
     }
-
+    
+    /**
+     * pagination
+     *
+     * @param  string|null $keyword
+     * @param  int $perPage
+     * @return LengthAwarePaginator
+     */
     public function pagination(string|null $keyword, int $perPage): LengthAwarePaginator
     {
         return Permission::where('name', 'like', '%' . $keyword . '%')

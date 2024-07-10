@@ -63,6 +63,13 @@ interface PermissionServiceInterface
      * @return bool
      */
     public function inactive(int $id): bool;
-
+    
+    /**
+     * pagination
+     *
+     * @param  string|null $keyword
+     * @param  int $perPage
+     * @return LengthAwarePaginator
+     */
     public function pagination(?string $keyword, int $perPage): LengthAwarePaginator;
 }

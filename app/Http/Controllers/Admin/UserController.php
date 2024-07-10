@@ -38,7 +38,6 @@ class UserController extends Controller
      */
     public function index(UserIndexRequest $request): Factory|View
     { 
-        
         $validatedData = $request->validated();
         $searchKeyword = $validatedData['keywords'] ?? null;
         $itemsPerPage = $validatedData['per_page'] ?? 10;
@@ -54,8 +53,6 @@ class UserController extends Controller
      */
     public function create(User $user): Factory|View
     {
-        
-        
         $roles = $this->roleService->getRole();
         $courses = $this->courseService->getCourse();
         return view('admin.users.create', compact('roles', 'courses'));
@@ -69,7 +66,6 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request): Redirector|RedirectResponse
     {
-       
         $params = $request->validated();
         $this->userService->create($params);
         return redirect()->route('users.index')->with('sms', 'User created successfully.');

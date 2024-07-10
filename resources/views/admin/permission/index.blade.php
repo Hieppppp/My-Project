@@ -17,12 +17,6 @@ Permission Management
         <div class="row mb-3">
             <div class="d-flex justify-content-between align-items-center w-100">
                 <h3>Permission Management</h3>
-                <div>
-                    <a href="{{ route('permissions.create') }}" class="btn btn-outline-primary">
-                        <i class="bi bi-plus-circle-fill" title="Click to add new"></i>
-                        <span>New Permission</span>
-                    </a>
-                </div>
             </div>
         </div>
         <div class="row mb-2">
@@ -57,7 +51,7 @@ Permission Management
             </div>
         </div>
     </div>
-    <table class="table table-striple border text-center">
+    <table class="table table-hover border text-center">
         <thead>
             <tr class="bg-primary text-white">
                 <th>Permission</th>
@@ -88,19 +82,6 @@ Permission Management
                         <i class="bi bi-arrow-down" title="Click to inactive"></i>
                     </a>
                     @endif
-
-                    <a href="{{ route('permissions.edit', $permission->id) }}" class="btn btn-outline-info">
-                        <i class="bi bi-pencil-square" title="Click to edit"></i>
-                    </a>
-
-                    <a href="{{ route('permissions.destroy', $permission->id) }}" class="btn btn-outline-danger" id="delete" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this user?')) document.getElementById('delete-form-{{ $permission->id }}').submit();">
-                        <i class="bi bi-trash" title="Click to delete"></i>
-                    </a>
-
-                    <form id="delete-form-{{ $permission->id }}" action="{{ route('permissions.destroy', $permission->id) }}" method="POST" style="display: none;">
-                        @csrf
-                        @method('DELETE')
-                    </form>
                 </td>
             </tr>
             @endforeach

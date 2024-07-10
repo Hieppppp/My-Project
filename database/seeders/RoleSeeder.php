@@ -22,7 +22,14 @@ class RoleSeeder extends Seeder
        
 
     }
-
+    
+    /**
+     * createRole
+     *
+     * @param  UserRole $role
+     * @param  Collection $permissions
+     * @return void
+     */
     protected function createRole(UserRole $role, Collection $permissions): void
     {
         $newRole = Role::create([
@@ -32,22 +39,45 @@ class RoleSeeder extends Seeder
         ]);
         $newRole->permissions()->sync($permissions);
     }
-
+    
+    /**
+     * createAdminRole
+     *
+     * @return void
+     */
     protected function createAdminRole(): void
     {
         $permission = Permission::pluck('id');
         $this->createRole(UserRole::ADMIN(), $permission);
     }
-
+    
+    /**
+     * createUserRole
+     *
+     * @return void
+     */
     protected function createUserRole(): void
     {
-        $permission = Permission::pluck('id');
+        $permission = Permission::whereIn('name', [
+            PermissionName::VIEW,
+            PermissionName::UPDATE,
+            PermissionName::VIEW_COURSE,
+        ])->pluck('id');
+
         $this->createRole(UserRole::USER(), $permission);
     }
-
+    
+    /**
+     * createCustomerRole
+     *
+     * @return void
+     */
     protected function createCustomerRole(): void
     {
-        $permission = Permission::pluck('id');
+        $permission = Permission::whereIn('name', [
+            PermissionName::VIEW_COURSE,
+        ])->pluck('id');
+        
         $this->createRole(UserRole::CUSTOMER(), $permission);
     }
 
