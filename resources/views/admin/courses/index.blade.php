@@ -86,7 +86,7 @@ Courses
         <thead>
             <tr class="bg-primary text-white">
                 <th><input type="checkbox"></th>
-                <th>Name</th>
+                <th>Courses</th>
                 <th>Description</th>
                 <th>Start Date</th>
                 <th>End Date</th>

@@ -74,6 +74,24 @@ Detail User
                                     <span>3 hours ago</span>
                                 </div>
                             </div>
+
+                            <div class="profile-info-row">
+                                <div class="profile-info-name"> Created At </div>
+                                <div class="profile-info-value">
+                                    <i class="bi bi-calendar-date light-orange bigger-110"></i>
+                                    <span>{{ \Carbon\Carbon::parse($users->created_at)->format('d-m-Y')  }}</span>
+                                </div>
+                            </div>
+
+                            <div class="profile-info-row">
+                                <div class="profile-info-name"> Updated At </div>
+                                <div class="profile-info-value">
+                                    <i class="bi bi-calendar-date light-orange bigger-110"></i>
+                                    <span>{{ \Carbon\Carbon::parse($users->updated_at)->format('d-m-Y')  }}</span>
+                                </div>
+                            </div>
+
+                           
                         </div>
 
                         <div class="hr hr-8 dotted"></div>
