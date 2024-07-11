@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Enums\PermissionName;
+use App\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Auth\Access\Response;
@@ -21,9 +22,9 @@ class UserPolicy
      * @param  User $targetUser
      * @return bool
      */
-    public function view(User $user, User $targetUser): bool
+    public function view_user(User $user): bool
     {
-        return $user->id === $targetUser->id || $user->hasPermission(PermissionName::VIEW);
+        return $user->hasPermission(PermissionName::VIEW_USER);
     }
 
     /**
@@ -35,9 +36,9 @@ class UserPolicy
      * @param  User $user
      * @return bool
      */
-    public function create(User $user): bool
+    public function create_user(User $user): bool
     {
-        return $user->hasPermission(PermissionName::CREATE);
+        return $user->hasPermission(PermissionName::CREATE_USER);
     }
 
     /**
@@ -50,7 +51,7 @@ class UserPolicy
      * @param  User $targetUser
      * @return bool
      */
-    public function update(User $user, User $targetUser): bool
+    public function update_user(User $user, User $targetUser): bool
     {
         return $user->id === $targetUser->id;
     }
@@ -64,9 +65,12 @@ class UserPolicy
      * @param  User $user
      * @return bool
      */
-    public function delete(User $user): bool
+    public function delete_user(User $user, User $targetUser): bool
     {
-        return $user->hasPermission(PermissionName::DELETE);
+        if ($user->hasPermission(PermissionName::DELETE_USER) && !$targetUser->hasRole(UserRole::ADMIN())) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -80,20 +84,9 @@ class UserPolicy
      */
     public function restore(User $user): bool
     {
-        return $user->hasPermission(PermissionName::RESTORE);
+        return $user->hasPermission(PermissionName::RESTORE_USER);
     }
 
-    /**
-     * Determine whether the user can permanently delete the model.
-     */    
-    /**
-     * forceDelete
-     *
-     * @param  User $user
-     * @return bool
-     */
-    public function forceDelete(User $user): bool
-    {
-        return $user->hasPermission(PermissionName::FORCEDELETE);
-    }
+    
+    
 }

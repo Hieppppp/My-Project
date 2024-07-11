@@ -59,8 +59,8 @@ class RoleSeeder extends Seeder
     protected function createUserRole(): void
     {
         $permission = Permission::whereIn('name', [
-            PermissionName::VIEW,
-            PermissionName::UPDATE,
+            PermissionName::VIEW_USER,
+            PermissionName::UPDATE_USER,
             PermissionName::VIEW_COURSE,
         ])->pluck('id');
 

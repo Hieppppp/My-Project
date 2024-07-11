@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\PermissionName;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\CreateUserRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
@@ -10,11 +11,11 @@ use App\Models\User;
 use App\Services\Course\CourseServiceInterface;
 use App\Services\Role\RoleServiceInterface;
 use App\Services\User\UserServiceInterface;
+use Illuminate\Auth\Access\Gate;
 use Illuminate\Console\View\Components\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {    
@@ -90,7 +91,7 @@ class UserController extends Controller
      * @return Factory|View
      */
     public function edit(string $id): Factory|View
-    {
+    { 
         $users = $this->userService->find($id);
         $courses = $this->courseService->getCourse();
         $roles = $this->roleService->getRole();

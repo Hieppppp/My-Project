@@ -13,7 +13,7 @@
                     </li>
 
                     <li class="mb-4">
-                        <a class="btn btn-outline-light text-decoration-none w-100 mb-2" data-bs-toggle="collapse" href="#userDropdown" aria-expanded="false" aria-controls="multiCollapseExample1"><i class="bi bi-person-circle"></i> User </a>
+                        <a class="btn btn-outline-light text-decoration-none w-100 mb-2" data-bs-toggle="collapse" href="#userDropdown" aria-expanded="false" aria-controls="multiCollapseExample1"><i class="bi bi-person-circle"></i> Users & Roles </a>
                         <ul id="userDropdown" class="collapse list-unstyled">
                             <li class="mb-3 btn w-100"><a class="text-decoration-none text-dark btn-hover" href=" {{ route('users.store') }} ">User Management</a></li>
                             @if (auth()->user()->isAdmin())

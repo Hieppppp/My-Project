@@ -14,19 +14,18 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
-            PermissionName::VIEW,
-            PermissionName::CREATE,
-            PermissionName::UPDATE,
-            PermissionName::DELETE,
-            PermissionName::RESTORE,
-            PermissionName::FORCEDELETE,
+            PermissionName::VIEW_USER,
+            PermissionName::CREATE_USER,
+            PermissionName::UPDATE_USER,
+            PermissionName::DELETE_USER,
+            PermissionName::RESTORE_USER,
+           
 
             PermissionName::VIEW_COURSE,
             PermissionName::CREATE_COURSE,
             PermissionName::UPDATE_COURSE,
             PermissionName::DELETE_COURSE,
             PermissionName::RESTORE_COURSE,
-            PermissionName::FORCEDELETE_COURSE,
         ];
 
         $status = 1;

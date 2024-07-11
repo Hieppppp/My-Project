@@ -79,8 +79,8 @@ Edit User
             </div>
 
         </div>
-        <button type="button" class="btn btn-danger m-3" style="width:100px;">Cancel</button>
-        <button type="submit" class="btn btn-primary" style="width:100px;">Update</button>
+        <button type="button" class="btn btn-danger m-3" style="width:100px;"><i class="bi bi-trash"></i> Cancel</button>
+        <button type="submit" class="btn btn-primary" style="width:100px;"><i class="bi bi-save"></i> Update</button>
     </form>
 </div>
 @endsection

@@ -86,6 +86,16 @@
             reader.readAsDataURL(event.target.files[0]);
         }
 
+        function previewModalAvatar(event) {
+            var reader = new FileReader();
+            reader.onload =function() {
+                var output =document.getElementById('modal-avatar-preview');
+                output.src =reader.result;
+                output.style.display = 'block';
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
         $(document).ready(function() {
             $('#multiple-select-custom-field').select2({
                 theme: "bootstrap-5",

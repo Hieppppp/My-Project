@@ -11,7 +11,7 @@ Detail User
     </div>
     <div class="tabbable">
         <div class="d-flex justify-content-end" style="margin-right:35px;">
-            @can(App\Enums\PermissionName::UPDATE, $users)
+            @can(\App\Enums\PermissionName::UPDATE_USER, $users)
             <a href="{{ route('users.edit', $users->id) }}" class="btn btn-outline-primary">
                 <i class="bi bi-pencil-square" title="Click to edit"></i>
                 <span>Edit User</span>
@@ -69,7 +69,7 @@ Detail User
                             <div class="profile-info-row">
                                 <div class="profile-info-name"> Birth </div>
                                 <div class="profile-info-value">
-                                    <i class="bi bi-calendar-date light-orange bigger-110"></i>
+                                    <i class="bi bi-bookmark-dash-fill light-orange bigger-110"></i>
                                     <span>{{ \Carbon\Carbon::parse($users->date_of_birth)->format('d-m-Y')  }}</span>
                                 </div>
                             </div>
@@ -78,6 +78,7 @@ Detail User
                                 <div class="profile-info-name"> Last Online </div>
 
                                 <div class="profile-info-value">
+                                    <i class="bi bi-clock-fill light-orange bigger-110"></i>
                                     <span>3 hours ago</span>
                                 </div>
                             </div>

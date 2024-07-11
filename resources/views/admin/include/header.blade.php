@@ -47,11 +47,11 @@
                     </div>
                     <div class="form-group mb-4">
                         <label for="avatar">Avatar *</label>
-                        <input type="file" class="form-control" id="avatar" name="avatar" onchange="previewAvatar(event)">
+                        <input type="file" class="form-control" id="avatar" name="avatar" onchange="previewModalAvatar(event)">
                         @if (Auth::user()->avatar)
-                            <img id="avatar-preview" src="{{ asset('avatar/' . Auth::user()->avatar) }}" alt="Avatar" style="max-width: 100px; max-height: 100px; margin-top: 10px;">
+                            <img id="modal-avatar-preview" src="{{ asset('avatar/' . Auth::user()->avatar) }}" alt="Avatar" style="max-width: 100px; max-height: 100px; margin-top: 10px;">
                         @else
-                            <img id="avatar-preview" src="#" alt="Image Preview" style="display:none; max-width: 100px; margin-top: 10px;">
+                            <img id="modal-avatar-preview" src="#" alt="Image Preview" style="display:none; max-width: 100px; margin-top: 10px;">
                         @endif
                     </div>
 

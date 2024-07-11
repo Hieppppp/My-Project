@@ -19,7 +19,7 @@ class CoursePolicy
      */
     public function view(User $user, Course $course): bool
     {
-        return $user->hasPermission(PermissionName::VIEW_COURSE) || $user->isAssociatedWithCourse($course);
+        return $user->hasPermission(PermissionName::VIEW_COURSE);
     }
    
     /**
@@ -78,18 +78,5 @@ class CoursePolicy
         return $user->hasPermission(PermissionName::RESTORE_COURSE) || $user->isAssociatedWithCourse($course);
     }
 
-    /**
-     * Determine whether the user can permanently delete the model.
-     */    
-    /**
-     * forceDelete
-     *
-     * @param  User $user
-     * @param  Course $course
-     * @return bool
-     */
-    public function forceDelete(User $user, Course $course): bool
-    {
-        return $user->hasPermission(PermissionName::FORCEDELETE_COURSE) || $user->isAssociatedWithCourse($course);
-    }
+  
 }

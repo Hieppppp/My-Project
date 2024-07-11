@@ -17,13 +17,13 @@ User Management
             <div class="d-flex justify-content-between align-items-center w-100">
                 <h3>List User</h3>
                 <div>
-                    @can(App\Enums\PermissionName::CREATE, $users)
+                    @can(App\Enums\PermissionName::CREATE_USER, $users)
                     <a href="{{ route('users.create') }}" class="btn btn-outline-primary">
                         <i class="bi bi-plus-circle-fill" title="Click to add new user"></i>
                         <span>New User</span>
                     </a>
                     @endcan
-                    @can(APP\Enums\PermissionName::DELETE, $users)
+                    @can(APP\Enums\PermissionName::DELETE_USER, $users)
                     <button class="btn btn-outline-danger">
                         <i class="bi bi-trash" title="Click to delete all"></i>
                         <span>Delete All</span>
@@ -92,12 +92,12 @@ User Management
                     @endif
                 </td>
                 <td>
-                    @can(App\Enums\PermissionName::VIEW, $user)
+                    @can(App\Enums\PermissionName::VIEW_USER, $user)
                     <a href="{{ route('users.show', $user->id) }}" class="btn btn-outline-info">
                         <i class="bi bi-eye" title="Click to views"></i>
                     </a>
                     @endcan
-                    @can(App\Enums\PermissionName::DELETE, $user)
+                    @can(App\Enums\PermissionName::DELETE_USER, $user)
                     <a class="btn btn-outline-danger" id="delete" href="{{ route('users.destroy', $user->id) }}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this user?')) document.getElementById('delete-form-{{ $user->id }}').submit();">
                         <i class="bi bi-trash" title="Click to delete"></i>
                     </a>
