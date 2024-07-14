@@ -3,6 +3,7 @@
 Role Management
 @endsection
 @section('content')
+
 @if (Session::get('sms'))
 <div id="alert-container">
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -27,6 +28,7 @@ Role Management
         </div>
     </div>
     <table class="table table-hover border text-center">
+        <caption>List of roles</caption>
         <thead>
             <tr class="bg-primary text-white">
                 <th>Role</th>

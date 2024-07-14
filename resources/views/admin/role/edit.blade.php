@@ -3,6 +3,7 @@
 Edit Role
 @endsection
 @section('content')
+
 <div class="card-body">
     <div class="mb-4">
         <div style="font: size 14px;">
@@ -52,4 +53,5 @@ Edit Role
         <button type="submit" class="btn btn-primary" style="width:100px;"><i class="bi bi-save"></i> Update</button>
     </form>
 </div>
+
 @endsection

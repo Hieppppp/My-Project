@@ -63,12 +63,18 @@ Add User
             </div>
             <div class="col-md-4 border">
                 <div class="form-group">
-                    <label for="" class="fw-bold">Role Type</label>
+                    <label for="" class="fw-bold" style="margin-left: 10px;">Role Type</label>
                     <div class="p-2">
                         @foreach ($roles as $role)
-                        <div class="form-check">
+                        <!-- <div class="form-check">
                             <input class="form-check-input" type="checkbox" name="roles[]" value="{{ $role->id }}">
                             <label class="form-check-label" for="check{{ $role->id }}">{{ $role->name }}</label>
+                        </div> -->
+                        <div class="list-group">
+                            <label class="list-group-item">
+                                <input class="form-check-input me-1" type="checkbox" name="roles[]" value="{{ $role->id }}">
+                                <label class="form-check-label" for="check{{ $role->id }}">{{ $role->name }}</label>
+                            </label>
                         </div>
                         @endforeach
                     </div>

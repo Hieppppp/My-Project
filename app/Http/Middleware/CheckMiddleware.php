@@ -32,18 +32,17 @@ class CheckMiddleware
         $currentRouteName = $request->route()->getName();
 
         if (!$this->hasPermissionForRoute($user, $currentRouteName)) {
-            abort(403, 'Unauthorized action.');
+            abort(404, 'Unauthorized action.');
         }
 
         return $next($request);
     }
 
+  
+
     private function hasPermissionForRoute($user, $routeName): bool
     {
-        if ($user->isAdmin()) {
-            return true;
-        }
-        
+       
         $routePermissions = config('permissions.routes');
 
         $requiredPermissions = $routePermissions[$routeName] ?? [];
@@ -56,5 +55,7 @@ class CheckMiddleware
 
         return true;
     }
+    
+
 
 }

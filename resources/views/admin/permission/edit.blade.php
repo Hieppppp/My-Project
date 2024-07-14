@@ -3,6 +3,7 @@
 Edit Permission
 @endsection
 @section('content')
+
 <div class="card-body">
     <form action="{{ route('permissions.update', $permissions->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -33,4 +34,5 @@ Edit Permission
         <button type="submit" class="btn btn-primary" style="width:100px;">Update</button>
     </form>
 </div>
+
 @endsection

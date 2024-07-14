@@ -17,7 +17,7 @@ class PermissionRepository extends BaseRepository implements PermissionRepositor
 
     public function getPermission(): Collection
     {
-        return Permission::all();
+        return Permission::where('status', 1)->get();
     }
     
     /**

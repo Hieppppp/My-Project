@@ -23,15 +23,17 @@ final class PermissionName extends Enum
 
     
 
-
     const VIEW_COURSE = 'view_course';
-
     const CREATE_COURSE = 'create_course';
-
     const UPDATE_COURSE = 'update_course';
-
     const DELETE_COURSE = 'delete_course';
     const RESTORE_COURSE = 'restore_course';
+
+    const IMPORT_EXCEL = 'import_excel';
+    const EXPORT_EXCEL = 'export_excel';
+
+    const VIEW_ROLE = 'view_role';
+    const VIEW_PERMISSION = 'view_permission';
 
 
 

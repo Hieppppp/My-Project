@@ -29,6 +29,7 @@ class UserController extends Controller
         public CourseServiceInterface $courseService,
         public RoleServiceInterface $roleService
     ) {
+        $this->middleware('check-ownership')->only(['edit', 'update']);
     }
     
     /**
@@ -54,7 +55,7 @@ class UserController extends Controller
      */
     public function create(User $user): Factory|View
     {
-        $roles = $this->roleService->getRole();
+        $roles = $this->roleService->getRole()->where('status', 1);
         $courses = $this->courseService->getCourse();
         return view('admin.users.create', compact('roles', 'courses'));
     }

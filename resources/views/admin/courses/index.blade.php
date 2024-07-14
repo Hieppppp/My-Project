@@ -15,24 +15,25 @@ Courses
 
 <div class="container">
     <div class="row">
-        @if (auth()->user()->isAdmin())
-            <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="form-group mb-4">
-                    <div class="custom-file text-left">
-                        <input type="file" name="file" class="custom-file-input" id="customFile">
-                        <label class="custom-file-label" for="customFile">Choose file</label>
-                        <p class="text-danger">{{ $errors->first('file') }}</p>
-                    </div>
+        @can(\App\Enums\PermissionName::IMPORT_EXCEL, \App\Enums\PermissionName::EXPORT_EXCEL)
+        <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div class="form-group mb-4">
+                <div class="custom-file text-left">
+                    <input type="file" name="file" class="custom-file-input" id="customFile">
+                    <label class="custom-file-label" for="customFile">Choose file</label>
+                    <p class="text-danger">{{ $errors->first('file') }}</p>
                 </div>
-                <button class="btn btn-primary"><i class="bi bi-cloud-arrow-down"></i> Import</button>
+            </div>
+            <button class="btn btn-primary"><i class="bi bi-cloud-arrow-down"></i> Import</button>
 
-                <a class="btn btn-success" href="{{ route('export') }}"><i class="bi bi-file-excel"></i> Export</a>
-                @if(session('error_message'))
-                    <p class="text-danger">{{ session('error_message') }}</p>
-                @endif
-            </form>
-        @endif
+            <a class="btn btn-success" href="{{ route('export') }}"><i class="bi bi-file-excel"></i> Export</a>
+            @if(session('error_message'))
+            <p class="text-danger">{{ session('error_message') }}</p>
+            @endif
+        </form>
+        @endcan
+
         <div class="row mb-3">
             <div class="d-flex justify-content-between align-items-center w-100">
                 <h3>List Courses</h3>
@@ -47,7 +48,7 @@ Courses
                         <span>Delete All</span>
                     </button>
                     @endcan
-                    
+
                 </div>
             </div>
         </div>
@@ -84,6 +85,7 @@ Courses
         </div>
     </div>
     <table class="table table-hover border text-center">
+        <caption>List of courses</caption>
         <thead>
             <tr class="bg-primary text-white">
                 <th><input type="checkbox"></th>
@@ -106,20 +108,21 @@ Courses
                     <a href="{{ route('courses.show', $course->id) }}" class="btn btn-outline-info">
                         <i class="bi bi-eye" title="Click to views"></i>
                     </a>
-                   @can(App\Enums\PermissionName::UPDATE_COURSE, $course)
+                    @can(App\Enums\PermissionName::UPDATE_COURSE, $course)
                     <a href="{{ route('courses.edit', $course->id) }}" class="btn btn-outline-success">
                         <i class="bi bi-pencil-square" title="Click to edit"></i>
                     </a>
-                   @endcan
-                   @can(App\Enums\PermissionName::DELETE_COURSE, $course)
+                    @endcan
+                    @can(App\Enums\PermissionName::DELETE_COURSE, $course)
                     <a class="btn btn-outline-danger" id="delete" href="{{ route('courses.destroy', $course->id) }}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this course?')) document.getElementById('delete-form-{{ $course->id }}').submit();">
                         <i class="bi bi-trash" title="Click to delete"></i>
                     </a>
-                   @endcan
+                    @endcan
                     <form id="delete-form-{{ $course->id }}" action="{{ route('courses.destroy', $course->id) }}" method="POST" style="display: none;">
                         @csrf
                         @method('DELETE')
                     </form>
+                    
                 </td>
             </tr>
             @endforeach

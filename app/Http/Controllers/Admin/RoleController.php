@@ -17,7 +17,8 @@ class RoleController extends Controller
 {
     public function __construct(
         public RoleServiceInterface $roleService,
-        public PermissionServiceInterface $permissionService
+        public PermissionServiceInterface $permissionService,
+        
     )
     {
         

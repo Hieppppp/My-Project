@@ -1,7 +1,6 @@
 <?php
 
 use App\Enums\PermissionName;
-use App\Enums\UserRole;
 
 
 return [
@@ -15,5 +14,11 @@ return [
         'courses.create' => [PermissionName::CREATE_COURSE],
         'courses.edit' => [PermissionName::UPDATE_COURSE],
         'courses.destroy' => [PermissionName::DELETE_COURSE],
+
+        'export' => [PermissionName::EXPORT_EXCEL],
+        'import' => [PermissionName::IMPORT_EXCEL],
+
     ],
+
+    
 ];

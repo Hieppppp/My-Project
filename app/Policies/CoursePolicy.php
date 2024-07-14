@@ -6,6 +6,7 @@ use App\Enums\PermissionName;
 use App\Models\Course;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\DB;
 
 class CoursePolicy
 {
@@ -45,7 +46,8 @@ class CoursePolicy
      */
     public function update(User $user, Course $course): bool
     {
-        return $user->hasPermission(PermissionName::UPDATE_COURSE) || $user->isAssociatedWithCourse($course);
+        return $user->hasPermission(PermissionName::UPDATE_COURSE);
+        
     }
 
     /**
@@ -58,9 +60,10 @@ class CoursePolicy
      * @param  Course $course
      * @return bool
      */
-    public function delete(User $user, Course $course): bool
+    public function delete(User $user): bool
     {
-        return $user->hasPermission(PermissionName::DELETE_COURSE) || $user->isAssociatedWithCourse($course);
+        return $user->hasPermission(PermissionName::DELETE_COURSE);
+        
     }
 
     /**
@@ -75,7 +78,7 @@ class CoursePolicy
      */
     public function restore(User $user, Course $course): bool
     {
-        return $user->hasPermission(PermissionName::RESTORE_COURSE) || $user->isAssociatedWithCourse($course);
+        return $user->hasPermission(PermissionName::RESTORE_COURSE);
     }
 
   

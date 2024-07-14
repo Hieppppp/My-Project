@@ -20,12 +20,14 @@ class PermissionSeeder extends Seeder
             PermissionName::DELETE_USER,
             PermissionName::RESTORE_USER,
            
-
             PermissionName::VIEW_COURSE,
             PermissionName::CREATE_COURSE,
             PermissionName::UPDATE_COURSE,
             PermissionName::DELETE_COURSE,
             PermissionName::RESTORE_COURSE,
+
+            PermissionName::EXPORT_EXCEL,
+            PermissionName::IMPORT_EXCEL,
         ];
 
         $status = 1;

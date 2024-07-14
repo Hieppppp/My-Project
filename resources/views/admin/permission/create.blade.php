@@ -3,6 +3,7 @@
 Add New Permission
 @endsection
 @section('content')
+
 <div class="card-body">
     <div style="font: size 14px;">
         <a href="{{ route('users.index') }}" class="text-dark text-decoration-none"><i class="bi bi-house-door-fill"></i> Home</a>
@@ -36,4 +37,5 @@ Add New Permission
         <button type="submit" class="btn btn-primary" style="width:100px;">Save</button>
     </form>
 </div>
+
 @endsection

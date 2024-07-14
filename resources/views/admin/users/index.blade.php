@@ -16,20 +16,18 @@ User Management
         <div class="row mb-3">
             <div class="d-flex justify-content-between align-items-center w-100">
                 <h3>List User</h3>
+                @can(App\Enums\PermissionName::CREATE_USER, App\Enums\PermissionName::DELETE_USER, $users)
                 <div>
-                    @can(App\Enums\PermissionName::CREATE_USER, $users)
                     <a href="{{ route('users.create') }}" class="btn btn-outline-primary">
                         <i class="bi bi-plus-circle-fill" title="Click to add new user"></i>
                         <span>New User</span>
                     </a>
-                    @endcan
-                    @can(APP\Enums\PermissionName::DELETE_USER, $users)
                     <button class="btn btn-outline-danger">
                         <i class="bi bi-trash" title="Click to delete all"></i>
                         <span>Delete All</span>
                     </button>
-                    @endcan
                 </div>
+                @endcan
             </div>
         </div>
         <div class="row mb-2">
@@ -65,6 +63,7 @@ User Management
         </div>
     </div>
     <table class="table table-hover border text-center">
+        <caption>List of users</caption>
         <thead>
             <tr class="bg-primary text-white">
                 <th><input type="checkbox"></th>

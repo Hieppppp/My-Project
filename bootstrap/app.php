@@ -13,7 +13,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
+            'check-admin' => \App\Http\Middleware\CheckAdmin::class,
             'check-permission' => \App\Http\Middleware\CheckMiddleware::class,
+            'check-ownership' => \App\Http\Middleware\CheckUserOwnershipMiddleware::class,
             
         ]);
     })
