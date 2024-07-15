@@ -141,4 +141,14 @@ class User extends Authenticatable
         return $this->courses->contains($course);
         
     }
+
+    public function hasActivePermission($permissionName)
+    {
+        return $this->roles()
+        ->whereHas('permissions', function ($query) use ($permissionName) {
+            $query->where('name', $permissionName)
+                ->where('status', 1);
+        })
+        ->exists();
+    }
 }

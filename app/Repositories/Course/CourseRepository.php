@@ -22,7 +22,12 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
     {
         parent::__construct(Course::class);
     }
-
+    
+    /**
+     * getCourse
+     *
+     * @return Collection
+     */
     public function getCourse(): Collection
     {
         return Course::all();

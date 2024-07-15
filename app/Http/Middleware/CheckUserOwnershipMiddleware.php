@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\UserRole;
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,11 +21,16 @@ class CheckUserOwnershipMiddleware
         $user = Auth::user();
         $userId = $request->route('user');
 
-        // Check if the user is trying to edit their own profile
-        if ($user->id != $userId) {
-            abort(404, 'Unauthorized action.');
+        if (!$this->userHasRole($user, UserRole::ADMIN()) && $user->id != $userId) {
+            abort(404, 'Not Found');
         }
-
+        
         return $next($request);
     }
+
+    private function userHasRole(User $user, UserRole $role): bool
+    {
+        return $user->roles()->where('name', $role->value)->exists();
+    }
+
 }

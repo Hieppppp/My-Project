@@ -112,6 +112,7 @@
             });
         }, 3500);
 
+      
         CKEDITOR.replace('description');
 
 

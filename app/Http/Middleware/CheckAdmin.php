@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Enums\UserRole;
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,15 +24,21 @@ class CheckAdmin
             return redirect()->route('login');
         }
 
-        // Check if the user has the ADMIN role
         if (!$this->userHasRole($user, UserRole::ADMIN())) {
             abort(404, 'Not Found');
         }
 
         return $next($request);
     }
-
-    private function userHasRole($user, UserRole $role): bool
+    
+    /**
+     * userHasRole
+     *
+     * @param  User $user
+     * @param  UserRole $role
+     * @return bool
+     */
+    private function userHasRole(User $user, UserRole $role): bool
     {
         return $user->roles()->where('name', $role->value)->exists();
     }

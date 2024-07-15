@@ -34,7 +34,12 @@ class UpdateUserRequest extends FormRequest
             'roles.*' => 'exists:roles,id',
         ];
     }
-
+    
+    /**
+     * messages
+     *
+     * @return array
+     */
     public function messages(): array
     {
         return [

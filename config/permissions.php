@@ -17,7 +17,6 @@ return [
 
         'export' => [PermissionName::EXPORT_EXCEL],
         'import' => [PermissionName::IMPORT_EXCEL],
-
     ],
 
     

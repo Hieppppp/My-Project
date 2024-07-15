@@ -14,7 +14,12 @@ class PermissionRepository extends BaseRepository implements PermissionRepositor
     {
         parent::__construct(Permission::class);
     }
-
+    
+    /**
+     * getPermission
+     *
+     * @return Collection
+     */
     public function getPermission(): Collection
     {
         return Permission::where('status', 1)->get();

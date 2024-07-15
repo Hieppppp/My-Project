@@ -35,7 +35,7 @@ Add Course
                 <p class="text-danger">{{ $errors->first('end_date') }}</p>
             </div>
         </div>
-        <button type="button" class="btn btn-danger m-3" style="width:100px"><i class="bi bi-trash"></i> Cancel</button>
+        <button type="button" class="btn btn-danger m-3" style="width:100px" onclick="window.location='{{ URL::previous() }}'"><i class="bi bi-trash"></i> Cancel</button>
         <button type="submit" class="btn btn-primary" style="width:100px"><i class="bi bi-save"></i> Save</button>
     </form>
 

@@ -32,8 +32,6 @@ final class PermissionName extends Enum
     const IMPORT_EXCEL = 'import_excel';
     const EXPORT_EXCEL = 'export_excel';
 
-    const VIEW_ROLE = 'view_role';
-    const VIEW_PERMISSION = 'view_permission';
 
 
 

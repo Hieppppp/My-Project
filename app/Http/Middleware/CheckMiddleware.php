@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +22,7 @@ class CheckMiddleware
      * @param  Closure $next
      * @return Response
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, ): Response
     {
         $user = Auth::user();
 
@@ -31,16 +32,27 @@ class CheckMiddleware
 
         $currentRouteName = $request->route()->getName();
 
+
         if (!$this->hasPermissionForRoute($user, $currentRouteName)) {
-            abort(404, 'Unauthorized action.');
+            abort(404, 'Not Found.');
         }
+
+     
+        
 
         return $next($request);
     }
 
   
-
-    private function hasPermissionForRoute($user, $routeName): bool
+    
+    /**
+     * hasPermissionForRoute
+     *
+     * @param  User $user
+     * @param  string $routeName
+     * @return bool
+     */
+    private function hasPermissionForRoute(User $user, string $routeName): bool
     {
        
         $routePermissions = config('permissions.routes');
@@ -55,6 +67,8 @@ class CheckMiddleware
 
         return true;
     }
+
+  
     
 
 
