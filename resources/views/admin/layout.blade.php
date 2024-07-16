@@ -35,6 +35,12 @@
         .table-striped th {
             background-color: #dee2e6;
         }
+        .btn-icon {
+            border: none;
+        }
+
+       
+
 
         @media screen and (max-width:991px) {
             #dashboard-menu {
@@ -73,7 +79,7 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <!-- use ckeditor -->
-    <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>z
 
     <script>
         function previewAvatar(event) {

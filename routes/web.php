@@ -34,7 +34,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
     Route::middleware('check-permission')->group(function () {
         Route::resource('users', UserController::class)->where(['user' => '[0-9]+']);
-        Route::delete('/users/delete-multiple', [CourseController::class, 'deleteMultiRecord'])->name('users.deleteMultiRecord');
+        Route::delete('/users/delete-multiple', [UserController::class, 'deleteMultiRecord'])->name('users.deleteMultiRecord');
     });
 
     Route::middleware('check-permission')->group(function () {
@@ -42,6 +42,8 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
         Route::post('/courses/import', [CourseController::class, 'import'])->name('import');
         Route::resource('courses', CourseController::class)->where(['course' => '[0-9]+']);
         Route::delete('/courses/delete-multiple', [CourseController::class, 'deleteMultiRecord'])->name('courses.deleteMultiRecord');
+        Route::get('/autocomplete', [CourseController::class, 'autocomplete'])->name('autocomplete');
+
     });
 
     Route::middleware('check-admin')->group(function () {

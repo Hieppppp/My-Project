@@ -7,7 +7,6 @@ use App\Models\Course;
 use App\Repositories\BaseRepository;
 use App\Services\BaseService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 
 /**

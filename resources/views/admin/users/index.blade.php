@@ -18,12 +18,12 @@ User Management
                 <h3>List User</h3>
                 @can(App\Enums\PermissionName::CREATE_USER, App\Enums\PermissionName::DELETE_USER, $users)
                 <div>
-                    <a href="{{ route('users.create') }}" class="btn btn-outline-primary">
+                    <a href="{{ route('users.create') }}" class="btn btn-outline-primary border-0">
                         <i class="bi bi-plus-circle-fill" title="Click to add new user"></i>
                         <span>New User</span>
                     </a>
-                    <button class="btn btn-outline-danger" onclick="event.preventDefault(); document.getElementById('delete-multiple-form').submit();">
-                        <i class="bi bi-trash" title="Click to delete all"></i>
+                    <button class="btn btn-outline-danger border-0" onclick="event.preventDefault(); document.getElementById('delete-multiple-form').submit();">
+                        <i class="bi bi-trash"></i>
                         <span>Delete All</span>
                     </button>
                 </div>
@@ -87,7 +87,7 @@ User Management
                     <td>
                         @if (count($user->roles)>0)
                             @foreach($user->roles as $role)
-                                <span class="badge bg-success">{{ $role->name }}</span>
+                                <span class="badge bg-success ">{{ $role->name }}</span>
                             @endforeach
                         @else
                             <span class="badge bg-danger">No role</span>
@@ -95,12 +95,12 @@ User Management
                     </td>
                     <td>
                         @can(App\Enums\PermissionName::VIEW_USER, $user)
-                        <a href="{{ route('users.show', $user->id) }}" class="btn btn-outline-info">
+                        <a href="{{ route('users.show', $user->id) }}" class="btn btn-outline-info border-0">
                             <i class="bi bi-eye" title="Click to views"></i>
                         </a>
                         @endcan
                         @can(App\Enums\PermissionName::DELETE_USER, $user)
-                        <a class="btn btn-outline-danger" id="delete" href="{{ route('users.destroy', $user->id) }}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this user?')) document.getElementById('delete-form-{{ $user->id }}').submit();">
+                        <a class="btn btn-outline-danger border-0" id="delete" href="{{ route('users.destroy', $user->id) }}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this user?')) document.getElementById('delete-form-{{ $user->id }}').submit();">
                             <i class="bi bi-trash" title="Click to delete"></i>
                         </a>
                         @endcan

@@ -75,11 +75,11 @@ Permission Management
                 </td>
                 <td>
                     @if ($permission->status == 1)
-                    <a href="{{ route('permission.deactivate', ['id' => $permission->id]) }}" class="btn btn-outline-success">
+                    <a href="{{ route('permission.deactivate', ['id' => $permission->id]) }}" class="btn btn-outline-success border-0">
                         <i class="bi bi-arrow-up" title="Click to inactive"></i>
                     </a>
                     @else
-                    <a href="{{ route('permission.activate', ['id' => $permission->id]) }}" class="btn btn-outline-info">
+                    <a href="{{ route('permission.activate', ['id' => $permission->id]) }}" class="btn btn-outline-info border-0">
                         <i class="bi bi-arrow-down" title="Click to inactive"></i>
                     </a>
                     @endif

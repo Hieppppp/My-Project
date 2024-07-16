@@ -10,7 +10,6 @@ use App\Models\User;
 use App\Services\Course\CourseServiceInterface;
 use App\Services\Role\RoleServiceInterface;
 use App\Services\User\UserServiceInterface;
-use Illuminate\Auth\Access\Gate;
 use Illuminate\Console\View\Components\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -136,13 +135,14 @@ class UserController extends Controller
      */
     public function deleteMultiRecord(Request $request): Redirector|RedirectResponse
     {
-        $ids = $request->input('id', []);
+        $ids = $request->input('ids', []);
 
         if ($this->userService->deleteMultiRecord($ids))
         {
-            return redirect()->back()->with('sms', 'User deleted successfully.');
+            return redirect()->back()->with('sms', 'Users deleted successfully.');
         }
 
         return redirect()->back()->with('sms', 'Failed to delete users.');
+
     }
 }

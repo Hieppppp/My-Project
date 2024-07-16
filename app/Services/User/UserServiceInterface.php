@@ -2,10 +2,8 @@
 
 namespace App\Services\User;
 
-use App\Models\Course;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
 
 /**
  * [Description UserServiceInterface]

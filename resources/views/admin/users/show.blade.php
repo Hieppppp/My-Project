@@ -12,7 +12,7 @@ Detail User
     <div class="tabbable">
         <div class="d-flex justify-content-end" style="margin-right:35px;">
             @can(\App\Enums\PermissionName::UPDATE_USER, $users)
-            <a href="{{ route('users.edit', $users->id) }}" class="btn btn-outline-primary">
+            <a href="{{ route('users.edit', $users->id) }}" class="btn btn-outline-primary border-0">
                 <i class="bi bi-pencil-square" title="Click to edit"></i>
                 <span>Edit User</span>
             </a>
