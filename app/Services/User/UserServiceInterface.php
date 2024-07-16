@@ -74,5 +74,13 @@ interface UserServiceInterface
      * @return void
      */
     public function verifyUser(string $token);
+    
+    /**
+     * deleteMultipleUser
+     *
+     * @param  array $ids
+     * @return bool
+     */
+    public function deleteMultiRecord(array $ids): bool;
 
 }

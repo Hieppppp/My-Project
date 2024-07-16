@@ -22,7 +22,7 @@ User Management
                         <i class="bi bi-plus-circle-fill" title="Click to add new user"></i>
                         <span>New User</span>
                     </a>
-                    <button class="btn btn-outline-danger">
+                    <button class="btn btn-outline-danger" onclick="event.preventDefault(); document.getElementById('delete-multiple-form').submit();">
                         <i class="bi bi-trash" title="Click to delete all"></i>
                         <span>Delete All</span>
                     </button>
@@ -62,54 +62,58 @@ User Management
             </div>
         </div>
     </div>
-    <table class="table table-hover border text-center">
-        <caption>List of users</caption>
-        <thead>
-            <tr class="bg-primary text-white">
-                <th><input type="checkbox"></th>
-                <th>Name</th>
-                <th>Profile</th>
-                <th>Role</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($users as $user)
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>{{ $user->name }}</td>
-                <td>
-                    <img width="50px" height="50px" class="img-fluid rounded-circle" src="/avatar/{{ $user->avatar }}" alt="">
-                </td>
-                <td>
-                    @if (count($user->roles)>0)
-                        @foreach($user->roles as $role)
-                            <span class="badge bg-success">{{ $role->name }}</span>
-                        @endforeach
-                    @else
-                        <span class="badge bg-danger">No role</span>
-                    @endif
-                </td>
-                <td>
-                    @can(App\Enums\PermissionName::VIEW_USER, $user)
-                    <a href="{{ route('users.show', $user->id) }}" class="btn btn-outline-info">
-                        <i class="bi bi-eye" title="Click to views"></i>
-                    </a>
-                    @endcan
-                    @can(App\Enums\PermissionName::DELETE_USER, $user)
-                    <a class="btn btn-outline-danger" id="delete" href="{{ route('users.destroy', $user->id) }}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this user?')) document.getElementById('delete-form-{{ $user->id }}').submit();">
-                        <i class="bi bi-trash" title="Click to delete"></i>
-                    </a>
-                    @endcan
-                    <form id="delete-form-{{ $user->id }}" action="{{ route('users.destroy', $user->id) }}" method="POST" style="display: none;">
-                        @csrf
-                        @method('DELETE')
-                    </form>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+    <form id="delete-multiple-form" action="{{ route('users.deleteMultiRecord')}}" method="post">
+        @csrf
+        @method('DELETE')
+        <table class="table table-hover border text-center">
+            <caption>List of users</caption>
+            <thead>
+                <tr class="bg-primary text-white">
+                    <th><input type="checkbox" onclick="toggle(this);"></th>
+                    <th>Name</th>
+                    <th>Profile</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($users as $user)
+                <tr>
+                    <td><input type="checkbox" name="ids[]" value="{{ $user->id }}"></t>
+                    <td>{{ $user->name }}</td>
+                    <td>
+                        <img width="50px" height="50px" class="img-fluid rounded-circle" src="/avatar/{{ $user->avatar }}" alt="">
+                    </td>
+                    <td>
+                        @if (count($user->roles)>0)
+                            @foreach($user->roles as $role)
+                                <span class="badge bg-success">{{ $role->name }}</span>
+                            @endforeach
+                        @else
+                            <span class="badge bg-danger">No role</span>
+                        @endif
+                    </td>
+                    <td>
+                        @can(App\Enums\PermissionName::VIEW_USER, $user)
+                        <a href="{{ route('users.show', $user->id) }}" class="btn btn-outline-info">
+                            <i class="bi bi-eye" title="Click to views"></i>
+                        </a>
+                        @endcan
+                        @can(App\Enums\PermissionName::DELETE_USER, $user)
+                        <a class="btn btn-outline-danger" id="delete" href="{{ route('users.destroy', $user->id) }}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this user?')) document.getElementById('delete-form-{{ $user->id }}').submit();">
+                            <i class="bi bi-trash" title="Click to delete"></i>
+                        </a>
+                        @endcan
+                        <form id="delete-form-{{ $user->id }}" action="{{ route('users.destroy', $user->id) }}" method="POST" style="display: none;">
+                            @csrf
+                            @method('DELETE')
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </form>
     {{ $users->appends(['per_page' => $itemsPerPage])->links() }}
 </div>
 @endsection

@@ -37,9 +37,6 @@ class CheckMiddleware
             abort(404, 'Not Found.');
         }
 
-     
-        
-
         return $next($request);
     }
 
@@ -54,6 +51,10 @@ class CheckMiddleware
      */
     private function hasPermissionForRoute(User $user, string $routeName): bool
     {
+        if ($user->isAdmin())
+        {
+            return true;
+        }
        
         $routePermissions = config('permissions.routes');
 
@@ -68,7 +69,7 @@ class CheckMiddleware
         return true;
     }
 
-  
+   
     
 
 

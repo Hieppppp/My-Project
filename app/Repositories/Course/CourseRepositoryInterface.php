@@ -79,4 +79,14 @@ interface  CourseRepositoryInterface
      * @return void
      */
     public function import($file): void;
+    
+    /**
+     * deleteByIds
+     *
+     * @param  array $ids
+     * @return int
+     */
+    public function deleteByIds(array $ids): int;
+
+    
 }

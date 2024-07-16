@@ -30,33 +30,18 @@ Route::get('password/reset/{token}', [ResetPasswordController::class, 'showReset
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 
 
-// Route::prefix('admin')->middleware(['auth', 'check-permission'])->group(function () {
-
-//     Route::resource('users', UserController::class)->where(['user' => '[0-9]+']);
-
-//     Route::get('/courses/export', [CourseController::class, 'export'])->name('export');
-//     Route::post('/courses/import', [CourseController::class, 'import'])->name('import');
-//     Route::resource('courses', CourseController::class)->where(['course' => '[0-9]+']);
-
-//     Route::resource('roles', RoleController::class)->where(['role' => '[0-9]+'])->middleware('check-admin');
-//     Route::get('roles/activate/{id}', [RoleController::class, 'activate'])->name('roles.activate');
-//     Route::get('roles/deactivate/{id}', [RoleController::class, 'deactivate'])->name('roles.deactivate');
-
-//     Route::resource('permissions', PermissionController::class)->where(['permission' => '[0-9]+'])->middleware('check-admin');
-//     Route::get('permission/activate/{id}', [PermissionController::class, 'activate'])->name('permission.activate');
-//     Route::get('permission/deactivate/{id}', [PermissionController::class, 'deactivate'])->name('permission.deactivate');
-// });
-
 Route::prefix('admin')->middleware(['auth'])->group(function () {
 
     Route::middleware('check-permission')->group(function () {
         Route::resource('users', UserController::class)->where(['user' => '[0-9]+']);
+        Route::delete('/users/delete-multiple', [CourseController::class, 'deleteMultiRecord'])->name('users.deleteMultiRecord');
     });
 
     Route::middleware('check-permission')->group(function () {
         Route::get('/courses/export', [CourseController::class, 'export'])->name('export');
         Route::post('/courses/import', [CourseController::class, 'import'])->name('import');
         Route::resource('courses', CourseController::class)->where(['course' => '[0-9]+']);
+        Route::delete('/courses/delete-multiple', [CourseController::class, 'deleteMultiRecord'])->name('courses.deleteMultiRecord');
     });
 
     Route::middleware('check-admin')->group(function () {

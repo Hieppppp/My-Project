@@ -113,4 +113,15 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     {
         return User::where('email', $email)->first();
     }
+    
+    /**
+     * deleteByIds
+     *
+     * @param  array $ids
+     * @return int
+     */
+    public function deleteByIds(array $ids): int
+    {
+        return User::whereIn('id', $ids)->delete();
+    }
 }

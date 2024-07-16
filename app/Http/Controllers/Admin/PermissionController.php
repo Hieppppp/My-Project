@@ -9,7 +9,6 @@ use App\Http\Requests\Permission\UpdatePermissionRequest;
 use App\Services\Permission\PermissionServiceInterface;
 use Illuminate\Console\View\Components\Factory;
 use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 

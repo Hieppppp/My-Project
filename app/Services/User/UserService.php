@@ -230,4 +230,9 @@ class UserService extends BaseService implements UserServiceInterface
             return 'Invalid verification code';
         }
     }
+
+    public function deleteMultiRecord(array $ids): bool
+    {
+        return $this->repository->deleteByIds($ids) > 0;
+    }
 }

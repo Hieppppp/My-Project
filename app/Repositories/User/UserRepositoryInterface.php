@@ -63,6 +63,14 @@ interface UserRepositoryInterface
      * @return User
      */
     public function findByEmail(string $email): ?User;
+    
+    /**
+     * deleteByIds
+     *
+     * @param  array $ids
+     * @return int
+     */
+    public function deleteByIds(array $ids): int;
 
   
 }

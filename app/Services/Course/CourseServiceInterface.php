@@ -84,4 +84,12 @@ interface CourseServiceInterface
      * @return void
      */
     public function import($file): void;
+    
+    /**
+     * deleteMultiRecord
+     *
+     * @param  array $ids
+     * @return bool
+     */
+    public function deleteMultiRecord(array $ids): bool;
 }

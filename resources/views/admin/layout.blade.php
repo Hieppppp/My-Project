@@ -112,6 +112,15 @@
             });
         }, 3500);
 
+        function toggle(source) {
+            checkboxes = document.getElementsByName('ids[]');
+            for(var i=0, n=checkboxes.length;i<n;i++) {
+                checkboxes[i].checked = source.checked;
+            }
+        }
+
+
+      
       
         CKEDITOR.replace('description');
 

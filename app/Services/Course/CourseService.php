@@ -118,4 +118,9 @@ class CourseService extends BaseService implements CourseServiceInterface
     {
         $this->repository->import($file);
     }
+
+    public function deleteMultiRecord(array $ids): bool
+    {
+        return $this->repository->deleteByIds($ids) > 0;
+    }
 }

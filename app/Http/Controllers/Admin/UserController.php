@@ -14,6 +14,7 @@ use Illuminate\Auth\Access\Gate;
 use Illuminate\Console\View\Components\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 
 class UserController extends Controller
@@ -125,5 +126,23 @@ class UserController extends Controller
        
         $this->userService->delete($id);
         return redirect()->back()->with('sms', 'User deleted successfully.');
+    }
+    
+    /**
+     * deleteMultiRecord
+     *
+     * @param  Request $request
+     * @return Redirector|RedirectResponse
+     */
+    public function deleteMultiRecord(Request $request): Redirector|RedirectResponse
+    {
+        $ids = $request->input('id', []);
+
+        if ($this->userService->deleteMultiRecord($ids))
+        {
+            return redirect()->back()->with('sms', 'User deleted successfully.');
+        }
+
+        return redirect()->back()->with('sms', 'Failed to delete users.');
     }
 }

@@ -12,8 +12,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Services\Course\CourseServiceInterface;
 use Illuminate\Console\View\Components\Factory;
 use Illuminate\Routing\Redirector;
-use App\Models\User;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -157,6 +156,26 @@ class CourseController extends Controller
         } catch (\Throwable $th) {
             return redirect()->back()->with('error_message', 'Error: ' . $th->getMessage());
         }
+    }
+    
+    /**
+     * deleteMultiRecord
+     *
+     * @param  Request $request
+     * @return Redirector|RedirectResponse
+     */
+    public function deleteMultiRecord(Request $request): Redirector|RedirectResponse
+    {
+        
+        $ids = $request->input('ids', []);
+
+        if ($this->courseService->deleteMultiRecord($ids))
+        {
+            return redirect()->back()->with('sms', 'Course deleted successfully.');
+        }
+
+        return redirect()->back()->with('sms', 'Failed to delete courses.');
+
     }
     
     

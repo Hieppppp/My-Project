@@ -126,4 +126,15 @@ class CourseRepository extends BaseRepository implements CourseRepositoryInterfa
     {
         Excel::import(new CoursesImport, $file);
     }
+    
+    /**
+     * deleteByIds
+     *
+     * @param  array $ids
+     * @return int
+     */
+    public function deleteByIds(array $ids): int
+    {
+        return Course::whereIn('id', $ids)->delete();
+    }
 }
