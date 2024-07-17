@@ -86,14 +86,14 @@ Courses
         @method('DELETE')
         <table class="table table-hover border text-center">
             <caption>List of courses</caption>
-            <thead>
-                <tr class="bg-primary text-white">
-                    <th><input type="checkbox" onclick="toggle(this);"></th>
-                    <th>Courses</th>
-                    <th>Description</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Action</th>
+            <thead class="bg-light text-capitalize">
+                <tr class="">
+                    <th width="5%"><input type="checkbox" onclick="toggle(this);"></th>
+                    <th width="15%">Courses</th>
+                    <th width="40%">Description</th>
+                    <th width="10%">Start Date</th>
+                    <th width="10%">End Date</th>
+                    <th width="20%">Action</th>
                 </tr>
             </thead>
             <tbody>

@@ -30,19 +30,5 @@ class CreateRoleRequest extends FormRequest
         ];
     }
     
-    /**
-     * messages
-     *
-     * @return array
-     */
-    public function messages(): array
-    {
-        return [
-            'name.required' => 'Role is required.',
-            'name.unique' => 'This name already exists. Please choose another name.',
-            'description.required' => 'Description is required.',
-            'status.required' => 'Status is required.', 
-            'status.in' => 'Invalid status',
-        ];
-    }
+    
 }

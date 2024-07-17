@@ -16,8 +16,10 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 
+
 class UserController extends Controller
-{    
+{  
+    
     /**
      * __construct
      *
@@ -38,14 +40,19 @@ class UserController extends Controller
      * @return Factory
      */
     public function index(UserIndexRequest $request): Factory|View
-    { 
+    {
         $validatedData = $request->validated();
         $searchKeyword = $validatedData['keywords'] ?? null;
         $itemsPerPage = $validatedData['per_page'] ?? 10;
-        $users = $this->userService->pagination($searchKeyword, $itemsPerPage);
-        return view('admin.users.index', compact('users', 'itemsPerPage'));
+        $roles = $validatedData['roles'] ?? null; 
+
+        $users = $this->userService->pagination($searchKeyword, $itemsPerPage, $roles);
+
+        $allRoles = $this->roleService->getRole();
+
+        return view('admin.users.index', compact('users', 'itemsPerPage', 'allRoles'));
     }
-       
+   
     /**
      * create
      *
@@ -145,4 +152,12 @@ class UserController extends Controller
         return redirect()->back()->with('sms', 'Failed to delete users.');
 
     }
+
+    
+    /**
+     * showLinkRequestForm
+     *
+     * @return Factory
+     */
+   
 }

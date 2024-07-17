@@ -30,10 +30,4 @@ final class PermissionName extends Enum
     const IMPORT_EXCEL = 'import_excel';
     const EXPORT_EXCEL = 'export_excel';
 
-    const MANAGE_ROLES = 'manage_roles';
-    const MANAGE_PERMISSIONS = 'manage_permissions';
-
-
-
-
 }

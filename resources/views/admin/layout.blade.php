@@ -79,7 +79,10 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <!-- use ckeditor -->
-    <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>z
+    <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+
+    
+
 
     <script>
         function previewAvatar(event) {
@@ -125,13 +128,18 @@
             }
         }
 
-
-      
-      
         CKEDITOR.replace('description');
 
-
     </script>
+
+    <script>
+        $('#example').DataTable({
+            ajax: 'data/arrays.txt'
+        });
+    </script>
+
+
+
 </body>
 
 </html>

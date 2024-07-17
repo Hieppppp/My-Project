@@ -29,21 +29,5 @@ class UpdateCourseRequest extends FormRequest
         ];
     }
     
-    /**
-     * messages
-     *
-     * @return array
-     */
-    public function messages(): array
-    {
-        return [
-            'name.required' => 'Name is required.',
-            'description.required' => 'Description is required.',
-            'start_date.required' => 'Start date is required.',
-            'start_date.date' => 'The date is not valid date.',
-            'end_date.required' => 'End date is required.',
-            'end_date.date' => 'The date is not valid date.',
-            'end_date.after_or_equal' => 'The date must be a date after start date.'
-        ];
-    }
+   
 }

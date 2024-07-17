@@ -2,10 +2,10 @@
 
 namespace App\Repositories\User;
 
-use App\Models\Course;
+
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
+
 
 interface UserRepositoryInterface
 {
@@ -51,10 +51,10 @@ interface UserRepositoryInterface
      * 
      * @param string|null $keyword
      * @param int $perPage
-     * 
+     * @param array|null $roles
      * @return LengthAwarePaginator
      */
-    public function pagination(?string $keyword, int $perPage): LengthAwarePaginator;
+    public function pagination(?string $keyword, int $perPage, ?array $roles = null): LengthAwarePaginator;
     
     /**
      * findByEmail

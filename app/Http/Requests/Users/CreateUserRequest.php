@@ -34,29 +34,5 @@ class CreateUserRequest extends FormRequest
         ];
     }
 
-    /**
-     * Get the validation messages that apply to the request.
-     *
-     * @return array<string, string>
-     */
-    public function messages(): array
-    {
-        return [
-            'phone.required' => 'Phone number is required.',
-            'phone.regex' => 'The phone number format is invalid. Please enter a valid Vietnamese phone number.',
-            'name.required' => 'Name is required.',
-            'email.required' => 'Email is required.',
-            'email.email' => 'The email must be a valid email address.',
-            'email.unique' => 'The email has already been taken.',
-            'password.required' => 'Password is required.',
-            'password.min' => 'The password must be at least 8 characters.',
-            'password.confirmed' => 'The password confirmation does not match.',
-            'date_of_birth.required' => 'Date of birth is required.',
-            'date_of_birth.date' => 'The date of birth is not a valid date.',
-            'date_of_birth.before_or_equal' => 'The date of birth must be a date before or equal to today.',
-            'avatar.image' => 'The avatar must be an image file.',
-            'avatar.mimes' => 'The avatar must be a file of type: jpeg, png, jpg, gif, svg.',
-            'avatar.max' => 'The avatar may not be greater than 2048 KB.',
-        ];
-    }
+    
 }

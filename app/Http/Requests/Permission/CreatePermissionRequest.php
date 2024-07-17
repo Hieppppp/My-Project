@@ -28,18 +28,5 @@ class CreatePermissionRequest extends FormRequest
         ];
     }
     
-    /**
-     * messages
-     *
-     * @return array
-     */
-    public function messages(): array
-    {
-        return [
-            'name.required' => 'Permission is required.',
-            'description.required' => 'Description is required.',
-            'status.required' => 'Status is required.', 
-            'status.in' => 'Invalid status',
-        ];
-    }
+   
 }

@@ -54,7 +54,7 @@ Permission Management
     <table class="table table-hover border text-center">
         <caption>List of permissions</caption>
         <thead>
-            <tr class="bg-primary text-white">
+            <tr class="">
                 <th>Permission</th>
                 <th>Description</th>
                 <th>Status</th>

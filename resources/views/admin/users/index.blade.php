@@ -23,7 +23,7 @@ User Management
                         <span>New User</span>
                     </a>
                     <button class="btn btn-outline-danger border-0" onclick="event.preventDefault(); document.getElementById('delete-multiple-form').submit();">
-                        <i class="bi bi-trash"></i>
+                        <i class="bi bi-trash" title="Click to delete all"></i>
                         <span>Delete All</span>
                     </button>
                 </div>
@@ -31,11 +31,11 @@ User Management
             </div>
         </div>
         <div class="row mb-2">
-            <div class="col-md-6">
-                <form action="{{ route('users.index') }}" method="get">
+            <div class="col-md-2">
+                <form action="" method="get">
                     <label>
                         Show
-                        <select name="per_page" onchange="this.form.submit()">
+                        <select name="per_page" class="form-select d-inline w-auto" onchange="this.form.submit()">
                             <option value="10" {{ request('per_page') == 10 ? ' selected ' : '' }}>10</option>
                             <option value="20" {{ request('per_page') == 20 ? ' selected ' : '' }}>20</option>
                             <option value="50" {{ request('per_page') == 50 ? ' selected ' : '' }}>50</option>
@@ -45,17 +45,33 @@ User Management
                     </label>
                 </form>
             </div>
-
-            <div class="col-md-6">
-                <form method="get" class="">
-                    <div class="row">
-                        <div class="d-flex justify-content-end">
-                            <div class="me-2 w-50">
-                                <input type="search" name="keywords" class="form-control" placeholder="Search..." value="{{ request()->input('keywords') }}">
-                            </div>
-                            <div class="">
-                                <button type="submit" class="btn btn-primary btn-block"><i class="bi bi-search"></i> Search</button>
-                            </div>
+            <div class="col-md-2">
+                <form action="" method="get">
+                    <div class="d-flex">
+                        <div class="me-2 w-100">
+                            <select name="roles[]" id="roles" class="form-control">
+                                <option value="0">Filter by Role</option>
+                                @foreach($allRoles as $role)
+                                <option value="{{ $role->name }}" {{ in_array($role->name, request()->input('roles', [])) ? 'selected' : '' }}>
+                                    {{ $role->name }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary"><i class="bi bi-filter"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-8">
+                <form method="get">
+                    <div class="d-flex justify-content-end">
+                        <div class="me-2 w-50">
+                            <input type="search" name="keywords" class="form-control" placeholder="Search by email or name..." value="{{ request()->input('keywords') }}">
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i> Search</button>
                         </div>
                     </div>
                 </form>
@@ -65,15 +81,15 @@ User Management
     <form id="delete-multiple-form" action="{{ route('users.deleteMultiRecord')}}" method="post">
         @csrf
         @method('DELETE')
-        <table class="table table-hover border text-center">
+        <table id="dataTable" class="table table-hover border text-center">
             <caption>List of users</caption>
-            <thead>
-                <tr class="bg-primary text-white">
-                    <th><input type="checkbox" onclick="toggle(this);"></th>
-                    <th>Name</th>
-                    <th>Profile</th>
-                    <th>Role</th>
-                    <th>Action</th>
+            <thead class="bg-light text-capitalize">
+                <tr class="">
+                    <th width="5%"><input type="checkbox" onclick="toggle(this);"></th>
+                    <th width="10%">Name</th>
+                    <th width="20%">Profile</th>
+                    <th width="10%">Role</th>
+                    <th width="20%">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -86,11 +102,11 @@ User Management
                     </td>
                     <td>
                         @if (count($user->roles)>0)
-                            @foreach($user->roles as $role)
-                                <span class="badge bg-success ">{{ $role->name }}</span>
-                            @endforeach
+                        @foreach($user->roles as $role)
+                        <span class="badge bg-info mr-1">{{ $role->name }}</span>
+                        @endforeach
                         @else
-                            <span class="badge bg-danger">No role</span>
+                        <span class="badge bg-danger mr-1">No role</span>
                         @endif
                     </td>
                     <td>
@@ -116,4 +132,5 @@ User Management
     </form>
     {{ $users->appends(['per_page' => $itemsPerPage])->links() }}
 </div>
-@endsection
+@endsection 
+

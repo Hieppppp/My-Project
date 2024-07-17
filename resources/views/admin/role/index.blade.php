@@ -29,8 +29,8 @@ Role Management
     </div>
     <table class="table table-hover border text-center">
         <caption>List of roles</caption>
-        <thead>
-            <tr class="bg-primary text-white">
+        <thead class="bg-light text-capitalize">
+            <tr class="">
                 <th>Role</th>
                 <th>Permission</th>
                 <th>Status</th>
@@ -44,10 +44,10 @@ Role Management
                 <td style="width:70%;">
                     @if (count($role->permissions)>0)
                         @foreach ($role->permissions as $permission)
-                            <span class="badge bg-success">{{ $permission->name }}</span>
+                            <span class="badge bg-info mr-1">{{ $permission->name }}</span>
                         @endforeach
                     @else
-                        <span class="badge bg-danger">No permission</span>
+                        <span class="badge bg-danger mr-1">No permission</span>
                     @endif
                 </td>
                 <td>

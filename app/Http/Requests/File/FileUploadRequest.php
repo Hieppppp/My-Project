@@ -26,19 +26,5 @@ class FileUploadRequest extends FormRequest
         ];
     }
     
-    /**
-     * messages
-     *
-     * @return array
-     */
-    public function messages(): array
-    {
-        return [
-            'file.required' => 'A file is required for upload.',
-            'file.file' => 'The uploaded file must be a valid file.',
-            'file.mimes' => 'The uploaded file must be a file of type: xls, xlsx, csv.',
-            'file.max' => 'The uploaded file must not exceed 10MB.',
-        ];
 
-    }
 }

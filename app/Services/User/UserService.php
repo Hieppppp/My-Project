@@ -126,12 +126,12 @@ class UserService extends BaseService implements UserServiceInterface
      * 
      * @param string|null $keyword
      * @param int $perPage
-     * 
+     * @param array|null $roles
      * @return LengthAwarePaginator
      */
-    public function pagination(?string $keyword, int $perPage): LengthAwarePaginator
+    public function pagination(?string $keyword, int $perPage, ?array $roles = null): LengthAwarePaginator
     {
-        return $this->repository->pagination($keyword, $perPage);
+        return $this->repository->pagination($keyword, $perPage, $roles);
     }
 
     /**
@@ -230,9 +230,18 @@ class UserService extends BaseService implements UserServiceInterface
             return 'Invalid verification code';
         }
     }
-
+    
+    /**
+     * deleteMultiRecord
+     *
+     * @param  array $ids
+     * @return bool
+     */
     public function deleteMultiRecord(array $ids): bool
     {
         return $this->repository->deleteByIds($ids) > 0;
     }
+    
+
+    
 }

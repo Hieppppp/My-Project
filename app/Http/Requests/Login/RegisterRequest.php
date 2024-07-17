@@ -25,22 +25,6 @@ class RegisterRequest extends FormRequest
         ];
     }
     
-    /**
-     * messages
-     *
-     * @return array
-     */
-    public function messages():array
-    {
-        return [
-            'name.required' => 'Name is required.',
-            'email.required' => 'Email is required',
-            'email.email' => 'The email must be a valid email address',
-            'email.unique' => 'The email has already been taken.',
-            'password.required' => 'Password is required.',
-            'password.min' => 'The password must be at least 8 characters.',
-            'password.confirmed' => 'The password confirmation does not match.',
-        ];
-    }
+    
 }
 

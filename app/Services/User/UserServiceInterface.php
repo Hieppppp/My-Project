@@ -4,6 +4,7 @@ namespace App\Services\User;
 
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Http\Request;
 
 /**
  * [Description UserServiceInterface]
@@ -52,10 +53,10 @@ interface UserServiceInterface
      * 
      * @param string|null $keyword
      * @param int $perPage
-     * 
+     * @param array|null $roles
      * @return LengthAwarePaginator
      */
-    public function pagination(?string $keyword, int $perPage): LengthAwarePaginator;
+    public function pagination(?string $keyword, int $perPage, ?array $roles = null): LengthAwarePaginator;
     
     /**
      * register
@@ -80,5 +81,7 @@ interface UserServiceInterface
      * @return bool
      */
     public function deleteMultiRecord(array $ids): bool;
+
+    
 
 }

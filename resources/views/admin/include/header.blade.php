@@ -3,6 +3,10 @@
         <img width="50px" height="50px" class="rounded-circle" src="/avatar/{{ Auth::user()->avatar }}" alt="Avatar">
         {{ Auth::user()->name }}
     </h6>
+    
+  
+
+
     <form method="POST" action="{{ url('logout') }}">
         @csrf
         <button class="btn btn-warning" type="submit"><i class="bi bi-box-arrow-in-right"></i> Logout</button>

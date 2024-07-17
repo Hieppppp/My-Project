@@ -11,10 +11,19 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Foundation\Auth\ResetsPasswords;
 
 
 class AuthController extends Controller
-{    
+{ 
+    use SendsPasswordResetEmails, ResetsPasswords {
+        
+        SendsPasswordResetEmails::broker insteadof ResetsPasswords;
+        ResetsPasswords::credentials insteadof SendsPasswordResetEmails;
+        SendsPasswordResetEmails::credentials as sendPasswordResetEmailsCredentials;
+    }
+        
     public function __construct(
         public UserServiceInterface $userService
     )
@@ -99,5 +108,21 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->route('login');
+    }
+
+    public function showLinkRequestForm(): Factory|View
+    {
+        return view('auth.passwords.email');
+    }
+    
+    /**
+     * showResetForm
+     *
+     * @param  mixed $token
+     * @return Factory
+     */
+    public function showResetForm(string $token): Factory|View
+    {
+        return view('auth.passwords.reset', ['token' => $token]);
     }
 }

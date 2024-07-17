@@ -91,18 +91,30 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     /**
      * @param string|null $keyword
      * @param int $perPage
-     * 
+     * @param array|null $roles
      * @return LengthAwarePaginator
      */
-    public function pagination(?string $keyword, int $perPage): LengthAwarePaginator
+    public function pagination(?string $keyword, int $perPage, ?array $roles = null): LengthAwarePaginator
     {
-        return User::where('name', 'like', '%' . $keyword . '%')
-            ->orWhere('email', 'like', '%' . $keyword . '%')
-            ->orWhere('phone', 'like', '%' . $keyword . '%')
-            ->orderBy('created_at', 'DESC')
-            ->paginate($perPage);
+        $query = User::query()
+            ->where(function ($query) use ($keyword) {
+                $query->where('name', 'like', '%' . $keyword . '%')
+                    ->orWhere('email', 'like', '%' . $keyword . '%')
+                    ->orWhere('phone', 'like', '%' . $keyword . '%');
+            })
+            ->orderBy('created_at', 'DESC');
+
+        if (!empty($roles)) {
+            $query->whereHas('roles', function ($roleQuery) use ($roles) {
+                $roleQuery->whereIn('name', $roles);
+            });
+        }
+        
+        $users = $query->paginate($perPage);
+
+        return $users;
     }
-    
+   
     /**
      * findByEmail
      *
