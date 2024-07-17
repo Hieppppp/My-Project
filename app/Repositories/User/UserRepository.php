@@ -5,6 +5,7 @@ namespace App\Repositories\User;
 use App\Models\User;
 use App\Repositories\BaseRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
@@ -135,5 +136,10 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     public function deleteByIds(array $ids): int
     {
         return User::whereIn('id', $ids)->delete();
+    }
+
+    public function getUser(): Collection
+    {
+        return User::all();
     }
 }

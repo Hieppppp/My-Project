@@ -2,20 +2,24 @@
 
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\DashBoardController;
-use App\Http\Controllers\Admin\ForgotPasswordController;
 use App\Http\Controllers\Admin\PermissionController;
-use App\Http\Controllers\Admin\ResetPasswordController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
+Auth::routes();
+
+Route::get('/', function () {
+    return redirect()->route('login');
+})->middleware('guest');
+
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', function () {
-        return view('admin.home.dashboard');
-    })->name('dashboard');
+    Route::get('/home', [DashBoardController::class, 'index'])->name('dashboard');
 });
+
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);

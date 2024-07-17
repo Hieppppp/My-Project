@@ -5,7 +5,7 @@ namespace App\Repositories\User;
 
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-
+use Illuminate\Support\Collection;
 
 interface UserRepositoryInterface
 {
@@ -71,6 +71,13 @@ interface UserRepositoryInterface
      * @return int
      */
     public function deleteByIds(array $ids): int;
+    
+    /**
+     * getUser
+     *
+     * @return Collection
+     */
+    public function getUser(): Collection;
 
   
 }

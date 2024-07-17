@@ -32,18 +32,12 @@ class CourseController extends Controller
 
     /**
      * index
-     * 
-     * @param CourseIndexRequest $request
      * @return Factory|View
      */
-    public function index(CourseIndexRequest $request): Factory|View
+    public function index(): Factory|View
     {
-    
-        $validated = $request->validated();
-        $searchKeyword = $validated['keywords'] ?? null;
-        $itemsPerPage = $validated['per_page'] ?? 10;
-        $courses = $this->courseService->pagination($searchKeyword, $itemsPerPage);
-        return view('admin.courses.index', compact('courses', 'itemsPerPage'));
+        $courses = $this->courseService->getCourse();
+        return view('admin.courses.index', compact('courses'));
         
     }
     /**

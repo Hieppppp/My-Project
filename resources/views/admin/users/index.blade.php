@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('admin.layouts.layout')
 @section('title')
 User Management
 @endsection
@@ -30,60 +30,14 @@ User Management
                 @endcan
             </div>
         </div>
-        <div class="row mb-2">
-            <div class="col-md-2">
-                <form action="" method="get">
-                    <label>
-                        Show
-                        <select name="per_page" class="form-select d-inline w-auto" onchange="this.form.submit()">
-                            <option value="10" {{ request('per_page') == 10 ? ' selected ' : '' }}>10</option>
-                            <option value="20" {{ request('per_page') == 20 ? ' selected ' : '' }}>20</option>
-                            <option value="50" {{ request('per_page') == 50 ? ' selected ' : '' }}>50</option>
-                            <option value="100" {{ request('per_page') == 100 ? ' selected ' : '' }}>100</option>
-                        </select>
-                        users
-                    </label>
-                </form>
-            </div>
-            <div class="col-md-2">
-                <form action="" method="get">
-                    <div class="d-flex">
-                        <div class="me-2 w-100">
-                            <select name="roles[]" id="roles" class="form-control">
-                                <option value="0">Filter by Role</option>
-                                @foreach($allRoles as $role)
-                                <option value="{{ $role->name }}" {{ in_array($role->name, request()->input('roles', [])) ? 'selected' : '' }}>
-                                    {{ $role->name }}
-                                </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div>
-                            <button type="submit" class="btn btn-primary"><i class="bi bi-filter"></i></button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-md-8">
-                <form method="get">
-                    <div class="d-flex justify-content-end">
-                        <div class="me-2 w-50">
-                            <input type="search" name="keywords" class="form-control" placeholder="Search by email or name..." value="{{ request()->input('keywords') }}">
-                        </div>
-                        <div>
-                            <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i> Search</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
+
     </div>
     <form id="delete-multiple-form" action="{{ route('users.deleteMultiRecord')}}" method="post">
         @csrf
         @method('DELETE')
-        <table id="dataTable" class="table table-hover border text-center">
+        <table id="users" class="display table table-hover border text-center" cellspacing="0" width="100%">
             <caption>List of users</caption>
-            <thead class="bg-light text-capitalize">
+            <thead class="text-capitalize">
                 <tr class="">
                     <th width="5%"><input type="checkbox" onclick="toggle(this);"></th>
                     <th width="10%">Name</th>
@@ -129,8 +83,7 @@ User Management
                 @endforeach
             </tbody>
         </table>
+        
     </form>
-    {{ $users->appends(['per_page' => $itemsPerPage])->links() }}
 </div>
-@endsection 
-
+@endsection

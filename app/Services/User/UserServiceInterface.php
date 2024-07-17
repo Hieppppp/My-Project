@@ -5,6 +5,7 @@ namespace App\Services\User;
 use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 /**
  * [Description UserServiceInterface]
@@ -81,6 +82,13 @@ interface UserServiceInterface
      * @return bool
      */
     public function deleteMultiRecord(array $ids): bool;
+    
+    /**
+     * getUser
+     *
+     * @return Collection
+     */
+    public function getUser(): Collection;
 
     
 

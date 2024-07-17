@@ -35,22 +35,14 @@ class UserController extends Controller
     
     /**
      * index
-     * 
-     * @param UserIndexRequest $request
      * @return Factory
      */
-    public function index(UserIndexRequest $request): Factory|View
+    public function index(): Factory|View
     {
-        $validatedData = $request->validated();
-        $searchKeyword = $validatedData['keywords'] ?? null;
-        $itemsPerPage = $validatedData['per_page'] ?? 10;
-        $roles = $validatedData['roles'] ?? null; 
-
-        $users = $this->userService->pagination($searchKeyword, $itemsPerPage, $roles);
-
-        $allRoles = $this->roleService->getRole();
-
-        return view('admin.users.index', compact('users', 'itemsPerPage', 'allRoles'));
+        
+        $users = $this->userService->getUser();
+        return view('admin.users.index', compact('users'));
+        
     }
    
     /**

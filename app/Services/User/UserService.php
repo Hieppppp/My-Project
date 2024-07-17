@@ -9,7 +9,7 @@ use App\Repositories\BaseRepository;
 use App\Services\BaseService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -240,6 +240,11 @@ class UserService extends BaseService implements UserServiceInterface
     public function deleteMultiRecord(array $ids): bool
     {
         return $this->repository->deleteByIds($ids) > 0;
+    }
+
+    public function getUser(): Collection
+    {
+        return $this->repository->getUser();
     }
     
 

@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('admin.layouts.layout')
 @section('title')
 Courses
 @endsection
@@ -49,56 +49,26 @@ Courses
                 </div>
             </div>
         </div>
-        <div class="row mb-2">
-            <div class="col-md-6">
-                <form action="{{ route('courses.index') }}" method="get">
-                    <label>
-                        Show
-                        <select name="per_page" onchange="this.form.submit()">
-                            <option value="10" {{ request('per_page') == 10 ? ' selected' : '' }}>10</option>
-                            <option value="20" {{ request('per_page') == 20 ? ' selected' : '' }}>20</option>
-                            <option value="50" {{ request('per_page') == 50 ? ' selected' : '' }}>50</option>
-                            <option value="100" {{ request('per_page') == 100 ? ' selected' : '' }}>100</option>
-                        </select>
-                        courses
-                    </label>
-                </form>
-            </div>
-
-            <div class="col-md-6">
-                <form method="get" class="">
-                    <div class="row">
-                        <div class="d-flex justify-content-end">
-                            <div class="me-2 w-50">
-                                <input type="search" name="keywords" class="form-control" placeholder="Search..." value="{{ request()->input('keywords') }}">
-                            </div>
-                            <div class="">
-                                <button type="submit" class="btn btn-primary btn-block"><i class="bi bi-search"></i> Search</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
     </div>
     <form id="delete-multiple-form" action="{{ route('courses.deleteMultiRecord') }}" method="POST">
         @csrf
         @method('DELETE')
-        <table class="table table-hover border text-center">
-            <caption>List of courses</caption>
-            <thead class="bg-light text-capitalize">
-                <tr class="">
-                    <th width="5%"><input type="checkbox" onclick="toggle(this);"></th>
-                    <th width="15%">Courses</th>
-                    <th width="40%">Description</th>
-                    <th width="10%">Start Date</th>
-                    <th width="10%">End Date</th>
-                    <th width="20%">Action</th>
+        <table id="courses" class="display table table-hover border text-center" cellspacing="0" width="100%">
+            <thead class="text-capitalize">
+                <tr class="text-center">
+                    <th><input type="checkbox" onclick="toggle(this);"></th>
+                    <th>Courses</th>
+                    <th>Description</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Action</th>
                 </tr>
             </thead>
+
             <tbody>
                 @foreach ($courses as $course)
                 <tr>
+                    
                     <td><input type="checkbox" name="ids[]" value="{{ $course->id }}"></td>
                     <td>{{ $course->name }}</td>
                     <td>{!! Str::limit($course->description, 50) !!}</td>
@@ -128,7 +98,6 @@ Courses
             </tbody>
         </table>
     </form>
-    {{ $courses->appends(['per_page' => $itemsPerPage])->links() }}
 </div>
 
 
